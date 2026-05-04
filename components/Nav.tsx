@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Calculator as CalcIcon } from "lucide-react";
+import { LogoMark } from "./Logo";
 import { ThemeToggle } from "./ThemeToggle";
 
 export function Nav() {
@@ -7,9 +7,7 @@ export function Nav() {
     <nav className="sticky top-0 z-40 w-full border-b border-border bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 sm:px-6">
         <Link href="/" className="flex items-center gap-2">
-          <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary text-primary-foreground">
-            <CalcIcon className="h-4 w-4" />
-          </div>
+          <LogoMark size={28} />
           <span className="font-semibold tracking-tight">AI Cost Calc</span>
         </Link>
 
