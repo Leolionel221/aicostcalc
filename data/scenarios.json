@@ -1,0 +1,76 @@
+{
+  "scenarios": [
+    {
+      "id": "chatbot",
+      "icon": "MessageCircle",
+      "i18n": {
+        "en": { "name": "Customer Chatbot", "hint": "Short prompt, conversational response" },
+        "zh": { "name": "客服聊天机器人", "hint": "短提示词，对话式回复" }
+      },
+      "inputTokens": 50,
+      "outputTokens": 80,
+      "callsPerDay": 1000,
+      "recommendedModelIds": ["gpt-5-mini", "claude-haiku-4-5", "gemini-3-0-flash"]
+    },
+    {
+      "id": "code-assistant",
+      "icon": "Code",
+      "i18n": {
+        "en": { "name": "Code Assistant", "hint": "Function-level completion" },
+        "zh": { "name": "代码助手", "hint": "函数级补全" }
+      },
+      "inputTokens": 500,
+      "outputTokens": 300,
+      "callsPerDay": 200,
+      "recommendedModelIds": ["claude-opus-4-7", "gpt-5-5", "deepseek-v4"]
+    },
+    {
+      "id": "content-generation",
+      "icon": "FileText",
+      "i18n": {
+        "en": { "name": "Content Generation", "hint": "Long-form articles" },
+        "zh": { "name": "内容生成", "hint": "长篇文章生成" }
+      },
+      "inputTokens": 100,
+      "outputTokens": 1000,
+      "callsPerDay": 50,
+      "recommendedModelIds": ["claude-opus-4-7", "gpt-5-5"]
+    },
+    {
+      "id": "rag",
+      "icon": "Database",
+      "i18n": {
+        "en": { "name": "RAG Q&A", "hint": "Long context retrieval-augmented" },
+        "zh": { "name": "RAG 知识库问答", "hint": "长上下文检索增强" }
+      },
+      "inputTokens": 3000,
+      "outputTokens": 200,
+      "callsPerDay": 500,
+      "recommendedModelIds": ["gemini-3-0-flash", "gpt-5-mini", "claude-haiku-4-5"]
+    },
+    {
+      "id": "data-extraction",
+      "icon": "Filter",
+      "i18n": {
+        "en": { "name": "Data Extraction", "hint": "Structured output from documents" },
+        "zh": { "name": "数据提取", "hint": "从文档中提取结构化数据" }
+      },
+      "inputTokens": 1000,
+      "outputTokens": 100,
+      "callsPerDay": 100,
+      "recommendedModelIds": ["gpt-5-mini", "gemini-3-0-flash", "claude-haiku-4-5"]
+    },
+    {
+      "id": "translation",
+      "icon": "Languages",
+      "i18n": {
+        "en": { "name": "Translation", "hint": "Symmetric input/output" },
+        "zh": { "name": "翻译服务", "hint": "输入输出对称" }
+      },
+      "inputTokens": 500,
+      "outputTokens": 500,
+      "callsPerDay": 300,
+      "recommendedModelIds": ["gemini-3-0-flash", "deepseek-v4", "gpt-5-mini"]
+    }
+  ]
+}

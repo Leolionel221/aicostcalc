@@ -15,6 +15,7 @@ import { Slider } from "@/components/ui/slider";
 import { Switch } from "@/components/ui/switch";
 import { Card, CardContent } from "@/components/ui/card";
 import { CostComparisonStrip } from "./CostComparison";
+import { ScenarioTemplates, type Scenario } from "./ScenarioTemplates";
 import { calculateCost, calculateComparison } from "@/lib/calculator";
 import { ALL_CURRENCIES, formatCost, type CurrencyCode } from "@/lib/currency";
 import { cn } from "@/lib/utils";
@@ -34,6 +35,28 @@ export function Calculator({ models, defaultModelId }: CalculatorProps) {
   const [cachedPortion, setCachedPortion] = useState(0.5);
   const [batchEnabled, setBatchEnabled] = useState(false);
   const [currency, setCurrency] = useState<CurrencyCode>("USD");
+  const [activeScenarioId, setActiveScenarioId] = useState<string | null>(null);
+
+  function handleScenarioSelect(scenario: Scenario) {
+    setInputTokens(String(scenario.inputTokens));
+    setOutputTokens(String(scenario.outputTokens));
+    setActiveScenarioId(scenario.id);
+    // If user's current model isn't in recommended set, switch to first recommended that exists
+    if (!scenario.recommendedModelIds.includes(modelId)) {
+      const firstAvailable = scenario.recommendedModelIds.find((id) =>
+        models.some((m) => m.id === id),
+      );
+      if (firstAvailable) setModelId(firstAvailable);
+    }
+  }
+
+  // If user manually changes inputs, clear active scenario
+  function handleInputChange(setter: (v: string) => void) {
+    return (e: React.ChangeEvent<HTMLInputElement>) => {
+      setter(e.target.value);
+      setActiveScenarioId(null);
+    };
+  }
 
   const selectedModel = useMemo(
     () => models.find((m) => m.id === modelId) ?? models[0],
@@ -97,6 +120,12 @@ export function Calculator({ models, defaultModelId }: CalculatorProps) {
           </div>
         </div>
 
+        {/* Scenario templates */}
+        <ScenarioTemplates
+          onSelect={handleScenarioSelect}
+          activeId={activeScenarioId}
+        />
+
         {/* Token inputs */}
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-2">
@@ -106,7 +135,7 @@ export function Calculator({ models, defaultModelId }: CalculatorProps) {
               type="number"
               min={0}
               value={inputTokens}
-              onChange={(e) => setInputTokens(e.target.value)}
+              onChange={handleInputChange(setInputTokens)}
             />
           </div>
           <div className="space-y-2">
@@ -116,7 +145,7 @@ export function Calculator({ models, defaultModelId }: CalculatorProps) {
               type="number"
               min={0}
               value={outputTokens}
-              onChange={(e) => setOutputTokens(e.target.value)}
+              onChange={handleInputChange(setOutputTokens)}
             />
           </div>
         </div>
