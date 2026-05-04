@@ -1,12 +1,14 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import Link from "next/link";
 import { ArrowUpDown, ArrowUp, ArrowDown, EyeOff } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { calculateStandard } from "@/lib/calculator";
 import { formatCost, type CurrencyCode } from "@/lib/currency";
+import { modelSlug } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 import type { Model } from "@/lib/types";
 
@@ -227,7 +229,12 @@ export function ModelComparison({
                   )}
                 >
                   <td className="py-3 pr-4">
-                    <div className="font-medium">{model.name}</div>
+                    <Link
+                      href={`/${modelSlug(model.id)}`}
+                      className="font-medium hover:text-primary transition-colors"
+                    >
+                      {model.name}
+                    </Link>
                     <div className="text-xs text-muted-foreground">
                       {model.provider} · {model.category}
                     </div>

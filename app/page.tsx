@@ -3,6 +3,7 @@ import type { ModelsData } from "@/lib/types";
 import { Calculator } from "@/components/Calculator";
 import { ModelComparison } from "@/components/ModelComparison";
 import { MonthlyEstimator } from "@/components/MonthlyEstimator";
+import { siteJsonLd } from "@/lib/seo";
 
 const data = modelsData as ModelsData;
 
@@ -18,6 +19,12 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
 export default function Home() {
   return (
     <main>
+      {/* JSON-LD structured data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(siteJsonLd()) }}
+      />
+
       {/* Hero — two columns on desktop */}
       <section className="relative overflow-hidden border-b border-border">
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/8 via-background to-background" />
