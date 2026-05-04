@@ -5,7 +5,7 @@
 > 维护规则：每次"收口"（一个改动告一段落）都必须更新本文档相关章节，并在变更日志追加记录。
 
 **最后更新**：2026-05-04
-**当前阶段**：Week 1 — Foundation 已搭建
+**当前阶段**：Week 1 ✅ 完成（已上线 aicostcalc.net）
 **下一步**：Week 2 — 核心计算器 UI + 完成 10 个模型录入
 
 ---
@@ -286,9 +286,10 @@ npm run build        # 验证 build 通过
 - [x] messages/en.json + zh.json（基础翻译键）
 - [x] HANDOVER.md（本文档）
 - [x] GitHub 仓库 + 首次 push
-- [x] Vercel 部署成功（commit `aa677c5`，临时域名 live）
-- [ ] 绑定 aicostcalc.net 自定义域名（待用户在 Cloudflare DNS 操作）
-- [ ] **TODO**：解决 lockfile 兼容问题，恢复 `package-lock.json` 进 git（详见 §16 变更日志）
+- [x] Vercel 部署成功（commit `aa677c5`）
+- [x] 绑定 aicostcalc.net 自定义域名（Cloudflare Auto configure，SSL 自动签发）
+- [x] 加 www.aicostcalc.net → aicostcalc.net 重定向
+- [ ] **遗留 TODO**：解决 lockfile 兼容问题，恢复 `package-lock.json` 进 git（详见 §16 变更日志，不阻塞 Week 2）
 
 ### Week 2 — 核心功能（待开始）
 - [ ] 安装 Vitest + RTL，写 calculator.test.ts（100% 覆盖）
@@ -410,6 +411,21 @@ npm run build        # 验证 build 通过
 ## 16. 变更日志
 
 > 每次"收口"在此追加一条记录。最新的在最上方。
+
+### 2026-05-04 — Week 1 完整收口（域名上线）
+**类型**：milestone
+**摘要**：aicostcalc.net 正式上线，Week 1 Foundation 阶段全部完成。
+**改动范围**：
+- Vercel 项目绑定 `aicostcalc.net`（apex）作为主域名
+- Vercel 通过 Cloudflare Auto configure 完成 DNS 配置
+- Vercel 自动签发 SSL 证书
+- 加 `www.aicostcalc.net` 重定向到 apex
+- 更新本文档 §10 进度
+**当前线上状态**：
+- 主域名：https://aicostcalc.net（占位首页，含 GPT-4o + Claude Opus 4.7 卡片）
+- www：https://www.aicostcalc.net → 301 重定向到 apex
+- 部署：每次 push 到 `main` 自动部署
+**下一步**：进入 Week 2 — 核心计算器 UI + shadcn/ui 接入 + Vitest 单元测试 + 补齐 10 个模型录入。
 
 ### 2026-05-04 — Vercel 部署上线（含调试经过）
 **类型**：fix + chore
