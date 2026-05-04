@@ -39,53 +39,127 @@
       },
       "tokenization": {
         "encoder": "o200k_base",
-        "approximationRatio": {
-          "english": 4,
-          "chinese": 1.5,
-          "code": 3
-        }
+        "approximationRatio": { "english": 4, "chinese": 1.5, "code": 3 }
       },
       "supports": {
-        "vision": true,
-        "audio": false,
-        "tools": true,
-        "streaming": true,
-        "caching": true,
-        "batch": true,
-        "fineTuning": true,
-        "structuredOutput": true
+        "vision": true, "audio": false, "tools": true, "streaming": true,
+        "caching": true, "batch": true, "fineTuning": true, "structuredOutput": true
       },
       "lastVerified": "2026-05-01",
-      "sources": [
-        {
-          "type": "official",
-          "url": "https://openai.com/api/pricing",
-          "fetchedAt": "2026-05-01"
-        }
-      ],
+      "sources": [{ "type": "official", "url": "https://openai.com/api/pricing", "fetchedAt": "2026-05-01" }],
       "priceHistory": [
-        {
-          "date": "2024-05-13",
-          "input": 5.00,
-          "output": 15.00,
-          "note": "Initial release"
-        },
-        {
-          "date": "2024-08-06",
-          "input": 2.50,
-          "output": 10.00,
-          "note": "Price reduction"
-        }
+        { "date": "2024-05-13", "input": 5.00, "output": 15.00, "note": "Initial release" },
+        { "date": "2024-08-06", "input": 2.50, "output": 10.00, "note": "Price reduction" }
       ],
       "i18n": {
-        "en": {
-          "tagline": "OpenAI's flagship multimodal model",
-          "description": "GPT-4o is OpenAI's most capable general-purpose model, supporting text, vision, and tool use with a 128K context window."
-        },
-        "zh": {
-          "tagline": "OpenAI 的旗舰多模态模型",
-          "description": "GPT-4o 是 OpenAI 最强的通用模型，支持文本、视觉和工具调用，128K 上下文窗口。"
-        }
+        "en": { "tagline": "OpenAI's flagship multimodal model", "description": "GPT-4o is OpenAI's most capable general-purpose model, supporting text, vision, and tool use with a 128K context window." },
+        "zh": { "tagline": "OpenAI 的旗舰多模态模型", "description": "GPT-4o 是 OpenAI 最强的通用模型，支持文本、视觉和工具调用，128K 上下文窗口。" }
+      }
+    },
+    {
+      "id": "gpt-4o-mini",
+      "name": "GPT-4o mini",
+      "shortName": "4o mini",
+      "provider": "OpenAI",
+      "providerId": "openai",
+      "providerLogo": "/logos/openai.svg",
+      "providerWebsite": "https://openai.com",
+      "category": "small",
+      "useCase": ["general", "vision"],
+      "releaseDate": "2024-07-18",
+      "status": "active",
+      "deprecatedAt": null,
+      "successorId": null,
+      "pricing": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.15,
+        "output": 0.60,
+        "cachedInput": 0.075,
+        "cacheWrite": null,
+        "batchInput": 0.075,
+        "batchOutput": 0.30,
+        "imagePerImage": null,
+        "imageTokensFormula": null,
+        "reasoningOutput": null,
+        "fineTunedInput": null,
+        "fineTunedOutput": null
+      },
+      "limits": {
+        "contextWindow": 128000,
+        "maxOutput": 16384,
+        "maxImagesPerRequest": null,
+        "knowledgeCutoff": "2024-10"
+      },
+      "tokenization": {
+        "encoder": "o200k_base",
+        "approximationRatio": { "english": 4, "chinese": 1.5, "code": 3 }
+      },
+      "supports": {
+        "vision": true, "audio": false, "tools": true, "streaming": true,
+        "caching": true, "batch": true, "fineTuning": true, "structuredOutput": true
+      },
+      "lastVerified": "2026-05-01",
+      "sources": [{ "type": "official", "url": "https://openai.com/api/pricing", "fetchedAt": "2026-05-01" }],
+      "priceHistory": [
+        { "date": "2024-07-18", "input": 0.15, "output": 0.60, "note": "Initial release" }
+      ],
+      "i18n": {
+        "en": { "tagline": "OpenAI's affordable everyday model", "description": "GPT-4o mini is OpenAI's cost-efficient small model — 25x cheaper than GPT-4o, ideal for high-volume tasks." },
+        "zh": { "tagline": "OpenAI 的高性价比日常模型", "description": "GPT-4o mini 是 OpenAI 的小型高性价比模型，比 GPT-4o 便宜 25 倍，适合高并发任务。" }
+      }
+    },
+    {
+      "id": "o3-mini",
+      "name": "o3-mini",
+      "shortName": "o3-mini",
+      "provider": "OpenAI",
+      "providerId": "openai",
+      "providerLogo": "/logos/openai.svg",
+      "providerWebsite": "https://openai.com",
+      "category": "reasoning",
+      "useCase": ["reasoning", "coding", "math"],
+      "releaseDate": "2025-01-31",
+      "status": "active",
+      "deprecatedAt": null,
+      "successorId": null,
+      "pricing": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 1.10,
+        "output": 4.40,
+        "cachedInput": 0.55,
+        "cacheWrite": null,
+        "batchInput": 0.55,
+        "batchOutput": 2.20,
+        "imagePerImage": null,
+        "imageTokensFormula": null,
+        "reasoningOutput": null,
+        "fineTunedInput": null,
+        "fineTunedOutput": null
+      },
+      "limits": {
+        "contextWindow": 200000,
+        "maxOutput": 100000,
+        "maxImagesPerRequest": null,
+        "knowledgeCutoff": "2024-10"
+      },
+      "tokenization": {
+        "encoder": "o200k_base",
+        "approximationRatio": { "english": 4, "chinese": 1.5, "code": 3 }
+      },
+      "supports": {
+        "vision": false, "audio": false, "tools": true, "streaming": true,
+        "caching": true, "batch": true, "fineTuning": false, "structuredOutput": true
+      },
+      "lastVerified": "2026-05-01",
+      "sources": [{ "type": "official", "url": "https://openai.com/api/pricing", "fetchedAt": "2026-05-01" }],
+      "priceHistory": [
+        { "date": "2025-01-31", "input": 1.10, "output": 4.40, "note": "Initial release" }
+      ],
+      "i18n": {
+        "en": { "tagline": "OpenAI's reasoning model — fast and affordable", "description": "o3-mini is OpenAI's reasoning model optimized for STEM, coding, and math. Strong at chain-of-thought tasks at a fraction of o3's cost." },
+        "zh": { "tagline": "OpenAI 的快速廉价推理模型", "description": "o3-mini 是 OpenAI 针对 STEM、编程和数学优化的推理模型，思维链表现强，成本远低于 o3。" }
       }
     },
     {
@@ -125,47 +199,338 @@
       },
       "tokenization": {
         "encoder": "approximate",
-        "approximationRatio": {
-          "english": 4,
-          "chinese": 1.5,
-          "code": 3
-        }
+        "approximationRatio": { "english": 4, "chinese": 1.5, "code": 3 }
       },
       "supports": {
-        "vision": true,
-        "audio": false,
-        "tools": true,
-        "streaming": true,
-        "caching": true,
-        "batch": true,
-        "fineTuning": false,
-        "structuredOutput": true
+        "vision": true, "audio": false, "tools": true, "streaming": true,
+        "caching": true, "batch": true, "fineTuning": false, "structuredOutput": true
       },
       "lastVerified": "2026-05-01",
-      "sources": [
-        {
-          "type": "official",
-          "url": "https://www.anthropic.com/pricing",
-          "fetchedAt": "2026-05-01"
-        }
-      ],
+      "sources": [{ "type": "official", "url": "https://www.anthropic.com/pricing", "fetchedAt": "2026-05-01" }],
       "priceHistory": [
-        {
-          "date": "2026-02-01",
-          "input": 15.00,
-          "output": 75.00,
-          "note": "Initial release"
-        }
+        { "date": "2026-02-01", "input": 15.00, "output": 75.00, "note": "Initial release" }
       ],
       "i18n": {
-        "en": {
-          "tagline": "Anthropic's flagship reasoning model",
-          "description": "Claude Opus 4.7 is Anthropic's most capable model for complex reasoning, coding, and long-context tasks. 200K context window."
-        },
-        "zh": {
-          "tagline": "Anthropic 的旗舰推理模型",
-          "description": "Claude Opus 4.7 是 Anthropic 最强的复杂推理、编程和长上下文模型，200K 上下文窗口。"
-        }
+        "en": { "tagline": "Anthropic's flagship reasoning model", "description": "Claude Opus 4.7 is Anthropic's most capable model for complex reasoning, coding, and long-context tasks. 200K context window." },
+        "zh": { "tagline": "Anthropic 的旗舰推理模型", "description": "Claude Opus 4.7 是 Anthropic 最强的复杂推理、编程和长上下文模型，200K 上下文窗口。" }
+      }
+    },
+    {
+      "id": "claude-haiku-4-5",
+      "name": "Claude Haiku 4.5",
+      "shortName": "Haiku 4.5",
+      "provider": "Anthropic",
+      "providerId": "anthropic",
+      "providerLogo": "/logos/anthropic.svg",
+      "providerWebsite": "https://anthropic.com",
+      "category": "small",
+      "useCase": ["general", "fast"],
+      "releaseDate": "2025-10-15",
+      "status": "active",
+      "deprecatedAt": null,
+      "successorId": null,
+      "pricing": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 1.00,
+        "output": 5.00,
+        "cachedInput": 0.10,
+        "cacheWrite": 1.25,
+        "batchInput": 0.50,
+        "batchOutput": 2.50,
+        "imagePerImage": null,
+        "imageTokensFormula": null,
+        "reasoningOutput": null,
+        "fineTunedInput": null,
+        "fineTunedOutput": null
+      },
+      "limits": {
+        "contextWindow": 200000,
+        "maxOutput": 8192,
+        "maxImagesPerRequest": 100,
+        "knowledgeCutoff": "2025-02"
+      },
+      "tokenization": {
+        "encoder": "approximate",
+        "approximationRatio": { "english": 4, "chinese": 1.5, "code": 3 }
+      },
+      "supports": {
+        "vision": true, "audio": false, "tools": true, "streaming": true,
+        "caching": true, "batch": true, "fineTuning": false, "structuredOutput": true
+      },
+      "lastVerified": "2026-05-01",
+      "sources": [{ "type": "official", "url": "https://www.anthropic.com/pricing", "fetchedAt": "2026-05-01" }],
+      "priceHistory": [
+        { "date": "2025-10-15", "input": 1.00, "output": 5.00, "note": "Initial release" }
+      ],
+      "i18n": {
+        "en": { "tagline": "Anthropic's fast and affordable model", "description": "Claude Haiku 4.5 is Anthropic's small fast model — strong at everyday tasks at a fraction of Opus pricing." },
+        "zh": { "tagline": "Anthropic 的快速实惠模型", "description": "Claude Haiku 4.5 是 Anthropic 的小型快速模型，日常任务强劲，成本仅为 Opus 的零头。" }
+      }
+    },
+    {
+      "id": "gemini-2-5-pro",
+      "name": "Gemini 2.5 Pro",
+      "shortName": "Gemini 2.5 Pro",
+      "provider": "Google",
+      "providerId": "google",
+      "providerLogo": "/logos/google.svg",
+      "providerWebsite": "https://ai.google.dev",
+      "category": "flagship",
+      "useCase": ["general", "vision", "long-context", "reasoning"],
+      "releaseDate": "2025-03-25",
+      "status": "active",
+      "deprecatedAt": null,
+      "successorId": null,
+      "pricing": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 1.25,
+        "output": 10.00,
+        "cachedInput": 0.31,
+        "cacheWrite": null,
+        "batchInput": 0.625,
+        "batchOutput": 5.00,
+        "imagePerImage": null,
+        "imageTokensFormula": null,
+        "reasoningOutput": null,
+        "fineTunedInput": null,
+        "fineTunedOutput": null
+      },
+      "limits": {
+        "contextWindow": 2000000,
+        "maxOutput": 65536,
+        "maxImagesPerRequest": 3000,
+        "knowledgeCutoff": "2025-01"
+      },
+      "tokenization": {
+        "encoder": "approximate",
+        "approximationRatio": { "english": 4, "chinese": 1.5, "code": 3 }
+      },
+      "supports": {
+        "vision": true, "audio": true, "tools": true, "streaming": true,
+        "caching": true, "batch": true, "fineTuning": true, "structuredOutput": true
+      },
+      "lastVerified": "2026-05-01",
+      "sources": [{ "type": "official", "url": "https://ai.google.dev/pricing", "fetchedAt": "2026-05-01" }],
+      "priceHistory": [
+        { "date": "2025-03-25", "input": 1.25, "output": 10.00, "note": "Initial release" }
+      ],
+      "i18n": {
+        "en": { "tagline": "Google's flagship long-context model", "description": "Gemini 2.5 Pro features a 2M token context window — the longest among major frontier models. Strong at reasoning, vision, and long-document tasks." },
+        "zh": { "tagline": "Google 旗舰长上下文模型", "description": "Gemini 2.5 Pro 具有 2M token 上下文窗口（前沿模型中最长），擅长推理、视觉和长文档处理。" }
+      }
+    },
+    {
+      "id": "gemini-2-5-flash",
+      "name": "Gemini 2.5 Flash",
+      "shortName": "Gemini 2.5 Flash",
+      "provider": "Google",
+      "providerId": "google",
+      "providerLogo": "/logos/google.svg",
+      "providerWebsite": "https://ai.google.dev",
+      "category": "balanced",
+      "useCase": ["general", "vision", "fast"],
+      "releaseDate": "2025-04-09",
+      "status": "active",
+      "deprecatedAt": null,
+      "successorId": null,
+      "pricing": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.30,
+        "output": 2.50,
+        "cachedInput": 0.075,
+        "cacheWrite": null,
+        "batchInput": 0.15,
+        "batchOutput": 1.25,
+        "imagePerImage": null,
+        "imageTokensFormula": null,
+        "reasoningOutput": null,
+        "fineTunedInput": null,
+        "fineTunedOutput": null
+      },
+      "limits": {
+        "contextWindow": 1000000,
+        "maxOutput": 65536,
+        "maxImagesPerRequest": 3000,
+        "knowledgeCutoff": "2025-01"
+      },
+      "tokenization": {
+        "encoder": "approximate",
+        "approximationRatio": { "english": 4, "chinese": 1.5, "code": 3 }
+      },
+      "supports": {
+        "vision": true, "audio": true, "tools": true, "streaming": true,
+        "caching": true, "batch": true, "fineTuning": true, "structuredOutput": true
+      },
+      "lastVerified": "2026-05-01",
+      "sources": [{ "type": "official", "url": "https://ai.google.dev/pricing", "fetchedAt": "2026-05-01" }],
+      "priceHistory": [
+        { "date": "2025-04-09", "input": 0.30, "output": 2.50, "note": "Initial release" }
+      ],
+      "i18n": {
+        "en": { "tagline": "Google's fast multimodal workhorse", "description": "Gemini 2.5 Flash balances speed and capability with a 1M context window. Strong throughput for high-volume use cases." },
+        "zh": { "tagline": "Google 的高速多模态主力", "description": "Gemini 2.5 Flash 平衡速度与能力，1M 上下文窗口，吞吐强，适合大量任务。" }
+      }
+    },
+    {
+      "id": "deepseek-v3",
+      "name": "DeepSeek V3",
+      "shortName": "DeepSeek V3",
+      "provider": "DeepSeek",
+      "providerId": "deepseek",
+      "providerLogo": "/logos/deepseek.svg",
+      "providerWebsite": "https://deepseek.com",
+      "category": "balanced",
+      "useCase": ["general", "coding", "math"],
+      "releaseDate": "2024-12-26",
+      "status": "active",
+      "deprecatedAt": null,
+      "successorId": null,
+      "pricing": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.27,
+        "output": 1.10,
+        "cachedInput": 0.07,
+        "cacheWrite": null,
+        "batchInput": null,
+        "batchOutput": null,
+        "imagePerImage": null,
+        "imageTokensFormula": null,
+        "reasoningOutput": null,
+        "fineTunedInput": null,
+        "fineTunedOutput": null
+      },
+      "limits": {
+        "contextWindow": 128000,
+        "maxOutput": 8192,
+        "maxImagesPerRequest": null,
+        "knowledgeCutoff": "2024-07"
+      },
+      "tokenization": {
+        "encoder": "approximate",
+        "approximationRatio": { "english": 4, "chinese": 1.5, "code": 3 }
+      },
+      "supports": {
+        "vision": false, "audio": false, "tools": true, "streaming": true,
+        "caching": true, "batch": false, "fineTuning": false, "structuredOutput": true
+      },
+      "lastVerified": "2026-05-01",
+      "sources": [{ "type": "official", "url": "https://platform.deepseek.com/pricing", "fetchedAt": "2026-05-01" }],
+      "priceHistory": [
+        { "date": "2024-12-26", "input": 0.27, "output": 1.10, "note": "Initial release" }
+      ],
+      "i18n": {
+        "en": { "tagline": "DeepSeek's strong, affordable open model", "description": "DeepSeek V3 is an open-weight MoE model with 671B total parameters. Strong at coding and math, dramatically cheaper than US frontier models." },
+        "zh": { "tagline": "DeepSeek 的开源高性价比强模型", "description": "DeepSeek V3 是开源 MoE 模型，总参数 671B，编程和数学表现强，价格远低于美国前沿模型。" }
+      }
+    },
+    {
+      "id": "grok-3",
+      "name": "Grok 3",
+      "shortName": "Grok 3",
+      "provider": "xAI",
+      "providerId": "xai",
+      "providerLogo": "/logos/xai.svg",
+      "providerWebsite": "https://x.ai",
+      "category": "flagship",
+      "useCase": ["general", "reasoning", "real-time"],
+      "releaseDate": "2025-02-17",
+      "status": "active",
+      "deprecatedAt": null,
+      "successorId": null,
+      "pricing": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 3.00,
+        "output": 15.00,
+        "cachedInput": null,
+        "cacheWrite": null,
+        "batchInput": null,
+        "batchOutput": null,
+        "imagePerImage": null,
+        "imageTokensFormula": null,
+        "reasoningOutput": null,
+        "fineTunedInput": null,
+        "fineTunedOutput": null
+      },
+      "limits": {
+        "contextWindow": 131072,
+        "maxOutput": 8192,
+        "maxImagesPerRequest": null,
+        "knowledgeCutoff": "2024-11"
+      },
+      "tokenization": {
+        "encoder": "approximate",
+        "approximationRatio": { "english": 4, "chinese": 1.5, "code": 3 }
+      },
+      "supports": {
+        "vision": true, "audio": false, "tools": true, "streaming": true,
+        "caching": false, "batch": false, "fineTuning": false, "structuredOutput": true
+      },
+      "lastVerified": "2026-05-01",
+      "sources": [{ "type": "official", "url": "https://x.ai/api", "fetchedAt": "2026-05-01" }],
+      "priceHistory": [
+        { "date": "2025-02-17", "input": 3.00, "output": 15.00, "note": "Initial release" }
+      ],
+      "i18n": {
+        "en": { "tagline": "xAI's flagship with real-time X integration", "description": "Grok 3 is xAI's flagship model with native X (Twitter) integration for real-time information access." },
+        "zh": { "tagline": "xAI 旗舰，原生 X 实时集成", "description": "Grok 3 是 xAI 的旗舰模型，原生集成 X（推特）实时信息访问。" }
+      }
+    },
+    {
+      "id": "mistral-large-2",
+      "name": "Mistral Large 2",
+      "shortName": "Mistral Large",
+      "provider": "Mistral",
+      "providerId": "mistral",
+      "providerLogo": "/logos/mistral.svg",
+      "providerWebsite": "https://mistral.ai",
+      "category": "flagship",
+      "useCase": ["general", "coding", "multilingual"],
+      "releaseDate": "2024-11-19",
+      "status": "active",
+      "deprecatedAt": null,
+      "successorId": null,
+      "pricing": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 2.00,
+        "output": 6.00,
+        "cachedInput": null,
+        "cacheWrite": null,
+        "batchInput": 1.00,
+        "batchOutput": 3.00,
+        "imagePerImage": null,
+        "imageTokensFormula": null,
+        "reasoningOutput": null,
+        "fineTunedInput": null,
+        "fineTunedOutput": null
+      },
+      "limits": {
+        "contextWindow": 128000,
+        "maxOutput": 8192,
+        "maxImagesPerRequest": null,
+        "knowledgeCutoff": "2024-07"
+      },
+      "tokenization": {
+        "encoder": "approximate",
+        "approximationRatio": { "english": 4, "chinese": 1.5, "code": 3 }
+      },
+      "supports": {
+        "vision": false, "audio": false, "tools": true, "streaming": true,
+        "caching": false, "batch": true, "fineTuning": true, "structuredOutput": true
+      },
+      "lastVerified": "2026-05-01",
+      "sources": [{ "type": "official", "url": "https://mistral.ai/technology", "fetchedAt": "2026-05-01" }],
+      "priceHistory": [
+        { "date": "2024-11-19", "input": 2.00, "output": 6.00, "note": "Initial release" }
+      ],
+      "i18n": {
+        "en": { "tagline": "Mistral's flagship multilingual model", "description": "Mistral Large 2 is Mistral's top open-weight model — strong at coding and dozens of languages, EU-friendly." },
+        "zh": { "tagline": "Mistral 旗舰多语言模型", "description": "Mistral Large 2 是 Mistral 顶级开源模型，编程和多语言能力强，欧盟友好。" }
       }
     }
   ]
