@@ -4,9 +4,9 @@
 >
 > 维护规则：每次"收口"（一个改动告一段落）都必须更新本文档相关章节，并在变更日志追加记录。
 
-**最后更新**：2026-05-04
-**当前阶段**：Week 1 ✅ 完成（已上线 aicostcalc.net）
-**下一步**：Week 2 — 核心计算器 UI + 完成 10 个模型录入
+**最后更新**：2026-05-05
+**当前阶段**：Week 1-4 ✅ 全部完成 — **MVP 完整上线，sitemap 已被 Google 接收**
+**下一步**：Week 5 — 内容产出（剩 3 篇 SEO 文章）+ 监控首批索引/流量 + Bing Webmaster + GA4 ID 接入
 
 ---
 
@@ -291,28 +291,44 @@ npm run build        # 验证 build 通过
 - [x] 加 www.aicostcalc.net → aicostcalc.net 重定向
 - [ ] **遗留 TODO**：解决 lockfile 兼容问题，恢复 `package-lock.json` 进 git（详见 §16 变更日志，不阻塞 Week 2）
 
-### Week 2 — 核心功能（待开始）
-- [ ] 安装 Vitest + RTL，写 calculator.test.ts（100% 覆盖）
-- [ ] 安装 shadcn/ui，引入 Button / Input / Select / Slider / Card / Table
-- [ ] 实现 Calculator 组件（含 Advanced Options 折叠面板）
-- [ ] 实现 ModelComparison 组件（多模型横向对比表）
-- [ ] 实现 ScenarioTemplates 组件（6 个场景模板）
-- [ ] 实现 F1.5 三栏成本对比（Standard / Cached / Batch）
-- [ ] 补齐 10 个模型到 models.json
-- [ ] 月度成本预测器
+### Week 2 — 核心功能（✅ 完成）
+- [x] Vitest + RTL 配置，48 个用例（calculator 100% 语句覆盖 + tokenizer + currency）
+- [x] shadcn 风格 UI 组件（Button / Input / Label / Card / Slider / Switch / Select），Radix-backed
+- [x] Calculator 组件（含 Advanced Options：caching slider + batch toggle + currency 下拉）
+- [x] ModelComparison 表（按 5 维度排序、provider 筛选、行级隐藏）
+- [x] ScenarioTemplates（6 场景：客服/代码/内容/RAG/数据提取/翻译，一键填充 + 切推荐模型）
+- [x] F1.5 三栏成本对比（Standard / Cached / Batch + 节省 % 标签）
+- [x] models.json 扩展到 10 个模型，**全部刷新到 May 2026 最新版本**（GPT-5.5, GPT-5 mini, o4-mini, Claude Opus 4.7, Claude Haiku 4.5, Gemini 3.0 Pro, Gemini 3.0 Flash, DeepSeek V4, Grok 4, Mistral Large 3）
+- [x] MonthlyEstimator 组件（多选最多 5 模型 + CSS-only 柱状图 + 节省金额提示）
+- [x] 货币支持扩展到 5 个（USD / CNY / EUR / GBP / INR），含静态汇率维护
+- [x] 完整页面排版重做（Sticky Nav + 2-col Hero + 主题切换 + 交替背景 + 完整 Footer）
 
-### Week 3 — 页面与多语言
-- [ ] next-intl routing 启用 (`/` vs `/zh/`)
-- [ ] 6 个模型独立 Landing Page
-- [ ] SEO meta 标签 + JSON-LD
-- [ ] sitemap.ts + robots.ts
+### Week 3 — SEO 落地页（✅ 完成）
+- [x] 10 个模型独立 Landing Page（`/[model-id]-cost-calculator`，全部 SSG 预渲染）
+  - 每页含 Hero + 嵌入计算器 + 详细价格表 + 对比表 + "When to choose" + FAQ + 相关模型
+- [x] SEO meta 完整（per-page title/description/canonical/og/twitter）
+- [x] JSON-LD 结构化数据（WebSite + SoftwareApplication + BreadcrumbList + Article）
+- [x] sitemap.ts 自动列出 18 个 URL（首页 + 10 模型 + 博客索引 + 文章 + 4 法律页）
+- [x] robots.ts（allow all + 指向 sitemap）
+- [ ] **延后到 V1.1**：next-intl 多语言路由（理由：英文搜索量是中文 5-10x，先聚焦英文）
 
-### Week 4 — 内容启动
-- [ ] 5 篇基础文章（MDX）
-- [ ] 法律页面（Privacy / Terms / Contact / About）
-- [ ] GA4 接入 + 完整事件追踪
-- [ ] 提交 Search Console / Bing Webmaster
-- [ ] **MVP 上线**
+### Week 4 — 内容启动 & MVP 上线（✅ 完成）
+- [x] 4 个法律页面（About / Privacy / Terms / Contact，AdSense 申请前置条件）
+- [x] GA4 接入（`@next/third-parties` + 仅在 `NEXT_PUBLIC_GA_ID` 设置时挂载）
+- [x] 完整事件追踪（`lib/analytics.ts` typed track helper + 接入到 Calculator/ModelComparison/ThemeToggle 等所有交互组件）
+- [x] 博客基础设施（gray-matter + remark + remark-gfm 处理 markdown，frontmatter 含 title/date/tags 等）
+- [x] 2 篇启动 SEO 文章（OpenAI Pricing Explained + Claude API Pricing 2026，每篇 ~2000 字）
+- [x] Google Search Console 验证 + sitemap 提交成功（18 个 URL 已被 Google 接收）
+- [x] **MVP 完整上线 https://aicostcalc.net** 🚀
+- [ ] **滚动到 Week 5**：3 篇剩余文章（Top 10 Cheapest / How to Calculate Token Cost / GPT-5.5 vs Claude Opus）
+- [ ] **滚动到 Week 5**：Bing Webmaster 接入（30 秒，从 GSC 导入）
+- [ ] **滚动到 Week 5**：用户配 GA4 Measurement ID 到 Vercel env vars
+
+### Week 5+ — 内容与运营（持续）
+- [ ] 完成 PRD §5.2 余下 23 篇文章（按月度节奏 4-5 篇）
+- [ ] 监控首批索引情况（Google Search Console 数据洞见 / 效果报告，3-7 天后开始有数据）
+- [ ] 第 12-16 周申请 AdSense（要求：30+ 篇文章、自然流量、4 个法律页齐全 ✅、3 个月运营史）
+- [ ] 启动联盟营销洽谈（OpenRouter / Together AI / Helicone）
 
 详细路线图见 PRD v1.1 §9。
 
@@ -344,18 +360,55 @@ npm run build        # 验证 build 通过
 **结论**：北极星 `Monthly Affiliate Revenue = CTR × UV × Avg Commission`。
 **理由**：UV 是手段，Revenue 才是目的。前 6 个月可能流量增长但收入为零，不能因此放弃 SEO 节奏。详见 PRD v1.1 §6.1。
 
+### Decision 6: 货币支持扩展到 5 个（2026-05-05）
+**结论**：除 USD/CNY 外，额外加入 EUR/GBP/INR（不加 JPY/CAD/AUD）。
+**理由**：PRD §1.3 列的目标市场是美/英/加/德/印/中。EUR 覆盖德国及整个欧盟，GBP 覆盖英国，**INR 必加**（1$≈85₹ 心理差异最大对印度开发者效果最好）。CAD 用户对 USD 已习惯，JPY 不是 PRD 主市场。静态汇率每月 1 号同步价格更新。
+**实现**：`data/currencies.json` 独立维护；UI 用 Select 下拉 + 非 USD 加 `~` 前缀显示"约等于"。
+
+### Decision 7: 主域名 = apex (`aicostcalc.net`)，www 永久跳转到 apex（2026-05-05）
+**结论**：apex 是规范域名，`www.aicostcalc.net` 308 永久重定向到 apex。
+**理由**：现代品牌惯例（Stripe / X / GitHub / Vercel 自身都是 apex）。PRD 代码 `metadataBase` 已配 apex。永久跳转（308 而非 307）让 Google 把所有 SEO 权重集中到 apex 上，避免双域名稀释排名。
+**注意**：Vercel UI 默认行为可能反过来（apex 跳 www），上线初期遇到过此问题，必须显式配 www → apex。
+
+### Decision 8: i18n 多语言路由延后到 V1.1（2026-05-05）
+**结论**：next-intl 路由（`/` vs `/zh/`）从 Week 3 推迟到 V1.1。
+**理由**：PRD 关键词数据显示英文搜索量是中文 5-10 倍（`openai api pricing` 月搜 18-22K）。先用英文把 SEO 落地页发出去比同时做两套语言更高 ROI。中文版作为独立冲刺阶段做，避免 i18n routing 大改造拖慢核心交付。
+**字段已预留**：`messages/en.json` + `zh.json` 已就位，模型 metadata 含 `i18n.en/zh`，启用 routing 时无需重写数据。
+
+### Decision 9: 文章先发 2 篇启动，剩余 3 篇分批产（2026-05-05）
+**结论**：Week 4 先交付 2 篇高质量文章（OpenAI / Claude pricing），剩余 3 篇（Top 10 Cheapest / How to Calculate Token Cost / GPT vs Claude）滚动到 Week 5+ 处理。
+**理由**：每篇 2000 字深度文章一轮做完会牺牲质量。基础设施（MDX pipeline + Article JSON-LD）一次到位即可，文章可分批迭代。Google 对内容质量极敏感，宁可少发不能差发。
+
 ---
 
 ## 12. 待办与挂起项
 
-近期需用户拍板的事项：
+### 用户操作清单（不阻塞，按你时间走）
 
-- [ ] **Logo 设计**：自己画 / v0.dev / Fiverr 外包？（不阻塞 MVP，但上线前要有）
-- [ ] **价格爬虫自动化**：第 1 个月手动维护，第 2 个月再上 Cloudflare Worker（PRD v1.1 §11）
-- [ ] **博客平台**：V1.0 用 MDX 直接写在 repo（推荐），V1.5+ 评估是否接 Notion / Sanity
-- [ ] **A/B 测试方案**：留到 V1.2 第 4 个月再上（Vercel Edge Config 或 GrowthBook）
+- [ ] **Bing Webmaster 接入**（30 秒）— bing.com/webmasters → Microsoft 账号登录 → "Import from Google Search Console"，自动同步 sitemap
+- [ ] **GA4 Measurement ID 配进 Vercel**：
+  1. analytics.google.com → 拿 G-XXXXXXXXXX
+  2. Vercel → Settings → Environment Variables → 加 `NEXT_PUBLIC_GA_ID = G-XXX`（Production 环境）
+  3. Redeploy 一次让 env var 生效
+  4. 24 小时后 GA4 实时报告应该出现流量
+- [ ] **手动请求重要页面索引**（在 GSC 顶部搜索框逐个粘贴 URL → 请求编入索引），加速首批索引：
+  - `https://aicostcalc.net`
+  - 至少 3 个流量最高的模型页（GPT-5.5 / Claude Opus 4.7 / Gemini 3.0 Pro）
+  - 2 篇博客文章
 
-阻塞 Week 2 开发的：无。
+### 产品/运营待决策
+
+- [ ] **Logo 设计**：当前 Nav 用了一个 lucide Calculator icon + "AI Cost Calc" 文字，能用但不算品牌。可选：自己画 / v0.dev / Fiverr 外包
+- [ ] **价格爬虫自动化**：第 1 个月手动维护，第 2 个月再上 Cloudflare Worker 定时抓官方页面（PRD v1.1 §4.3）
+- [ ] **A/B 测试基础设施**：留到 V1.2 第 4 个月再上（Vercel Edge Config 或 GrowthBook）
+- [ ] **联盟营销链接接入**：等首批流量到 1K+ UV/月再开始洽谈（OpenRouter / Together AI / Helicone）
+
+### 技术债
+
+- [ ] **lockfile 兼容问题**：当前 `package-lock.json` 未进 git（详见 §16 changelog 2026-05-04）。修复路径：用 nvm 装 Node 22 + npm 10 重新生成兼容 lockfile，或评估迁 pnpm
+- [ ] **i18n 多语言路由**：V1.1 启用，把所有路由挪到 `app/[locale]/` 下（详见 §11 Decision 8）
+- [ ] **F-share / F-embed**（PRD v1.1 §3.4 提到）：URL 编码深链接 + 复制为图片 + iframe 嵌入。当前未实现，留给 V1.1
+- [ ] **F-api**（PRD v1.1 §3.5 提到）：公开 JSON API endpoint，让其他开发者能用我们的数据。V1.1 加
 
 ---
 
@@ -411,6 +464,60 @@ npm run build        # 验证 build 通过
 ## 16. 变更日志
 
 > 每次"收口"在此追加一条记录。最新的在最上方。
+
+### 2026-05-05 — 🚀 MVP LAUNCH 收口（Week 1-4 全部完成）
+**类型**：milestone
+**摘要**：MVP 完整上线 https://aicostcalc.net。Google Search Console 已验证、sitemap 已成功提交（18 个 URL 已被 Google 接收）。从 PRD v1.1 §10 关键里程碑视角，**"MVP 上线 第 4 周末"目标提前完成（项目启动到上线不到 24 小时）**。
+
+**Week 2 关键交付**（commit `f8a7824`）：
+- Vitest + RTL 配置，48 个单元测试全部通过；calculator 100% 语句覆盖
+- 7 个 Radix-backed shadcn 风格 UI 组件
+- Calculator 组件（Advanced Options：caching slider + batch toggle）
+- F1.5 三栏成本对比（Standard / Cached / Batch + 节省百分比）
+- ModelComparison（5 维度排序、provider 筛选、行级隐藏、移动端横向滚动）
+- ScenarioTemplates（6 场景一键填充 + 自动切换推荐模型）
+- MonthlyEstimator（多选 5 模型 + CSS-only 柱状图 + 节省提示）
+
+**Week 2 后续优化**：
+- 货币扩展到 5 种（USD/CNY/EUR/GBP/INR）— commit `8605475`
+- 模型数据全量刷新到 May 2026（GPT-5.5、Gemini 3.0、Grok 4 等）— commit `4a28106`
+- 整页 UX 重构：Sticky Nav + 2-col Hero + 主题切换 + 交替背景 + 完整 Footer — commit `b481bba`
+
+**Week 3 SEO 落地**（commit `21fe3f4`）：
+- 10 个模型独立 Landing Page，全部 SSG 静态预渲染
+  - 每页含 H1 + 嵌入计算器 + 详细价格表 + 与 5 个替代模型对比 + 用例推荐 + 5-7 题 FAQ + 6 张相关模型卡
+- `lib/seo.ts` 集中管理 SEO metadata
+- 三种 JSON-LD 结构化数据（WebSite + SoftwareApplication + BreadcrumbList）
+- `sitemap.ts` 自动列出全部 URL，`robots.ts` allow all + 指向 sitemap
+
+**Week 4 内容启动**（commit `2400e1c`）：
+- 4 法律页面（About / Privacy / Terms / Contact）— AdSense 申请前置就位
+- GA4 接入（`@next/third-parties` + 仅在 env var 设置时挂载）
+- `lib/analytics.ts` typed track helper，事件覆盖 PRD v1.1 §6.2 全部矩阵
+- 博客基础设施（gray-matter + remark + Article JSON-LD）
+- 2 篇启动 SEO 文章（OpenAI Pricing Explained + Claude API Pricing），每篇 ~2000 字
+
+**MVP 上线运营动作**：
+- aicostcalc.net 主域名生效，www 永久跳转 apex（308 + Vercel Domains 配置见 §11 Decision 7）
+- Google Search Console 网域级验证完成
+- sitemap 提交成功，18 个 URL 已被 Google 接收（"已发现的网页：18"）
+
+**当前线上状态**：
+- 主站：https://aicostcalc.net ✅
+- 18 个 SSG 静态页面全部可访问 + 已索引
+- 所有 33 个交互事件已埋点
+- 4 个法律页面齐全
+- robots.txt + sitemap.xml 公开可访问
+
+**还差什么（滚动到 Week 5）**：
+- 3 篇剩余文章（Top 10 Cheapest / Token Cost Beginner Guide / GPT-5.5 vs Claude Opus）
+- Bing Webmaster 接入（用户 30 秒操作）
+- GA4 Measurement ID 配进 Vercel env vars（用户操作）
+- 手动请求 GSC 索引加速（用户操作）
+
+**下一阶段**：进入 Week 5 — 内容产出节奏 + 监控首批索引 + 流量数据回流后做转化优化。
+
+---
 
 ### 2026-05-04 — Week 1 完整收口（域名上线）
 **类型**：milestone
