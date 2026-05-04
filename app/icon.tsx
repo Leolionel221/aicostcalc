@@ -19,13 +19,13 @@ export default function Icon() {
       >
         <svg width="22" height="22" viewBox="0 0 40 40" fill="none">
           <path
-            d="M11 16 L20 25 L29 16"
+            d="M16 11 L25 20 L16 29"
             stroke="white"
             strokeWidth="3.5"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
-          <circle cx="20" cy="30" r="2" fill="#10B981" />
+          <circle cx="30" cy="20" r="2" fill="#10B981" />
         </svg>
       </div>
     ),

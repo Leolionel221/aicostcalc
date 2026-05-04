@@ -9,13 +9,13 @@ interface LogoProps {
 /**
  * AI Cost Calc brand mark.
  *
- * A descending chevron with a single accent dot at the convergence point.
- * Visual metaphor: cost descending toward the optimal (cheapest) endpoint.
+ * A forward-pointing chevron with a single accent dot at the destination.
+ * Visual metaphor: forward motion toward the answer / target / cheapest pick.
  *
  * Design philosophy:
  * - Restraint: one geometric element, not a busy chart icon
  * - Premium palette: deep slate (not bright blue) with single emerald accent
- * - Mathematical: chevron suggests "minimum" / "convergence"
+ * - Active: chevron suggests "next" / "play" / "find your answer"
  * - Scales: legible from 16px favicon to 1200x630 OG image
  */
 export function LogoMark({ className, size = 28 }: LogoProps) {
@@ -34,17 +34,17 @@ export function LogoMark({ className, size = 28 }: LogoProps) {
       {/* Subtle highlight at top — gives depth without using actual gradients
           (avoids SVG <defs> id collisions when rendered multiple times in SSR) */}
       <rect width="40" height="20" rx="8" fill="white" fillOpacity="0.04" />
-      {/* Chevron: descending, soft white */}
+      {/* Chevron: forward-pointing, soft white */}
       <path
-        d="M12 15.5 L20 24 L28 15.5"
+        d="M15.5 12 L24 20 L15.5 28"
         stroke="white"
         strokeWidth="2.6"
         strokeLinecap="round"
         strokeLinejoin="round"
         fill="none"
       />
-      {/* Convergence point: small emerald accent dot */}
-      <circle cx="20" cy="29.5" r="1.7" fill="#10B981" />
+      {/* Destination point: small emerald accent dot */}
+      <circle cx="29.5" cy="20" r="1.7" fill="#10B981" />
     </svg>
   );
 }
