@@ -5,6 +5,10 @@
 /.pnp
 .pnp.*
 .yarn/*
+
+# lockfile temporarily ignored — debugging Vercel "Invalid Version" install error
+# TODO: revert this once root cause is found
+package-lock.json
 !.yarn/patches
 !.yarn/plugins
 !.yarn/releases
