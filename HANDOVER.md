@@ -286,7 +286,9 @@ npm run build        # 验证 build 通过
 - [x] messages/en.json + zh.json（基础翻译键）
 - [x] HANDOVER.md（本文档）
 - [x] GitHub 仓库 + 首次 push
-- [ ] Vercel 部署（待用户操作）
+- [x] Vercel 部署成功（commit `aa677c5`，临时域名 live）
+- [ ] 绑定 aicostcalc.net 自定义域名（待用户在 Cloudflare DNS 操作）
+- [ ] **TODO**：解决 lockfile 兼容问题，恢复 `package-lock.json` 进 git（详见 §16 变更日志）
 
 ### Week 2 — 核心功能（待开始）
 - [ ] 安装 Vitest + RTL，写 calculator.test.ts（100% 覆盖）
@@ -408,6 +410,29 @@ npm run build        # 验证 build 通过
 ## 16. 变更日志
 
 > 每次"收口"在此追加一条记录。最新的在最上方。
+
+### 2026-05-04 — Vercel 部署上线（含调试经过）
+**类型**：fix + chore
+**摘要**：MVP 占位页成功部署到 Vercel，临时域名可访问；过程中遇到并解决 4 次 `npm install` 失败。
+**调试经过**：
+- 第 1 次失败（commit `b46db2a`）：`npm error Invalid Version:`（空值）。直觉是 lockfile 与 package.json 名字不匹配（创建时用临时目录名 `aicostcalc-init`）。
+- 第 2 次失败（commit `488e925`，重新生成 lockfile）：错误依旧。
+- 第 3 次失败（commit `8eb4616`，加 engines.node + 再次重生 lockfile）：错误依旧。
+- 第 4 次失败（commit `189d31b`，加 .npmrc with legacy-peer-deps）：错误依旧。
+- 第 5 次成功（commit `aa677c5`，**删除 package-lock.json**，让 Vercel 全新解析）：✅
+**根本原因**：本地 Node 24 / npm 11 生成的 `lockfileVersion: 3` 中含有 Vercel 端 npm 拒绝的字段（具体 token 未定位，但行为可复现）。
+**当前权宜方案**：`package-lock.json` 被加入 `.gitignore`，每次部署 Vercel 全新解析。
+**风险**：
+- 失去依赖锁定，某次部署可能拉到比开发时更新的 patch 版本（在 `^x.y.z` 范围内）
+- 部署多 ~30s（解析时间）
+**TODO（不阻塞 Week 2）**：
+- 尝试用 nvm 装 Node 22 + npm 10，本地重新生成兼容 lockfile
+- 或评估迁移到 pnpm（pnpm-lock.yaml 与 npm lockfile 格式不同，Vercel 兼容性更好）
+- 选定方案后从 .gitignore 中移除 `package-lock.json`，重新提交锁文件
+**部署 URL**：
+- 临时：`aicostcalc-git-main-leolionel221s-projects.vercel.app`
+- 待绑定：`aicostcalc.net`（待用户操作 Cloudflare DNS）
+**经验教训**：本地 npm 与 Vercel 环境 npm 可能存在版本兼容差异。下次遇到诡异 install 错误，**优先尝试删除 lockfile 让 Vercel 全新解析**，比一遍遍修 lockfile 高效得多。
 
 ### 2026-05-04 — Project Foundation 收口
 **类型**：feat + docs + chore
