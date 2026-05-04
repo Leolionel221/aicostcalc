@@ -30,18 +30,23 @@ export function Footer() {
             </div>
             <ul className="space-y-2">
               <li>
-                <a href="#calculator" className="hover:text-foreground transition-colors">
+                <a href="/" className="hover:text-foreground transition-colors">
                   Calculator
                 </a>
               </li>
               <li>
-                <a href="#compare" className="hover:text-foreground transition-colors">
+                <a href="/#compare" className="hover:text-foreground transition-colors">
                   Compare models
                 </a>
               </li>
               <li>
-                <a href="#forecast" className="hover:text-foreground transition-colors">
+                <a href="/#forecast" className="hover:text-foreground transition-colors">
                   Monthly forecast
+                </a>
+              </li>
+              <li>
+                <a href="/blog" className="hover:text-foreground transition-colors">
+                  Blog
                 </a>
               </li>
             </ul>
@@ -101,8 +106,26 @@ export function Footer() {
                   GitHub
                 </a>
               </li>
-              <li className="text-muted-foreground">Privacy (TBD)</li>
-              <li className="text-muted-foreground">Terms (TBD)</li>
+              <li>
+                <a href="/about" className="hover:text-foreground transition-colors">
+                  About
+                </a>
+              </li>
+              <li>
+                <a href="/contact" className="hover:text-foreground transition-colors">
+                  Contact
+                </a>
+              </li>
+              <li>
+                <a href="/privacy" className="hover:text-foreground transition-colors">
+                  Privacy
+                </a>
+              </li>
+              <li>
+                <a href="/terms" className="hover:text-foreground transition-colors">
+                  Terms
+                </a>
+              </li>
             </ul>
           </div>
         </div>

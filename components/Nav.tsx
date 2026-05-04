@@ -14,15 +14,15 @@ export function Nav() {
         </Link>
 
         <div className="hidden md:flex items-center gap-6 text-sm">
-          <a href="#calculator" className="text-muted-foreground hover:text-foreground transition-colors">
+          <Link href="/" className="text-muted-foreground hover:text-foreground transition-colors">
             Calculator
-          </a>
-          <a href="#compare" className="text-muted-foreground hover:text-foreground transition-colors">
-            Compare
-          </a>
-          <a href="#forecast" className="text-muted-foreground hover:text-foreground transition-colors">
-            Forecast
-          </a>
+          </Link>
+          <Link href="/blog" className="text-muted-foreground hover:text-foreground transition-colors">
+            Blog
+          </Link>
+          <Link href="/about" className="text-muted-foreground hover:text-foreground transition-colors">
+            About
+          </Link>
         </div>
 
         <div className="flex items-center gap-2">

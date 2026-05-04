@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label";
 import { calculateStandard } from "@/lib/calculator";
 import { formatCost, type CurrencyCode } from "@/lib/currency";
 import { modelSlug } from "@/lib/seo";
+import { track } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 import type { Model } from "@/lib/types";
 
@@ -86,6 +87,7 @@ export function ModelComparison({
       setSortKey(key);
       setSortDir("asc");
     }
+    track("comparison_table_sorted", { key });
   }
 
   function toggleProvider(provider: string) {
@@ -95,6 +97,7 @@ export function ModelComparison({
       else next.add(provider);
       return next;
     });
+    track("comparison_table_filtered", { provider });
   }
 
   function hideModel(id: string) {

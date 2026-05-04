@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import modelsData from "@/data/models.json";
 import type { ModelsData } from "@/lib/types";
 import { SITE, modelSlug } from "@/lib/seo";
+import { getAllPostsMeta } from "@/lib/blog";
 
 const data = modelsData as ModelsData;
 
@@ -22,5 +23,26 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  return [homepage, ...modelPages];
+  const blogIndex = {
+    url: `${SITE.url}/blog`,
+    lastModified,
+    changeFrequency: "weekly" as const,
+    priority: 0.7,
+  };
+
+  const blogPosts = getAllPostsMeta().map((post) => ({
+    url: `${SITE.url}/blog/${post.slug}`,
+    lastModified: new Date(post.date),
+    changeFrequency: "monthly" as const,
+    priority: 0.6,
+  }));
+
+  const staticPages = ["about", "privacy", "terms", "contact"].map((slug) => ({
+    url: `${SITE.url}/${slug}`,
+    lastModified,
+    changeFrequency: "yearly" as const,
+    priority: 0.3,
+  }));
+
+  return [homepage, ...modelPages, blogIndex, ...blogPosts, ...staticPages];
 }

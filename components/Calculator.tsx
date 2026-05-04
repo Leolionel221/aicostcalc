@@ -18,6 +18,7 @@ import { CostComparisonStrip } from "./CostComparison";
 import { ScenarioTemplates, type Scenario } from "./ScenarioTemplates";
 import { calculateCost, calculateComparison } from "@/lib/calculator";
 import { ALL_CURRENCIES, formatCost, type CurrencyCode } from "@/lib/currency";
+import { track, trackDebounced } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 import type { Model } from "@/lib/types";
 
@@ -41,6 +42,7 @@ export function Calculator({ models, defaultModelId }: CalculatorProps) {
     setInputTokens(String(scenario.inputTokens));
     setOutputTokens(String(scenario.outputTokens));
     setActiveScenarioId(scenario.id);
+    track("scenario_template_selected", { scenario_id: scenario.id });
     // If user's current model isn't in recommended set, switch to first recommended that exists
     if (!scenario.recommendedModelIds.includes(modelId)) {
       const firstAvailable = scenario.recommendedModelIds.find((id) =>
@@ -50,12 +52,39 @@ export function Calculator({ models, defaultModelId }: CalculatorProps) {
     }
   }
 
-  // If user manually changes inputs, clear active scenario
+  function handleModelChange(newId: string) {
+    setModelId(newId);
+    track("model_selected", { model_id: newId, source: "calculator_dropdown" });
+  }
+
+  // If user manually changes inputs, clear active scenario + fire debounced event
   function handleInputChange(setter: (v: string) => void) {
     return (e: React.ChangeEvent<HTMLInputElement>) => {
       setter(e.target.value);
       setActiveScenarioId(null);
+      trackDebounced("calculator_used", { model_id: modelId });
     };
+  }
+
+  function handleCachingToggle(enabled: boolean) {
+    setCachingEnabled(enabled);
+    track("caching_toggled", { enabled, model_id: modelId });
+  }
+
+  function handleBatchToggle(enabled: boolean) {
+    setBatchEnabled(enabled);
+    track("batch_toggled", { enabled, model_id: modelId });
+  }
+
+  function handleCurrencyChange(c: CurrencyCode) {
+    setCurrency(c);
+    track("currency_switched", { currency: c });
+  }
+
+  function handleAdvancedToggle() {
+    const next = !advancedOpen;
+    setAdvancedOpen(next);
+    if (next) track("advanced_options_opened", { model_id: modelId });
   }
 
   const selectedModel = useMemo(
@@ -91,7 +120,7 @@ export function Calculator({ models, defaultModelId }: CalculatorProps) {
         {/* Model selector */}
         <div className="space-y-2">
           <Label htmlFor="model-select">Model</Label>
-          <Select value={modelId} onValueChange={setModelId}>
+          <Select value={modelId} onValueChange={handleModelChange}>
             <SelectTrigger id="model-select" className="w-full">
               <SelectValue placeholder="Select a model" />
             </SelectTrigger>
@@ -154,7 +183,7 @@ export function Calculator({ models, defaultModelId }: CalculatorProps) {
         <div className="border-t pt-4">
           <button
             type="button"
-            onClick={() => setAdvancedOpen(!advancedOpen)}
+            onClick={handleAdvancedToggle}
             className="flex w-full items-center justify-between text-sm font-medium hover:text-primary transition-colors"
           >
             <span>Advanced options</span>
@@ -180,7 +209,7 @@ export function Calculator({ models, defaultModelId }: CalculatorProps) {
                   <Switch
                     id="caching-switch"
                     checked={cachingEnabled && supportsCaching}
-                    onCheckedChange={setCachingEnabled}
+                    onCheckedChange={handleCachingToggle}
                     disabled={!supportsCaching}
                   />
                 </div>
@@ -214,7 +243,7 @@ export function Calculator({ models, defaultModelId }: CalculatorProps) {
                 <Switch
                   id="batch-switch"
                   checked={batchEnabled && supportsBatch}
-                  onCheckedChange={setBatchEnabled}
+                  onCheckedChange={handleBatchToggle}
                   disabled={!supportsBatch}
                 />
               </div>
@@ -224,7 +253,7 @@ export function Calculator({ models, defaultModelId }: CalculatorProps) {
                 <Label htmlFor="currency-select">Currency</Label>
                 <Select
                   value={currency}
-                  onValueChange={(v) => setCurrency(v as CurrencyCode)}
+                  onValueChange={(v) => handleCurrencyChange(v as CurrencyCode)}
                 >
                   <SelectTrigger id="currency-select" className="w-full">
                     <SelectValue />
