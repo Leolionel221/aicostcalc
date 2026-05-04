@@ -5,8 +5,8 @@
 > 维护规则：每次"收口"（一个改动告一段落）都必须更新本文档相关章节，并在变更日志追加记录。
 
 **最后更新**：2026-05-05
-**当前阶段**：Week 1-4 ✅ 全部完成 — **MVP 完整上线，sitemap 已被 Google 接收**
-**下一步**：Week 5 — 内容产出（剩 3 篇 SEO 文章）+ 监控首批索引/流量 + Bing Webmaster + GA4 ID 接入
+**当前阶段**：Week 1-5 ✅ 全部完成 — **PRD 第 1 个月 5 篇 SEO 文章全部交付**
+**下一步**：Week 6 — 第 2 个月对比类文章 + 监控 GSC 索引情况 + 用户接 GA4/Bing 后开始数据回流
 
 ---
 
@@ -324,8 +324,20 @@ npm run build        # 验证 build 通过
 - [ ] **滚动到 Week 5**：Bing Webmaster 接入（30 秒，从 GSC 导入）
 - [ ] **滚动到 Week 5**：用户配 GA4 Measurement ID 到 Vercel env vars
 
-### Week 5+ — 内容与运营（持续）
-- [ ] 完成 PRD §5.2 余下 23 篇文章（按月度节奏 4-5 篇）
+### Week 5 — 第一批内容启动（✅ 完成）
+- [x] PRD §5.2 第 1 个月 5 篇基础文章全部完成（~10,000 字内容）
+  - OpenAI API Pricing Explained（深度指南）
+  - Claude API Pricing 2026（深度指南）
+  - Top 10 Cheapest AI APIs in 2026（排行榜，覆盖高搜索量关键词）
+  - How to Calculate Token Cost: A Beginner's Guide（教学）
+  - GPT-5.5 vs Claude Opus 4.7（对比）
+- [x] 全部内容互相内链 + 链到模型独立页 + 链到首页计算器（完整内部 SEO 链接结构）
+- [x] 品牌 logo 重做（深 slate + 单一前进 chevron + emerald accent dot）
+- [x] favicon / apple-icon / og-image 全部统一新品牌
+
+### Week 6+ — 持续内容与运营
+- [ ] 第 2 个月 5 篇文章（PRD §5.2 对比类）：DeepSeek vs OpenAI / Gemini vs GPT-4 / Open Source LLMs vs OpenAI / Claude Haiku vs GPT-4o-mini / Mistral vs Llama
+- [ ] 第 3-6 个月按节奏每月 5 篇（优化类、场景类、深度+热点）
 - [ ] 监控首批索引情况（Google Search Console 数据洞见 / 效果报告，3-7 天后开始有数据）
 - [ ] 第 12-16 周申请 AdSense（要求：30+ 篇文章、自然流量、4 个法律页齐全 ✅、3 个月运营史）
 - [ ] 启动联盟营销洽谈（OpenRouter / Together AI / Helicone）
@@ -464,6 +476,35 @@ npm run build        # 验证 build 通过
 ## 16. 变更日志
 
 > 每次"收口"在此追加一条记录。最新的在最上方。
+
+### 2026-05-05 — Week 5 收口（第 1 个月内容全发完 + 品牌 logo 定稿）
+**类型**：content + design
+**摘要**：PRD §5.2 第 1 个月规定的 5 篇 SEO 文章全部上线，~10,000 字总内容；品牌 logo 重做并定稿（深 slate + 前进 chevron + emerald 终点）。
+
+**新增内容**（commit `7d5bf5b`）：
+- `top-10-cheapest-ai-apis-2026.md` — 排行榜，10 个模型按 per-call cost 排序，含改写排序的 3 个变量（caching/output ratio/batch）
+- `how-to-calculate-token-cost-beginner-guide.md` — 教学，覆盖 token / input vs output / volume math / caching / batch / 常见错误
+- `gpt-5-5-vs-claude-opus-4-7-comparison.md` — 头对头对比，5 个场景的真实成本 + 4 个 Opus 赢的理由 + 5 个 GPT 赢的理由 + 决策树
+
+**品牌 logo 迭代**（commits `32c94d7` / `39c4afa` / `3a6733b`）：
+- v1: 亮蓝方块 + 3 道横条 → 太通用、像图表 icon
+- v2: 深 slate + 向下 chevron + 绿点 → 克制了，但"被动 settle"心理感
+- **v3 (定稿)**: 深 slate + **向前 chevron (>)** + emerald 终点点 → 主动"找到答案"的能量，匹配交互工具调性
+
+**SEO 资产升级**：
+- favicon / apple-icon / og-image 全部统一 v3 logo
+- sitemap 自动包含新 3 篇文章（21 个 URL，比原 18 个多 3）
+- 5 篇文章互相内链 + 链到 10 个模型 landing + 链到首页计算器
+
+**当前线上状态**：
+- 21 个静态 SSG 页面
+- 14,000+ 字英文 SEO 内容
+- 完整品牌识别（logo / favicon / og）
+- Search Console + sitemap 全部就位
+
+**Week 6 起步**：进入"每周 1-2 篇文章"稳定输出节奏，避免单轮压缩降低质量。第 2 个月计划聚焦对比类文章（DeepSeek vs OpenAI、Gemini vs GPT 等）。
+
+---
 
 ### 2026-05-05 — 🚀 MVP LAUNCH 收口（Week 1-4 全部完成）
 **类型**：milestone
