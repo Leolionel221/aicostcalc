@@ -1,0 +1,37 @@
+{
+  "lastUpdated": "2026-05-04",
+  "base": "USD",
+  "note": "Static rates updated monthly with model pricing. AI APIs are billed in USD; all non-USD amounts are approximations for budgeting reference only.",
+  "currencies": [
+    {
+      "code": "USD",
+      "symbol": "$",
+      "rate": 1.0,
+      "name": "US Dollar"
+    },
+    {
+      "code": "CNY",
+      "symbol": "¥",
+      "rate": 7.2,
+      "name": "Chinese Yuan"
+    },
+    {
+      "code": "EUR",
+      "symbol": "€",
+      "rate": 0.92,
+      "name": "Euro"
+    },
+    {
+      "code": "GBP",
+      "symbol": "£",
+      "rate": 0.78,
+      "name": "British Pound"
+    },
+    {
+      "code": "INR",
+      "symbol": "₹",
+      "rate": 84.5,
+      "name": "Indian Rupee"
+    }
+  ]
+}

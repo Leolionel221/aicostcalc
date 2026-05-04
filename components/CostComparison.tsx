@@ -1,18 +1,8 @@
 "use client";
 
 import type { CostComparison } from "@/lib/types";
+import { formatCost, type CurrencyCode } from "@/lib/currency";
 import { cn } from "@/lib/utils";
-
-const USD_TO_CNY = 7.2;
-
-function formatCurrency(amount: number, currency: "USD" | "CNY"): string {
-  const value = currency === "CNY" ? amount * USD_TO_CNY : amount;
-  const symbol = currency === "CNY" ? "¥" : "$";
-  if (value === 0) return `${symbol}0`;
-  if (value < 0.01) return `${symbol}${value.toFixed(6)}`;
-  if (value < 1) return `${symbol}${value.toFixed(4)}`;
-  return `${symbol}${value.toFixed(4)}`;
-}
 
 function savePercent(standard: number, alt: number): number {
   if (standard === 0) return 0;
@@ -21,7 +11,7 @@ function savePercent(standard: number, alt: number): number {
 
 interface CostComparisonStripProps {
   comparison: CostComparison;
-  currency: "USD" | "CNY";
+  currency: CurrencyCode;
 }
 
 export function CostComparisonStrip({
@@ -80,7 +70,7 @@ export function CostComparisonStrip({
             {col.supported ? (
               <>
                 <div className="text-lg font-semibold font-mono tabular-nums">
-                  {formatCurrency(col.cost!, currency)}
+                  {formatCost(col.cost!, currency)}
                 </div>
                 {col.saving !== null && col.saving > 0 && (
                   <div className="text-xs mt-1 text-[color:var(--accent)] font-medium">

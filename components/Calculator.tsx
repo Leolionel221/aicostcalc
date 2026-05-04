@@ -16,19 +16,9 @@ import { Switch } from "@/components/ui/switch";
 import { Card, CardContent } from "@/components/ui/card";
 import { CostComparisonStrip } from "./CostComparison";
 import { calculateCost, calculateComparison } from "@/lib/calculator";
+import { ALL_CURRENCIES, formatCost, type CurrencyCode } from "@/lib/currency";
 import { cn } from "@/lib/utils";
 import type { Model } from "@/lib/types";
-
-const USD_TO_CNY = 7.2; // approximate, V1.0 placeholder
-
-function formatCurrency(amount: number, currency: "USD" | "CNY"): string {
-  const value = currency === "CNY" ? amount * USD_TO_CNY : amount;
-  const symbol = currency === "CNY" ? "¥" : "$";
-  if (value === 0) return `${symbol}0`;
-  if (value < 0.01) return `${symbol}${value.toFixed(6)}`;
-  if (value < 1) return `${symbol}${value.toFixed(4)}`;
-  return `${symbol}${value.toFixed(4)}`;
-}
 
 interface CalculatorProps {
   models: Model[];
@@ -43,7 +33,7 @@ export function Calculator({ models, defaultModelId }: CalculatorProps) {
   const [cachingEnabled, setCachingEnabled] = useState(false);
   const [cachedPortion, setCachedPortion] = useState(0.5);
   const [batchEnabled, setBatchEnabled] = useState(false);
-  const [currency, setCurrency] = useState<"USD" | "CNY">("USD");
+  const [currency, setCurrency] = useState<CurrencyCode>("USD");
 
   const selectedModel = useMemo(
     () => models.find((m) => m.id === modelId) ?? models[0],
@@ -201,25 +191,29 @@ export function Calculator({ models, defaultModelId }: CalculatorProps) {
               </div>
 
               {/* Currency */}
-              <div className="flex items-center justify-between">
-                <Label>Currency</Label>
-                <div className="inline-flex rounded-md border border-border p-0.5">
-                  {(["USD", "CNY"] as const).map((c) => (
-                    <button
-                      key={c}
-                      type="button"
-                      onClick={() => setCurrency(c)}
-                      className={cn(
-                        "px-3 py-1 text-xs rounded transition-colors",
-                        currency === c
-                          ? "bg-primary text-primary-foreground"
-                          : "text-muted-foreground hover:text-foreground",
-                      )}
-                    >
-                      {c}
-                    </button>
-                  ))}
-                </div>
+              <div className="space-y-2">
+                <Label htmlFor="currency-select">Currency</Label>
+                <Select
+                  value={currency}
+                  onValueChange={(v) => setCurrency(v as CurrencyCode)}
+                >
+                  <SelectTrigger id="currency-select" className="w-full">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {ALL_CURRENCIES.map((c) => (
+                      <SelectItem key={c.code} value={c.code}>
+                        <span className="font-mono mr-2">{c.symbol}</span>
+                        {c.code} <span className="text-muted-foreground">· {c.name}</span>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                {currency !== "USD" && (
+                  <p className="text-xs text-muted-foreground">
+                    AI APIs are billed in USD. Other currencies shown for reference only (~).
+                  </p>
+                )}
               </div>
             </div>
           )}
@@ -230,20 +224,20 @@ export function Calculator({ models, defaultModelId }: CalculatorProps) {
           <div className="flex items-baseline justify-between">
             <span className="text-sm text-muted-foreground">Total cost per call</span>
             <span className="text-3xl font-semibold font-mono tabular-nums">
-              {formatCurrency(cost.totalCost, currency)}
+              {formatCost(cost.totalCost, currency)}
             </span>
           </div>
           <div className="grid grid-cols-2 gap-2 text-xs text-muted-foreground">
             <div className="flex justify-between rounded-md bg-muted px-3 py-2">
               <span>Input</span>
               <span className="font-mono tabular-nums">
-                {formatCurrency(cost.inputCost, currency)}
+                {formatCost(cost.inputCost, currency)}
               </span>
             </div>
             <div className="flex justify-between rounded-md bg-muted px-3 py-2">
               <span>Output</span>
               <span className="font-mono tabular-nums">
-                {formatCurrency(cost.outputCost, currency)}
+                {formatCost(cost.outputCost, currency)}
               </span>
             </div>
           </div>
