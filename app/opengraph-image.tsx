@@ -26,21 +26,33 @@ export default function OpenGraphImage() {
             style={{
               width: 64,
               height: 64,
-              borderRadius: 14,
-              background: "#2563EB",
-              padding: "14px 14px",
+              borderRadius: 13,
+              background: "#0F172A",
+              border: "1px solid rgba(255,255,255,0.08)",
               display: "flex",
-              flexDirection: "column",
-              gap: 5,
-              alignItems: "flex-start",
+              alignItems: "center",
               justifyContent: "center",
             }}
           >
-            <div style={{ display: "flex", width: 36, height: 6, borderRadius: 3, background: "#10B981" }} />
-            <div style={{ display: "flex", width: 26, height: 6, borderRadius: 3, background: "rgba(255,255,255,0.85)" }} />
-            <div style={{ display: "flex", width: 17, height: 6, borderRadius: 3, background: "rgba(255,255,255,0.5)" }} />
+            <svg width="44" height="44" viewBox="0 0 40 40" fill="none">
+              <path
+                d="M12 15.5 L20 24 L28 15.5"
+                stroke="white"
+                strokeWidth="2.6"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <circle cx="20" cy="29.5" r="1.7" fill="#10B981" />
+            </svg>
           </div>
-          <div style={{ display: "flex", fontSize: 32, fontWeight: 600, letterSpacing: -0.5 }}>
+          <div
+            style={{
+              display: "flex",
+              fontSize: 32,
+              fontWeight: 600,
+              letterSpacing: -0.5,
+            }}
+          >
             AI Cost Calc
           </div>
         </div>
@@ -87,20 +99,22 @@ export default function OpenGraphImage() {
             fontSize: 22,
           }}
         >
-          {["Caching savings", "Batch API", "Monthly forecast", "Free + open"].map((label) => (
-            <div
-              key={label}
-              style={{
-                display: "flex",
-                padding: "12px 20px",
-                borderRadius: 9999,
-                border: "2px solid rgba(255,255,255,0.15)",
-                color: "rgba(255,255,255,0.85)",
-              }}
-            >
-              {label}
-            </div>
-          ))}
+          {["Caching savings", "Batch API", "Monthly forecast", "Free + open"].map(
+            (label) => (
+              <div
+                key={label}
+                style={{
+                  display: "flex",
+                  padding: "12px 20px",
+                  borderRadius: 9999,
+                  border: "2px solid rgba(255,255,255,0.15)",
+                  color: "rgba(255,255,255,0.85)",
+                }}
+              >
+                {label}
+              </div>
+            ),
+          )}
         </div>
 
         {/* Site URL */}

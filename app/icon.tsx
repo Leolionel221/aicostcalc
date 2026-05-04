@@ -11,18 +11,22 @@ export default function Icon() {
           width: "100%",
           height: "100%",
           display: "flex",
-          flexDirection: "column",
+          alignItems: "center",
           justifyContent: "center",
-          alignItems: "flex-start",
-          background: "#2563EB",
-          borderRadius: 7,
-          padding: "6px 6px",
-          gap: 2,
+          background: "#0F172A",
+          borderRadius: 6,
         }}
       >
-        <div style={{ display: "flex", width: 20, height: 3, borderRadius: 1.5, background: "#10B981" }} />
-        <div style={{ display: "flex", width: 14, height: 3, borderRadius: 1.5, background: "rgba(255,255,255,0.85)" }} />
-        <div style={{ display: "flex", width: 9, height: 3, borderRadius: 1.5, background: "rgba(255,255,255,0.5)" }} />
+        <svg width="22" height="22" viewBox="0 0 40 40" fill="none">
+          <path
+            d="M11 16 L20 25 L29 16"
+            stroke="white"
+            strokeWidth="3.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <circle cx="20" cy="30" r="2" fill="#10B981" />
+        </svg>
       </div>
     ),
     { ...size },

@@ -11,18 +11,22 @@ export default function AppleIcon() {
           width: "100%",
           height: "100%",
           display: "flex",
-          flexDirection: "column",
+          alignItems: "center",
           justifyContent: "center",
-          alignItems: "flex-start",
-          background: "#2563EB",
-          borderRadius: 40,
-          padding: "36px 36px",
-          gap: 12,
+          background: "#0F172A",
+          borderRadius: 36,
         }}
       >
-        <div style={{ display: "flex", width: 108, height: 16, borderRadius: 8, background: "#10B981" }} />
-        <div style={{ display: "flex", width: 76, height: 16, borderRadius: 8, background: "rgba(255,255,255,0.85)" }} />
-        <div style={{ display: "flex", width: 50, height: 16, borderRadius: 8, background: "rgba(255,255,255,0.5)" }} />
+        <svg width="120" height="120" viewBox="0 0 40 40" fill="none">
+          <path
+            d="M12 15.5 L20 24 L28 15.5"
+            stroke="white"
+            strokeWidth="2.6"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <circle cx="20" cy="29.5" r="1.7" fill="#10B981" />
+        </svg>
       </div>
     ),
     { ...size },
