@@ -1,0 +1,172 @@
+{
+  "schemaVersion": "2.0",
+  "lastUpdated": "2026-05-04",
+  "models": [
+    {
+      "id": "gpt-4o",
+      "name": "GPT-4o",
+      "shortName": "GPT-4o",
+      "provider": "OpenAI",
+      "providerId": "openai",
+      "providerLogo": "/logos/openai.svg",
+      "providerWebsite": "https://openai.com",
+      "category": "flagship",
+      "useCase": ["general", "vision", "coding"],
+      "releaseDate": "2024-05-13",
+      "status": "active",
+      "deprecatedAt": null,
+      "successorId": null,
+      "pricing": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 2.50,
+        "output": 10.00,
+        "cachedInput": 1.25,
+        "cacheWrite": null,
+        "batchInput": 1.25,
+        "batchOutput": 5.00,
+        "imagePerImage": null,
+        "imageTokensFormula": null,
+        "reasoningOutput": null,
+        "fineTunedInput": null,
+        "fineTunedOutput": null
+      },
+      "limits": {
+        "contextWindow": 128000,
+        "maxOutput": 16384,
+        "maxImagesPerRequest": null,
+        "knowledgeCutoff": "2024-10"
+      },
+      "tokenization": {
+        "encoder": "o200k_base",
+        "approximationRatio": {
+          "english": 4,
+          "chinese": 1.5,
+          "code": 3
+        }
+      },
+      "supports": {
+        "vision": true,
+        "audio": false,
+        "tools": true,
+        "streaming": true,
+        "caching": true,
+        "batch": true,
+        "fineTuning": true,
+        "structuredOutput": true
+      },
+      "lastVerified": "2026-05-01",
+      "sources": [
+        {
+          "type": "official",
+          "url": "https://openai.com/api/pricing",
+          "fetchedAt": "2026-05-01"
+        }
+      ],
+      "priceHistory": [
+        {
+          "date": "2024-05-13",
+          "input": 5.00,
+          "output": 15.00,
+          "note": "Initial release"
+        },
+        {
+          "date": "2024-08-06",
+          "input": 2.50,
+          "output": 10.00,
+          "note": "Price reduction"
+        }
+      ],
+      "i18n": {
+        "en": {
+          "tagline": "OpenAI's flagship multimodal model",
+          "description": "GPT-4o is OpenAI's most capable general-purpose model, supporting text, vision, and tool use with a 128K context window."
+        },
+        "zh": {
+          "tagline": "OpenAI 的旗舰多模态模型",
+          "description": "GPT-4o 是 OpenAI 最强的通用模型，支持文本、视觉和工具调用，128K 上下文窗口。"
+        }
+      }
+    },
+    {
+      "id": "claude-opus-4-7",
+      "name": "Claude Opus 4.7",
+      "shortName": "Opus 4.7",
+      "provider": "Anthropic",
+      "providerId": "anthropic",
+      "providerLogo": "/logos/anthropic.svg",
+      "providerWebsite": "https://anthropic.com",
+      "category": "flagship",
+      "useCase": ["reasoning", "coding", "general"],
+      "releaseDate": "2026-02-01",
+      "status": "active",
+      "deprecatedAt": null,
+      "successorId": null,
+      "pricing": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 15.00,
+        "output": 75.00,
+        "cachedInput": 1.50,
+        "cacheWrite": 18.75,
+        "batchInput": 7.50,
+        "batchOutput": 37.50,
+        "imagePerImage": null,
+        "imageTokensFormula": null,
+        "reasoningOutput": null,
+        "fineTunedInput": null,
+        "fineTunedOutput": null
+      },
+      "limits": {
+        "contextWindow": 200000,
+        "maxOutput": 8192,
+        "maxImagesPerRequest": 100,
+        "knowledgeCutoff": "2025-04"
+      },
+      "tokenization": {
+        "encoder": "approximate",
+        "approximationRatio": {
+          "english": 4,
+          "chinese": 1.5,
+          "code": 3
+        }
+      },
+      "supports": {
+        "vision": true,
+        "audio": false,
+        "tools": true,
+        "streaming": true,
+        "caching": true,
+        "batch": true,
+        "fineTuning": false,
+        "structuredOutput": true
+      },
+      "lastVerified": "2026-05-01",
+      "sources": [
+        {
+          "type": "official",
+          "url": "https://www.anthropic.com/pricing",
+          "fetchedAt": "2026-05-01"
+        }
+      ],
+      "priceHistory": [
+        {
+          "date": "2026-02-01",
+          "input": 15.00,
+          "output": 75.00,
+          "note": "Initial release"
+        }
+      ],
+      "i18n": {
+        "en": {
+          "tagline": "Anthropic's flagship reasoning model",
+          "description": "Claude Opus 4.7 is Anthropic's most capable model for complex reasoning, coding, and long-context tasks. 200K context window."
+        },
+        "zh": {
+          "tagline": "Anthropic 的旗舰推理模型",
+          "description": "Claude Opus 4.7 是 Anthropic 最强的复杂推理、编程和长上下文模型，200K 上下文窗口。"
+        }
+      }
+    }
+  ]
+}

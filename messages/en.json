@@ -1,0 +1,41 @@
+{
+  "site": {
+    "title": "AI API Cost Calculator",
+    "tagline": "Calculate AI API costs in seconds. Compare 20+ models.",
+    "description": "Free tool to calculate and compare API pricing for OpenAI, Anthropic, Google, DeepSeek, and more."
+  },
+  "nav": {
+    "calculator": "Calculator",
+    "compare": "Compare",
+    "models": "Models",
+    "blog": "Blog"
+  },
+  "calculator": {
+    "title": "Cost Calculator",
+    "modelLabel": "Model",
+    "inputTokens": "Input tokens",
+    "outputTokens": "Output tokens",
+    "advancedOptions": "Advanced options",
+    "useCaching": "Use prompt caching",
+    "cachedPortion": "Cached portion of input",
+    "useBatch": "Use Batch API (~24h, 50% off)",
+    "currency": "Currency",
+    "totalCost": "Total cost per call",
+    "exact": "Exact",
+    "estimated": "Estimated",
+    "share": "Share",
+    "exportImage": "Export as image"
+  },
+  "comparison": {
+    "standard": "Standard",
+    "withCaching": "With Caching",
+    "withBatch": "With Batch",
+    "save": "Save",
+    "notSupported": "Not supported"
+  },
+  "trust": {
+    "lastVerified": "Last verified",
+    "source": "Source",
+    "reportError": "Report an error"
+  }
+}
