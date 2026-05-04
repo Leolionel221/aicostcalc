@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter, Noto_Sans_SC } from "next/font/google";
 import { Providers } from "./providers";
+import { Nav } from "@/components/Nav";
+import { Footer } from "@/components/Footer";
 import "./globals.css";
 
 const inter = Inter({
@@ -22,7 +24,7 @@ export const metadata: Metadata = {
     template: "%s | AI API Cost Calculator",
   },
   description:
-    "Free tool to calculate and compare API costs across OpenAI, Anthropic, Google, DeepSeek and 20+ LLM models. Updated monthly.",
+    "Free tool to calculate and compare API costs across OpenAI, Anthropic, Google, DeepSeek and 10+ LLM models. Updated monthly.",
   metadataBase: new URL("https://aicostcalc.net"),
   openGraph: {
     type: "website",
@@ -46,7 +48,11 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col font-sans bg-background text-foreground">
-        <Providers>{children}</Providers>
+        <Providers>
+          <Nav />
+          <div className="flex-1">{children}</div>
+          <Footer />
+        </Providers>
       </body>
     </html>
   );
