@@ -36,10 +36,18 @@
 **12 个月目标**：月 UV 20K-50K，月入 $300-1,500（保守）/ $2,300（乐观）。
 
 **核心差异化**（4 点）：
-1. 覆盖最全（20+ 模型）
-2. 中英双语（默认英文）
-3. 场景化模板
-4. 配套深度 SEO 内容
+1. 覆盖关键模型（V1.0 是 10 个 May 2026 旗舰，目标 V1.5 扩到 20+）
+2. 英文先行（中文版 V1.1，详见 §11 Decision 8）
+3. 场景化模板（6 个使用场景一键填充）
+4. 配套深度 SEO 内容（V1.0 已发 5 篇 ~14,000 字）
+
+**当前线上数据快照**（2026-05-05）：
+- 21 个 SSG 静态页面（首页 + 10 模型 + 5 文章 + 4 法律 + 博客索引）
+- ~14,000 字英文 SEO 内容
+- Google Search Console 域名级验证 + sitemap 提交成功（18 URL 已收）
+- Bing Webmaster 已导入同步
+- GA4 实时事件回流中
+- dev.to 第 1 篇文章交叉发布（高权重反向链接）
 
 ---
 
@@ -50,18 +58,29 @@
 | 框架 | Next.js | 16.x | App Router，PRD 写 14 但实际用最新版 |
 | UI 库 | React | 19.x | 含 Server Components |
 | 语言 | TypeScript | 5.x | 严格模式 |
-| 样式 | Tailwind CSS | 4.x | CSS-based config，新版语法 |
-| 国际化 | next-intl | 4.x | 路由 `/` 英文，`/zh/` 中文（V1.0 暂未启用 routing，V1.0 末或 Week 3 接入） |
-| 暗黑模式 | next-themes | 0.4 | system / light / dark |
-| 图标 | lucide-react | 1.x | shadcn/ui 默认 icon 库 |
-| Tokenizer | js-tiktoken | 1.x | 仅 OpenAI 系精确，其他用估算 |
+| 样式 | Tailwind CSS | 4.x | CSS-based config，token 在 `app/globals.css` |
+| UI 组件 | Radix UI primitives | 各最新 | 自写 shadcn 风格组件，不用 shadcn CLI |
+| 国际化 | next-intl | 4.x | 已装但 routing 未启用（V1.1，详见 §11 Decision 8）|
+| 暗黑模式 | next-themes | 0.4 | system / light / dark + ThemeToggle |
+| 图标 | lucide-react | 1.x | 注意：v1 移除了 brand icons（GitHub icon 自己写 SVG） |
+| Tokenizer | js-tiktoken | 1.x | OpenAI 系精确（dynamic import），其他估算 |
+| Markdown | gray-matter + remark + remark-gfm + remark-html | 各最新 | 博客 .md 文件渲染 |
+| Analytics | @next/third-parties (GA4) | 16.x | 仅在 `NEXT_PUBLIC_GA_ID` 设置时挂载 |
+| 测试 | Vitest + RTL + @vitest/coverage-v8 | 4.x | 48 个用例，calculator 100% 覆盖 |
 | 字体 | Inter + Noto Sans SC | Google Fonts | 中英统一观感 |
 | 构建 | Turbopack | Next.js 内置 | dev 和 build 都启用 |
 
-**未安装但 PRD 计划要用的**：
-- shadcn/ui — 第一次需要组件时执行 `npx shadcn@latest init` 再 `add <component>`
-- @vercel/analytics — 部署到 Vercel 后再加
-- 测试框架（Vitest + React Testing Library）— Week 2 实现 calculator.test.ts 时安装
+**关键自实现的（不依赖外部 lib）**：
+- shadcn 风格 UI 组件（`components/ui/*`）— 7 个 Radix-backed 组件手写
+- Logo + favicon + apple-icon + opengraph-image — 全部 SVG / next/og ImageResponse
+- SEO metadata + JSON-LD 生成器（`lib/seo.ts`）
+- Currency 转换 + 格式化（`lib/currency.ts`）
+- Analytics typed event helper（`lib/analytics.ts`）
+
+**已知未安装**（V1.1+ 启用时再加）：
+- A/B testing：Vercel Edge Config 或 GrowthBook
+- 错误监控：Sentry（PRD 计划，未上线）
+- Plausible（备份 GA4，未上线）
 
 ---
 
@@ -69,47 +88,92 @@
 
 ```
 /Users/chenze/Desktop/AI API Cost Calculator/   ← 项目根 = Git 仓库根
-├── app/                       # Next.js App Router 路由
-│   ├── layout.tsx              # 根布局（含 ThemeProvider、字体）
-│   ├── page.tsx                # 首页（当前是 Week 1 占位）
-│   ├── providers.tsx           # ThemeProvider 包装
-│   └── globals.css             # 全局样式 + design tokens
+├── app/                              # Next.js App Router 路由
+│   ├── layout.tsx                    # 根布局（Nav + Footer + ThemeProvider + GA4）
+│   ├── page.tsx                      # 首页（Hero + Calculator + Compare + Forecast）
+│   ├── providers.tsx                 # ThemeProvider 包装
+│   ├── globals.css                   # 设计 token + prose-content 文章排版
+│   ├── [slug]/page.tsx               # 模型独立 Landing Page (SSG 10 个)
+│   ├── blog/
+│   │   ├── page.tsx                  # 博客索引页
+│   │   └── [slug]/page.tsx           # 博客文章详情 (SSG 5 篇)
+│   ├── about/page.tsx                # 关于
+│   ├── privacy/page.tsx              # 隐私政策
+│   ├── terms/page.tsx                # 服务条款
+│   ├── contact/page.tsx              # 联系
+│   ├── icon.tsx                      # 32x32 favicon (next/og)
+│   ├── apple-icon.tsx                # 180x180 Apple touch icon
+│   ├── opengraph-image.tsx           # 1200x630 OG image
+│   ├── sitemap.ts                    # 自动生成 sitemap.xml (21 URL)
+│   └── robots.ts                     # 自动生成 robots.txt
 ├── components/
-│   └── ui/                     # shadcn/ui 组件（待 Week 2 添加）
+│   ├── Calculator.tsx                # 核心计算器（含 Advanced Options）
+│   ├── CostComparison.tsx            # F1.5 三栏对比（Standard/Cached/Batch）
+│   ├── ModelComparison.tsx           # 全模型表格（排序/筛选/隐藏）
+│   ├── MonthlyEstimator.tsx          # 月度成本预测 + 柱状图
+│   ├── ScenarioTemplates.tsx         # 6 个场景模板
+│   ├── ModelPricingTable.tsx         # 详细价格表（Landing 页用）
+│   ├── ModelFAQ.tsx                  # 自动生成 FAQ（Landing 页用）
+│   ├── LegalPage.tsx                 # 法律页通用布局
+│   ├── Logo.tsx                      # 品牌 mark + LogoMark 子组件
+│   ├── Nav.tsx                       # 顶部导航（含锚点 + ThemeToggle）
+│   ├── Footer.tsx                    # 页脚（含商标声明）
+│   ├── ThemeToggle.tsx               # 暗黑/亮色切换按钮
+│   └── ui/                           # shadcn 风格组件（Radix-backed）
+│       ├── button.tsx | input.tsx | label.tsx | card.tsx
+│       ├── slider.tsx | switch.tsx | select.tsx
+├── content/
+│   └── blog/                         # Markdown 博客文章
+│       ├── openai-api-pricing-explained-2026.md
+│       ├── claude-api-pricing-2026.md
+│       ├── top-10-cheapest-ai-apis-2026.md
+│       ├── how-to-calculate-token-cost-beginner-guide.md
+│       └── gpt-5-5-vs-claude-opus-4-7-comparison.md
 ├── data/
-│   └── models.json             # 核心模型价格表 (Schema v2)
-├── docs/                       # 产品文档（不进 build）
+│   ├── models.json                   # 核心模型价格表 (Schema v2, 10 个模型)
+│   ├── currencies.json               # 静态汇率（USD/CNY/EUR/GBP/INR）
+│   └── scenarios.json                # 6 个场景模板配置
+├── docs/                             # 产品文档（不进 build）
 │   ├── AI_API_Cost_Calculator_PRD.pdf
 │   └── PRD_v1.1_Supplement.md
 ├── lib/
-│   ├── types.ts                # TypeScript 类型定义
-│   ├── calculator.ts           # 成本计算逻辑（标准/缓存/批处理）
-│   ├── tokenizer.ts            # Token 估算（OpenAI tiktoken + 字符比率 fallback）
-│   └── utils.ts                # cn() helper for shadcn
+│   ├── types.ts                      # Schema v2 完整类型定义
+│   ├── calculator.ts                 # standard/cached/batch/comparison/monthly
+│   ├── calculator.test.ts            # 25 用例
+│   ├── tokenizer.ts                  # OpenAI 精确 + 字符比率 fallback
+│   ├── tokenizer.test.ts             # 8 用例
+│   ├── currency.ts                   # 5 货币转换 + formatCost helper
+│   ├── currency.test.ts              # 15 用例
+│   ├── analytics.ts                  # typed GA4 track helper
+│   ├── seo.ts                        # metadata + JSON-LD 生成器
+│   ├── blog.ts                       # markdown 渲染 pipeline
+│   └── utils.ts                      # cn() helper
 ├── messages/
-│   ├── en.json                 # 英文翻译
-│   └── zh.json                 # 中文翻译
+│   ├── en.json                       # 英文翻译键
+│   └── zh.json                       # 中文翻译键（V1.1 启用）
 ├── public/
-│   └── logos/                  # 各 AI provider 的 logo（SVG）
-├── AGENTS.md                   # AI 助手提示（Next.js 16 注意事项）
-├── CLAUDE.md                   # 链到 AGENTS.md
-├── HANDOVER.md                 # 本文档
-├── README.md                   # 项目入口介绍
-├── PRD_v1.1_Supplement.md → docs/PRD_v1.1_Supplement.md
-├── package.json
-├── tsconfig.json
-├── eslint.config.mjs
-├── next.config.ts
-├── postcss.config.mjs
-├── .env.example
-├── .gitignore
+│   └── logos/                        # 各 AI provider logo（待补 SVG）
+├── AGENTS.md                         # Next.js 16 给 AI agent 的注意事项
+├── CLAUDE.md                         # 链到 AGENTS.md
+├── HANDOVER.md                       # 本文档
+├── README.md                         # 200 行专业 OSS 仓库门面
+├── LICENSE                           # MIT
+├── package.json                      # 含 OSS 元数据 (license/keywords/repo)
+├── tsconfig.json | eslint.config.mjs | next.config.ts | postcss.config.mjs
+├── components.json                   # shadcn 配置（虽然没用 CLI，但保留）
+├── vitest.config.ts                  # 测试配置
+├── vitest.setup.ts                   # @testing-library/jest-dom 引入
+├── .npmrc                            # legacy-peer-deps + engine-strict=false
+├── .env.example                      # NEXT_PUBLIC_GA_ID 等
+├── .gitignore                        # 注意：package-lock.json 暂被 ignore（详见 §16）
 └── next-env.d.ts
 ```
 
 **约定**：
-- 业务逻辑在 `lib/`，UI 组件在 `components/`，路由页面在 `app/`
-- 数据全部在 `data/`，JSON 优先（轻量、Git 友好、SSG 直接 import）
+- 业务逻辑在 `lib/`，UI 组件在 `components/`，路由页面在 `app/`，内容数据在 `data/` 和 `content/`
+- 数据全部 JSON / Markdown 文件优先（轻量、Git 友好、SSG 直接 import）
 - 路径别名 `@/*` 指向项目根
+- 测试文件与源文件同目录（`xxx.test.ts` 紧挨着 `xxx.ts`）
 
 ---
 
@@ -128,7 +192,22 @@
 - `tokenization.encoder`: tiktoken encoder 名称（如 `o200k_base`、`cl100k_base`），或 `"approximate"`
 - `supports`: 各能力开关（vision、tools、caching、batch 等）
 
-**当前录入模型**：2 个（GPT-4o, Claude Opus 4.7）— Week 2 补齐到 10 个。
+**当前录入模型**：10 个（全部 May 2026 最新版本）：
+
+| Provider | 模型 | 类别 | Input/Output ($/1M) |
+|---|---|---|---|
+| OpenAI | GPT-5.5 | flagship | 5.00 / 20.00 |
+| OpenAI | GPT-5 mini | small | 0.20 / 0.80 |
+| OpenAI | o4-mini | reasoning | 0.90 / 3.60 |
+| Anthropic | Claude Opus 4.7 | flagship | 15.00 / 75.00 |
+| Anthropic | Claude Haiku 4.5 | small | 1.00 / 5.00 |
+| Google | Gemini 3.0 Pro | flagship | 1.50 / 12.00 |
+| Google | Gemini 3.0 Flash | balanced | 0.25 / 2.00 |
+| DeepSeek | DeepSeek V4 | balanced | 0.30 / 1.20 |
+| xAI | Grok 4 | flagship | 4.00 / 20.00 |
+| Mistral | Mistral Large 3 | flagship | 2.50 / 7.50 |
+
+**重要提醒**：所有数据均为 May 2026 推测值，生产上线前必须按 PRD §4.3 维护 SOP 逐家核对官方价格页（详见 `data/models.json` 顶部 `_note` 字段）。
 
 ### 维护流程（每月 1 日）
 
@@ -144,27 +223,65 @@
 
 ## 5. 关键模块设计
 
-### 5.1 `lib/calculator.ts`
+### 5.1 `lib/calculator.ts` ✅ 100% 覆盖
 
-提供 4 个函数：
+提供 6 个函数：
 - `calculateStandard(input, output, model)` — 标准计算
 - `calculateCached(input, output, model, cachedPortion)` — 含缓存折扣
 - `calculateBatch(input, output, model)` — Batch API 折扣
 - `calculateCost(input, output, model, options)` — 根据 options 自动选择
 - `calculateComparison(input, output, model, cachedPortion)` — 三栏对比（用于 F1.5）
-- `estimateMonthlyCost(costPerCall, callsPerDay)` — 月度预测
+- `estimateMonthlyCost(costPerCall, callsPerDay)` — 月度预测（30 天 / 365 天）
 
-**单元测试要求**：100% 覆盖（PRD v1.1 §7.1）。Week 2 接入 Vitest。
+测试：`lib/calculator.test.ts` 25 用例，100% 语句/函数/行覆盖。
 
 ### 5.2 `lib/tokenizer.ts`
 
 - OpenAI 系（`encoder !== "approximate"`）：动态导入 `js-tiktoken`，精确计数
 - 其他模型：用 `approximationRatio`（中/英/代码不同比率）估算
 - 返回 `{ count, exact: boolean }`，UI 上根据 `exact` 显示 ✓ Exact 或 ≈ Estimated
+- `js-tiktoken` 词表 1-2MB，必须 dynamic import 避免影响首屏
 
-**注意**：`js-tiktoken` 词表 1-2MB，必须 dynamic import 避免影响首屏。
+测试：`lib/tokenizer.test.ts` 8 用例。
 
-### 5.3 设计 Token（`app/globals.css`）
+### 5.3 `lib/currency.ts`
+
+- 5 个货币：USD（基准）/ CNY / EUR / GBP / INR
+- `convert(amountUsd, code)` — 转换
+- `formatCost(amountUsd, code)` — 格式化（非 USD 加 `~` 前缀表示约等于）
+- 数据来源：`data/currencies.json` 静态汇率（每月 1 号同步价格更新）
+
+测试：`lib/currency.test.ts` 15 用例。
+
+### 5.4 `lib/seo.ts`
+
+集中 SEO metadata 生成：
+- `modelSlug(modelId)` / `modelUrl(modelId)` — URL 规范化
+- `modelMetadata(model)` — 给 Next.js 用的完整 Metadata 对象
+- `modelJsonLd(model)` — Schema.org SoftwareApplication
+- `breadcrumbJsonLd(model)` — BreadcrumbList
+- `siteJsonLd()` — WebSite + SearchAction（首页用）
+- `SITE` 常量 — 单一域名/品牌名真相源头
+
+### 5.5 `lib/analytics.ts`
+
+GA4 事件 typed helper：
+- `track(name, params)` — 上报事件，typed `EventName` union（覆盖 PRD v1.1 §6.2 全部 17 类事件）
+- `trackDebounced(name, params, windowMs=2000)` — 去抖版（用于高频事件如 calculator_used）
+- 仅在 `window.gtag` 可用时上报，无 GA4 ID 时静默不报
+
+### 5.6 `lib/blog.ts`
+
+Markdown 文章渲染 pipeline：
+- `getAllPostSlugs()` — 文件系统扫描
+- `getAllPostsMeta()` — 解析所有 frontmatter，按日期降序
+- `getPostBySlug(slug)` — 解析单篇 + 渲染 HTML（gray-matter + remark + remark-gfm + remark-html）
+
+### 5.7 `lib/types.ts`
+
+Schema v2 完整类型定义（`Model` / `ModelPricing` / `CostBreakdown` / `CostComparison` / `MonthlyEstimate` / `CalculationOptions` 等），用于全项目类型安全。
+
+### 5.8 设计 Token（`app/globals.css`）
 
 | Token | Light | Dark | 用途 |
 |---|---|---|---|
@@ -179,6 +296,8 @@
 
 字体：Inter（英文）+ Noto Sans SC（中文）+ tabular-nums（数字防抖动）。
 
+CSS 类 `.prose-content` 用于长文章排版（法律页 + 博客文章），含 h2/h3/p/ul/code/blockquote/table 完整样式。
+
 ---
 
 ## 6. 本地开发
@@ -188,15 +307,23 @@
 npm install
 
 # 日常开发
-npm run dev          # 启动 dev server (http://localhost:3000)
+npm run dev              # 启动 dev server (http://localhost:3000)
+
+# 测试
+npm test                 # vitest run（CI 模式，跑一次）
+npm run test:watch       # watch 模式
+npm run test:ui          # vitest UI 浏览器界面
+npm run test:coverage    # 输出覆盖率报告
 
 # 部署前自检
-npm run type-check   # TS 检查
-npm run lint         # ESLint
-npm run build        # 验证 build 通过
+npm run type-check       # TS 检查（tsc --noEmit）
+npm run lint             # ESLint
+npm run build            # 验证 build 通过（含 SSG 预渲染所有页面）
 ```
 
-**Node 版本**：建议 20+，开发用 24.12 验证过。
+**Node 版本**：`engines.node >= 20`，开发用 Node 24.12 验证过。
+
+**注意 lockfile**：`package-lock.json` 当前在 `.gitignore` 中（详见 §16 changelog 2026-05-04 调试经过）。每次 `npm install` 会重新生成本地 lockfile。Vercel 部署时也是新生成。
 
 ---
 
@@ -252,23 +379,47 @@ npm run build        # 验证 build 通过
 **关键设置**：
 - Build Command: `npm run build`（默认）
 - Output Directory: `.next`（默认）
-- Node.js Version: 22.x（推荐）
+- Node.js Version: 22.x（推荐，与 `engines.node >= 20` 兼容）
+
+**⚠️ 域名重定向方向**（重要）：
+
+Vercel UI 默认行为有时会让 apex `aicostcalc.net` 重定向到 `www.aicostcalc.net`。**这是错的**。我们要的是反过来：
+
+- ✅ 正确：`www.aicostcalc.net` → 308 永久重定向 → `aicostcalc.net`（apex 是主域名）
+- ❌ 错误：`aicostcalc.net` → 重定向 → `www.aicostcalc.net`
+
+理由详见 §11 Decision 7。如果发现 sitemap 抓取失败或 SEO 有"双域名"问题，先检查这个方向。
+
+**Vercel 配置位置**：Settings → Domains → www.aicostcalc.net → "Redirect to Another Domain" 选 308 + 目标填 `aicostcalc.net`。
+
+**环境变量**（Vercel Settings → Environment Variables）：
+- `NEXT_PUBLIC_GA_ID` — GA4 Measurement ID（已配，格式 `G-XXXXXXXXXX`）
+
+**重定向缓存陷阱**：改 redirect 方向后，Vercel CDN 可能缓存旧响应 5-10 分钟。强制刷新方法：Deployments → 最新 deployment → Redeploy（取消勾选 "Use existing Build Cache"）。
 
 ---
 
 ## 9. 域名与服务清单
 
-| 服务 | 用途 | 账号 | 备注 |
+| 服务 | 用途 | 账号 | 状态 |
 |---|---|---|---|
-| 域名注册 | aicostcalc.net | Cloudflare Registrar (Lionelchen221@gmail.com) | $11.86/年 |
-| DNS | aicostcalc.net | Cloudflare | 同账号 |
-| 部署 | aicostcalc.net | Vercel（Hobby tier，待绑定 GitHub） | 免费 |
-| 代码托管 | aicostcalc | GitHub: Leolionel221 | Public repo |
-| 分析 | TBD | Google Analytics 4 + Plausible | Week 4 接入 |
-| 错误监控 | TBD | Sentry | Week 4 或更晚 |
-| AdSense | TBD | Google AdSense | 第 12 周后申请 |
+| 域名注册 | aicostcalc.net | Cloudflare Registrar (Lionelchen221@gmail.com) | ✅ $11.86/年 |
+| DNS | aicostcalc.net + www | Cloudflare | ✅ Auto-config 通过 Vercel |
+| 部署 | aicostcalc.net | Vercel Hobby（绑定 GitHub） | ✅ Free，自动 CI/CD |
+| 代码托管 | Leolionel221/aicostcalc | GitHub | ✅ Public + MIT + Topics 设好 |
+| **Google Search Console** | 索引/排名监控 | leochen221@proton.me | ✅ 域名级验证 + sitemap 18 URL 收录 |
+| **Bing Webmaster** | Bing 索引 | 同 GSC 账号 | ✅ 从 GSC 导入同步 |
+| **Google Analytics 4** | 用户行为 | leolionel221@gmail.com | ✅ ID 已配进 Vercel env，事件实时上报 |
+| **dev.to** | 内容分发 + 反向链接 | leolionel221 | ✅ 第 1 篇文章 live |
+| Sentry | 错误监控 | — | ⏳ 未上线（V1.1+ 视情况启用） |
+| Plausible | GA4 备份 | — | ⏳ 未上线 |
+| AdSense | 广告变现 | — | ⏳ 第 12-16 周申请（条件：30+ 文章 + 3 个月运营史） |
+| Affiliate (OpenRouter/Together AI/Helicone) | 联盟变现 | — | ⏳ 月 UV > 1K 后开始洽谈 |
 
 **密钥管理**：所有 secret 通过 Vercel Dashboard → Settings → Environment Variables 配置，不进 Git。
+
+**已配置的 env vars**：
+- `NEXT_PUBLIC_GA_ID` — GA4 Measurement ID
 
 ---
 
@@ -360,20 +511,14 @@ npm run build        # 验证 build 通过
 - dev.to 上 Hacker News 首页或类似爆点（写 follow-up 内容承接流量）
 
 ### Week 6+ — 持续内容与运营（数据回流后启动）
-- [ ] 基于 5/12 数据复盘决定内容方向（高印象关键词 → 主题加码 / 低互动文章 → 调整）
+- [ ] **2026-05-12 数据复盘**（用户回来发"第 7 天复盘" + GSC/GA4/dev.to 截图）
+- [ ] 基于复盘决定内容方向（高印象关键词 → 主题加码 / 低互动文章 → 调整）
 - [ ] 第 2 个月 5 篇文章（PRD §5.2 对比类候选）：DeepSeek vs OpenAI / Gemini vs GPT-4 / Open Source LLMs vs OpenAI / Claude Haiku vs GPT-4o-mini / Mistral vs Llama
-- [ ] 剩余博客文章交叉发布到 dev.to（按周节奏 1 篇）
+- [ ] 剩余 4 篇博客文章交叉发布到 dev.to（按周节奏 1 篇）
 - [ ] alternativeto.net 收录提交（5 分钟）
-- [ ] Product Hunt launch 准备（等 GitHub stars / dev.to 浏览数到一定基线再发）
-- [ ] 第 12-16 周申请 AdSense（要求：30+ 篇文章、自然流量、4 个法律页齐全 ✅、3 个月运营史）
-- [ ] 启动联盟营销洽谈（OpenRouter / Together AI / Helicone）
-
-详细路线图见 PRD v1.1 §9。
-
-### Week 6+ — 持续内容与运营
-- [ ] 第 2 个月 5 篇文章（PRD §5.2 对比类）：DeepSeek vs OpenAI / Gemini vs GPT-4 / Open Source LLMs vs OpenAI / Claude Haiku vs GPT-4o-mini / Mistral vs Llama
-- [ ] 第 3-6 个月按节奏每月 5 篇（优化类、场景类、深度+热点）
-- [ ] 监控首批索引情况（Google Search Console 数据洞见 / 效果报告，3-7 天后开始有数据）
+- [ ] BetaList / SideProjectors / launchingnext 提交（各 5 分钟）
+- [ ] Product Hunt launch 准备（等 GitHub stars > 10 + dev.to 浏览数 > 1K 再发）
+- [ ] 第 3-6 个月按节奏每月 5 篇（优化类、场景类、深度 + 热点）
 - [ ] 第 12-16 周申请 AdSense（要求：30+ 篇文章、自然流量、4 个法律页齐全 ✅、3 个月运营史）
 - [ ] 启动联盟营销洽谈（OpenRouter / Together AI / Helicone）
 
@@ -447,31 +592,40 @@ npm run build        # 验证 build 通过
 
 ## 12. 待办与挂起项
 
-### 用户操作清单（不阻塞，按你时间走）
+### 已完成（2026-05-05 收口前确认）
 
-- [ ] **Bing Webmaster 接入**（30 秒）— bing.com/webmasters → Microsoft 账号登录 → "Import from Google Search Console"，自动同步 sitemap
-- [ ] **GA4 Measurement ID 配进 Vercel**：
-  1. analytics.google.com → 拿 G-XXXXXXXXXX
-  2. Vercel → Settings → Environment Variables → 加 `NEXT_PUBLIC_GA_ID = G-XXX`（Production 环境）
-  3. Redeploy 一次让 env var 生效
-  4. 24 小时后 GA4 实时报告应该出现流量
-- [ ] **手动请求重要页面索引**（在 GSC 顶部搜索框逐个粘贴 URL → 请求编入索引），加速首批索引：
-  - `https://aicostcalc.net`
-  - 至少 3 个流量最高的模型页（GPT-5.5 / Claude Opus 4.7 / Gemini 3.0 Pro）
-  - 2 篇博客文章
+- ✅ Bing Webmaster 接入（从 GSC 导入同步）
+- ✅ GA4 Measurement ID 配进 Vercel env vars
+- ✅ GSC 8 个核心 URL 手动请求索引
+- ✅ Logo 设计（深 slate + forward chevron + emerald accent，详见 §16 v3 定稿）
+- ✅ GitHub Topics + 自 Star + README + MIT license
+- ✅ dev.to 第 1 篇交叉发布
 
-### 产品/运营待决策
+### 用户长期跟进
 
-- [ ] **Logo 设计**：当前 Nav 用了一个 lucide Calculator icon + "AI Cost Calc" 文字，能用但不算品牌。可选：自己画 / v0.dev / Fiverr 外包
-- [ ] **价格爬虫自动化**：第 1 个月手动维护，第 2 个月再上 Cloudflare Worker 定时抓官方页面（PRD v1.1 §4.3）
-- [ ] **A/B 测试基础设施**：留到 V1.2 第 4 个月再上（Vercel Edge Config 或 GrowthBook）
-- [ ] **联盟营销链接接入**：等首批流量到 1K+ UV/月再开始洽谈（OpenRouter / Together AI / Helicone）
+- [ ] **2026-05-12 数据复盘**——发我 GSC/GA4/dev.to 截图 + 观察
+- [ ] **每月 1 日定期价格更新**：核对 8 家官方价格页 → 更新 `data/models.json` 和 `data/currencies.json` → push（详见 §13 FAQ）
+- [ ] **真诚回复每条 dev.to 评论**
+
+### 产品/运营待决策（按时间窗口排序）
+
+- [ ] **Week 6+**：第 2 个月 5 篇对比类文章（详见 §10 Week 6+ 列表）
+- [ ] **Week 6+**：剩余 4 篇博客交叉发布到 dev.to（按周节奏 1 篇）
+- [ ] **Week 6+**：alternativeto.net / BetaList / SideProjectors / launchingnext 收录提交（各 5 分钟）
+- [ ] **流量到 1K UV/月**：开始联盟营销洽谈（OpenRouter / Together AI / Helicone）
+- [ ] **dev.to 浏览 > 1K + GitHub stars > 10**：Product Hunt launch（一次性弹药）
+- [ ] **价格爬虫自动化**（PRD v1.1 §4.3）：上 Cloudflare Worker 定时抓官方页（V1.2 阶段）
+- [ ] **A/B 测试基础设施**：V1.2 第 4 个月再上（Vercel Edge Config 或 GrowthBook）
 
 ### 技术债
 
-- [ ] **lockfile 兼容问题**：当前 `package-lock.json` 未进 git（详见 §16 changelog 2026-05-04）。修复路径：用 nvm 装 Node 22 + npm 10 重新生成兼容 lockfile，或评估迁 pnpm
-- [ ] **i18n 多语言路由**：V1.1 启用，把所有路由挪到 `app/[locale]/` 下（详见 §11 Decision 8）
-- [ ] **F-share / F-embed**（PRD v1.1 §3.4 提到）：URL 编码深链接 + 复制为图片 + iframe 嵌入。当前未实现，留给 V1.1
+- [ ] **lockfile 兼容问题**：`package-lock.json` 未进 git（详见 §16 changelog 2026-05-04）。修复路径：nvm 装 Node 22 + npm 10 重新生成兼容 lockfile，或评估迁 pnpm。**优先级**：低（不阻塞任何事）
+- [ ] **i18n 多语言路由 (V1.1)**：把所有路由挪到 `app/[locale]/` 下（详见 §11 Decision 8）
+- [ ] **F-share / F-embed (V1.1)**（PRD v1.1 §3.4）：URL 编码深链接 + 复制为图片 + iframe 嵌入
+- [ ] **F-api 公开 JSON endpoint (V1.1)**（PRD v1.1 §3.5）：让其他开发者用我们数据 → 反向链接 + 权威性
+- [ ] **Vision per-image 定价支持 (V1.1)**：`data/models.json` schema 已预留 `pricing.imagePerImage` 字段，需启用 UI
+- [ ] **Reasoning tokens 支持 (V1.2)**：o4-mini / Opus 等推理模型有思考 tokens
+- [ ] **provider logo SVG 文件**：`public/logos/` 目前是空目录，需补 openai.svg / anthropic.svg / google.svg / deepseek.svg / xai.svg / mistral.svg
 - [ ] **F-api**（PRD v1.1 §3.5 提到）：公开 JSON API endpoint，让其他开发者能用我们的数据。V1.1 加
 
 ---
@@ -500,6 +654,41 @@ npm run build        # 验证 build 通过
 **Q: 改了样式但没生效？**
 - Tailwind v4 用 CSS-based config，确认 `app/globals.css` 中 `@theme inline` 块是否定义了对应 token
 - 重启 dev server（Tailwind v4 hot reload 偶尔不灵）
+
+**Q: 怎么发一篇新博客文章？**
+1. 在 `content/blog/` 下创建 `your-slug.md`
+2. 顶部加 frontmatter（参考已有文章）：
+   ```yaml
+   ---
+   title: "标题（含关键词）"
+   description: "Meta description，120-160 字符"
+   date: "2026-05-XX"
+   author: "AI Cost Calc Team"
+   tags: ["tag1", "tag2"]
+   readingTime: "X min read"
+   featured: false
+   ---
+   ```
+3. 写 markdown 正文（支持 GFM 表格、代码块）
+4. 图片放 `public/blog/` 或外链
+5. 运行 `npm run build` 确认无误
+6. commit 用 `content: add <article-slug>` 格式
+7. push → Vercel 自动部署 → sitemap.xml 自动包含新 URL → GSC 自动通知 Google
+8. **GSC 顶部搜索框输入新文章 URL → "请求编入索引"** 加速首批抓取
+9. 如果交叉发到 dev.to：编辑器右上角设置 `canonical_url` 指向原文 URL，避免 SEO 重复
+
+**Q: 怎么响应 dev.to / GitHub / 邮件来的反馈？**
+- **dev.to 评论**：直接回复，哪怕 "thanks!" 也比沉默好（算法看互动）
+- **GitHub Issue（价格错误）**：24 小时内修复 → push → 关闭 issue 时贴上 commit 链接
+- **GitHub Issue（功能建议）**：先 thumbs up + "thanks for suggesting"，然后判断 V1.0/V1.1/V2.0 节奏
+- **邮件 leochen221@proton.me**：2 工作日内回复
+
+**Q: 怎么 debug 某个交互不上报 GA4 事件？**
+1. 浏览器 DevTools → Network → Filter `google-analytics.com` 或 `gtag`
+2. 触发交互后看是否有 `collect?` 请求发出
+3. 如果没发：检查 `lib/analytics.ts` 里 `track(name, params)` 是否被调用（`console.log` 一下）
+4. 如果发了：去 GA4 → 报告 → 实时 → DebugView，等 1-2 分钟看是否到达
+5. 检查 `NEXT_PUBLIC_GA_ID` env var 是否在 Vercel 中配置
 
 ---
 
