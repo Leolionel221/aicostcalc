@@ -2,7 +2,30 @@
   "name": "aicostcalc",
   "version": "0.1.0",
   "private": true,
-  "description": "AI API Cost Calculator - Compare pricing for 20+ LLM models",
+  "description": "Free tool to calculate and compare API pricing across 10+ LLMs (OpenAI, Anthropic, Google, DeepSeek, xAI, Mistral) including caching and Batch API discounts.",
+  "license": "MIT",
+  "homepage": "https://aicostcalc.net",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Leolionel221/aicostcalc.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Leolionel221/aicostcalc/issues"
+  },
+  "keywords": [
+    "ai",
+    "llm",
+    "pricing",
+    "calculator",
+    "openai",
+    "anthropic",
+    "claude",
+    "gpt",
+    "gemini",
+    "deepseek",
+    "cost-comparison",
+    "developer-tools"
+  ],
   "engines": {
     "node": ">=20.0.0"
   },
