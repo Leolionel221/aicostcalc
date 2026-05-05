@@ -5,8 +5,8 @@
 > 维护规则：每次"收口"（一个改动告一段落）都必须更新本文档相关章节，并在变更日志追加记录。
 
 **最后更新**：2026-05-05
-**当前阶段**：Week 1-5 ✅ 全部完成 — **PRD 第 1 个月 5 篇 SEO 文章全部交付**
-**下一步**：Week 6 — 第 2 个月对比类文章 + 监控 GSC 索引情况 + 用户接 GA4/Bing 后开始数据回流
+**当前阶段**：📊 **战略观察期** — 所有上线工作完成，等待 7 天 SEO/GA4 真实数据
+**下次决策点**：2026-05-12 数据复盘（GSC 印象数据 + GA4 用户行为 + dev.to 反响）→ 决定 Week 6 内容方向
 
 ---
 
@@ -334,6 +334,41 @@ npm run build        # 验证 build 通过
 - [x] 全部内容互相内链 + 链到模型独立页 + 链到首页计算器（完整内部 SEO 链接结构）
 - [x] 品牌 logo 重做（深 slate + 单一前进 chevron + emerald accent dot）
 - [x] favicon / apple-icon / og-image 全部统一新品牌
+- [x] README 重写（200 行专业 OSS 仓库门面）+ LICENSE (MIT)
+- [x] package.json 补 OSS 元数据（homepage、repository、bugs、keywords）
+- [x] GitHub Topics 标签设置 + 自 star
+- [x] dev.to 第一篇文章交叉发布（Top 10 Cheapest，含 canonical_url 反链）
+
+### 📊 战略观察期（2026-05-05 → 2026-05-12）
+**目标**：让 SEO/分析数据自然回流，避免没有数据基础就做盲目决策。
+
+**用户在做的事**（每天 ~10 分钟）：
+- GSC 索引监控 / 印象数据
+- GA4 实时事件 + 用户来源
+- dev.to 文章浏览量 / 评论
+- 真诚回每条评论
+
+**期间禁止动作**：
+- ❌ 不写新文章
+- ❌ 不加新功能
+- ❌ 不做付费推广
+- ❌ 不做 Product Hunt launch（保留弹药）
+
+**触发提前结束的条件**：
+- 24 小时单日 UV > 500（峰值复盘）
+- 收到价格错误举报（即时修复）
+- dev.to 上 Hacker News 首页或类似爆点（写 follow-up 内容承接流量）
+
+### Week 6+ — 持续内容与运营（数据回流后启动）
+- [ ] 基于 5/12 数据复盘决定内容方向（高印象关键词 → 主题加码 / 低互动文章 → 调整）
+- [ ] 第 2 个月 5 篇文章（PRD §5.2 对比类候选）：DeepSeek vs OpenAI / Gemini vs GPT-4 / Open Source LLMs vs OpenAI / Claude Haiku vs GPT-4o-mini / Mistral vs Llama
+- [ ] 剩余博客文章交叉发布到 dev.to（按周节奏 1 篇）
+- [ ] alternativeto.net 收录提交（5 分钟）
+- [ ] Product Hunt launch 准备（等 GitHub stars / dev.to 浏览数到一定基线再发）
+- [ ] 第 12-16 周申请 AdSense（要求：30+ 篇文章、自然流量、4 个法律页齐全 ✅、3 个月运营史）
+- [ ] 启动联盟营销洽谈（OpenRouter / Together AI / Helicone）
+
+详细路线图见 PRD v1.1 §9。
 
 ### Week 6+ — 持续内容与运营
 - [ ] 第 2 个月 5 篇文章（PRD §5.2 对比类）：DeepSeek vs OpenAI / Gemini vs GPT-4 / Open Source LLMs vs OpenAI / Claude Haiku vs GPT-4o-mini / Mistral vs Llama
@@ -390,6 +425,23 @@ npm run build        # 验证 build 通过
 ### Decision 9: 文章先发 2 篇启动，剩余 3 篇分批产（2026-05-05）
 **结论**：Week 4 先交付 2 篇高质量文章（OpenAI / Claude pricing），剩余 3 篇（Top 10 Cheapest / How to Calculate Token Cost / GPT vs Claude）滚动到 Week 5+ 处理。
 **理由**：每篇 2000 字深度文章一轮做完会牺牲质量。基础设施（MDX pipeline + Article JSON-LD）一次到位即可，文章可分批迭代。Google 对内容质量极敏感，宁可少发不能差发。
+
+### Decision 10: 仓库改 MIT 开源（2026-05-05）
+**结论**：从 "Private — all rights reserved" 改为 MIT License，配合 README 重写。
+**理由**：
+1. 你站点的护城河是**品牌 + 内容 + 数据维护**，不是代码（任何人 fork 都没法跟你竞争"被 Google 索引的内容资产"）
+2. 你的 GitHub repo 同时是**SEO 资产**和**社区发现入口**——awesome-list 收录、技术博客引用、贡献者参与都需要 OSI 认可的开源许可证
+3. MIT 是最被广泛接受的选择，没有任何使用限制
+4. "Private + Public 仓库" 自相矛盾且劝退贡献者
+**操作**：LICENSE 文件 + package.json `"license": "MIT"` 字段 + README 改 badge。
+
+### Decision 11: 战略观察期 7 天（2026-05-05）
+**结论**：5/5 上线 + 内容产出全部到位后，进入 7 天观察期，5/12 数据复盘后再决定 Week 6 方向。
+**理由**：
+- 24 小时内做完 PRD 4 周计划是异常加速。继续往前推会进入"凭直觉决策"区间。
+- SEO/GA4 数据回流需要时间（GSC 印象数据 3-7 天起，GA4 用户行为模式 7 天起）
+- 真实数据 > 假设。数据告诉你哪类内容/关键词最有 traction，再投资源效率最高。
+**期间允许的动作**：每天 5-10 分钟扫数据 + 真诚回评论。期间禁止新增内容/功能/付费推广。
 
 ---
 
@@ -476,6 +528,42 @@ npm run build        # 验证 build 通过
 ## 16. 变更日志
 
 > 每次"收口"在此追加一条记录。最新的在最上方。
+
+### 2026-05-05 — 社区发现期收口（README 改造 + dev.to 首发 + 进入战略观察期）
+**类型**：community + observation
+**摘要**：MVP 完整上线 + 5 篇文章产出后，做了一轮"社区发现"准备，并进入 7 天战略观察期等数据回流。
+
+**README + 仓库门面改造**（commit `2df2ad6`）：
+- README 从 30 行 → 200 行，结构：居中 hero + 5 个 badge + OG image 横幅 + Why this exists + 9 项 features + 10 模型表 + 5 篇博客阅读列表 + 12 层 tech stack + Quick start + 项目结构树 + 贡献指南 + 路线图 + 商标声明
+- LICENSE 文件添加（MIT，详见 §11 Decision 10）
+- package.json 补齐 OSS 元数据：license / homepage / repository / bugs / 12 个 keywords
+
+**社区动作完成**：
+- ✅ GitHub Topics 标签设置（12 个 keywords，进入 GitHub Topics 浏览页面）
+- ✅ 自 Star（首颗，零变一）
+- ✅ dev.to 第一篇文章交叉发布：[Top 10 Cheapest AI APIs in 2026](https://dev.to/leolionel221/top-10-cheapest-ai-apis-in-2026-ranked-by-real-cost-2f98)
+  - canonical_url 正确指向原文（无 SEO 重复内容风险）
+  - 4 tags：ai / llm / productivity / opensource
+  - 表格、cover image、cross-post disclaimer 全部正确渲染
+  - 收获 1 个 dev.to 高权重外链（域名权重 89）
+
+**未做但记录在案**：
+- TAAFT (theresanaiforthat) → 已收费，跳过
+- futurepedia / futuretools / toolify → 已收费，跳过
+- Reddit r/LocalLLaMA / r/MachineLearning → karma 门槛，需要后续养号或跳过
+- V2EX 分享创造节点 → 等级门槛，需要养号
+- Twitter/X / LinkedIn → 无粉丝基础，发了也无效
+- alternativeto.net / SideProjectors / launchingnext / BetaList → 留作后续 Week 6 后期投放
+
+**进入战略观察期**：
+- **2026-05-05 → 2026-05-12** 不增加新内容/功能/付费推广
+- 用户每天 ~10 分钟扫数据：GSC 索引 + 印象 / GA4 实时 + 事件 / dev.to 浏览 + 评论
+- 期间真诚回每条评论
+- 5/12 数据复盘 → 决定 Week 6 内容方向（用户回来说"第 7 天复盘"）
+
+**为什么观察而不是继续推**：从项目启动到当前不到 30 小时，已完成原 PRD 4 周计划。继续往前推会进入"凭直觉决策"区间——SEO 是慢节奏游戏，前 1-2 周观察远比加更多内容有价值。
+
+---
 
 ### 2026-05-05 — Week 5 收口（第 1 个月内容全发完 + 品牌 logo 定稿）
 **类型**：content + design
