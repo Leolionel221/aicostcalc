@@ -130,4 +130,98 @@ export function breadcrumbJsonLd(model: Model) {
 export const SITE = {
   url: SITE_URL,
   name: SITE_NAME,
+  github: "https://github.com/Leolionel221/aicostcalc",
 };
+
+const ISSUES_URL = `${SITE.github}/issues/new`;
+
+/**
+ * Build a GitHub Issues URL pre-filled with model pricing context.
+ * Used by the "Spotted a wrong price?" link on each model landing page.
+ *
+ * Pre-fills current values so the user only edits the wrong line + adds source.
+ */
+export function reportPriceUrl(model: Model): string {
+  const lines: string[] = [
+    `**Model**: ${model.name}`,
+    `**Provider**: ${model.provider}`,
+    ``,
+    `Current values shown on the site (please tell us which is wrong):`,
+    `- Input: $${model.pricing.input.toFixed(2)} / 1M tokens`,
+    `- Output: $${model.pricing.output.toFixed(2)} / 1M tokens`,
+  ];
+  if (model.pricing.cachedInput !== null) {
+    lines.push(
+      `- Cached input: $${model.pricing.cachedInput.toFixed(2)} / 1M tokens`,
+    );
+  }
+  if (model.pricing.cacheWrite !== null) {
+    lines.push(
+      `- Cache write: $${model.pricing.cacheWrite.toFixed(2)} / 1M tokens`,
+    );
+  }
+  if (model.pricing.batchInput !== null) {
+    lines.push(
+      `- Batch input: $${model.pricing.batchInput.toFixed(2)} / 1M tokens`,
+    );
+  }
+  if (model.pricing.batchOutput !== null) {
+    lines.push(
+      `- Batch output: $${model.pricing.batchOutput.toFixed(2)} / 1M tokens`,
+    );
+  }
+  lines.push(
+    `- Context window: ${(model.limits.contextWindow / 1000).toFixed(0)}K tokens`,
+  );
+  lines.push(``);
+  lines.push(`---`);
+  lines.push(``);
+  lines.push(`**What needs correction**: (e.g. "Output price should be $18.00, not $20.00")`);
+  lines.push(``);
+  lines.push(`**Suggested correct value**:`);
+  lines.push(``);
+  lines.push(`**Source link** (official ${model.provider} pricing page):`);
+  lines.push(``);
+  lines.push(`---`);
+  lines.push(`Page: ${modelUrl(model.id)}`);
+  lines.push(`Reported via "Spotted a wrong price?" link.`);
+
+  const params = new URLSearchParams({
+    title: `Pricing correction: ${model.name}`,
+    body: lines.join("\n"),
+    labels: "pricing-correction",
+  });
+
+  return `${ISSUES_URL}?${params.toString()}`;
+}
+
+/**
+ * Build a generic GitHub Issues URL for any feedback / bug reports.
+ * Used in Footer "Report an error" link.
+ */
+export function reportFeedbackUrl(): string {
+  const body = [
+    `**Type**: (Bug / Feature request / Pricing correction / General feedback / Question)`,
+    ``,
+    `**Description**:`,
+    ``,
+    `**Steps to reproduce** (if bug):`,
+    `1.`,
+    `2.`,
+    `3.`,
+    ``,
+    `**Expected behavior**:`,
+    ``,
+    `**Actual behavior**:`,
+    ``,
+    `**Browser / device** (if relevant):`,
+  ].join("\n");
+
+  const params = new URLSearchParams({
+    title: "",
+    body,
+    labels: "feedback",
+  });
+
+  return `${ISSUES_URL}?${params.toString()}`;
+}

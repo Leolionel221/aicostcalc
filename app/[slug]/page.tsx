@@ -14,6 +14,7 @@ import {
   modelMetadata,
   modelJsonLd,
   breadcrumbJsonLd,
+  reportPriceUrl,
 } from "@/lib/seo";
 
 const data = modelsData as ModelsData;
@@ -192,6 +193,16 @@ export default async function ModelPage({
             >
               {model.provider} official pricing
               <ExternalLink className="h-3 w-3" />
+            </a>
+            {" "}·{" "}
+            <a
+              href={reportPriceUrl(model)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 underline hover:text-foreground text-[color:var(--warning)]"
+              title="Open a pre-filled GitHub issue to correct this price"
+            >
+              ⚠️ Spotted a wrong price? Report in 30s →
             </a>
           </p>
         </div>

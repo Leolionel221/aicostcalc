@@ -1,3 +1,5 @@
+import { reportFeedbackUrl } from "@/lib/seo";
+
 function GithubIcon({ className }: { className?: string }) {
   return (
     <svg
@@ -104,6 +106,17 @@ export function Footer() {
                 >
                   <GithubIcon className="h-3.5 w-3.5" />
                   GitHub
+                </a>
+              </li>
+              <li>
+                <a
+                  href={reportFeedbackUrl()}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-foreground transition-colors"
+                  title="Report a bug, request a feature, or send feedback"
+                >
+                  Report an error / feedback →
                 </a>
               </li>
               <li>
