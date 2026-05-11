@@ -4,9 +4,9 @@
 >
 > 维护规则：每次"收口"（一个改动告一段落）都必须更新本文档相关章节，并在变更日志追加记录。
 
-**最后更新**：2026-05-05
-**当前阶段**：📊 **战略观察期** — 所有上线工作完成，等待 7 天 SEO/GA4 真实数据
-**下次决策点**：2026-05-12 数据复盘（GSC 印象数据 + GA4 用户行为 + dev.to 反响）→ 决定 Week 6 内容方向
+**最后更新**：2026-05-12
+**当前阶段**：📈 **Week 6 数据驱动内容期** — 观察期结束，基于真实 SEO 数据精准发力
+**下次决策点**：2026-05-19 看 OpenAI Caching 这篇新文章的曝光增长；决定 Week 7 第 2 篇文章节奏
 
 ---
 
@@ -41,13 +41,16 @@
 3. 场景化模板（6 个使用场景一键填充）
 4. 配套深度 SEO 内容（V1.0 已发 5 篇 ~14,000 字）
 
-**当前线上数据快照**（2026-05-05）：
-- 21 个 SSG 静态页面（首页 + 10 模型 + 5 文章 + 4 法律 + 博客索引）
-- ~14,000 字英文 SEO 内容
-- Google Search Console 域名级验证 + sitemap 提交成功（18 URL 已收）
+**当前线上数据快照**（2026-05-12）：
+- **22 个 SSG 静态页面**（首页 + 10 模型 + 6 文章 + 4 法律 + 博客索引）
+- **~16,000 字英文 SEO 内容**
+- Google Search Console：sitemap 已收，**18 页已索引** / 6 页等待（含正常重定向）
+- **Week 1 真实 SEO 数据**：1,859 曝光（+44.5% WoW），3 点击，平均排名 9.8（Top 10）
+- 5 个关键词 ≥15 曝光（claude opus 4.7 / openai prompt caching / gpt 5 mini / gpt 5.5 cost / gpt-5-mini）
 - Bing Webmaster 已导入同步
-- GA4 实时事件回流中
+- GA4 实时事件回流中（102 events, 8 users 28 天窗口）
 - dev.to 第 1 篇文章交叉发布（高权重反向链接）
+- 站内 GitHub Issues 反馈通道已上线（每页 + Footer）
 
 ---
 
@@ -510,14 +513,27 @@ Vercel UI 默认行为有时会让 apex `aicostcalc.net` 重定向到 `www.aicos
 - 收到价格错误举报（即时修复）
 - dev.to 上 Hacker News 首页或类似爆点（写 follow-up 内容承接流量）
 
-### Week 6+ — 持续内容与运营（数据回流后启动）
-- [ ] **2026-05-12 数据复盘**（用户回来发"第 7 天复盘" + GSC/GA4/dev.to 截图）
-- [ ] 基于复盘决定内容方向（高印象关键词 → 主题加码 / 低互动文章 → 调整）
-- [ ] 第 2 个月 5 篇文章（PRD §5.2 对比类候选）：DeepSeek vs OpenAI / Gemini vs GPT-4 / Open Source LLMs vs OpenAI / Claude Haiku vs GPT-4o-mini / Mistral vs Llama
+### Week 6 — 数据驱动内容期（进行中）
+
+**✅ 已完成**：
+- [x] **2026-05-12 数据复盘** — Week 1 SEO 表现远超 PRD 预期（详见 §16 changelog）
+- [x] 内容方向调整：基于数据，把"OpenAI prompt caching"主题提到 Week 6 第 1 篇
+- [x] **第 1 篇新文章**：[OpenAI Prompt Caching in 2026: When You'll Save 75%](https://aicostcalc.net/blog/openai-prompt-caching-when-worth-it)（1,900 字，2026-05-12 发布）
+- [x] 站内反馈通道上线（每模型页 + Footer 链 GitHub Issues 预填模板）
+
+**📋 Week 6 剩余任务**：
+- [ ] 等 1-2 天后，把 OpenAI Caching 文章交叉发布到 dev.to（重复上次格式）
+- [ ] 5/19 数据复盘：看新文章曝光增长情况
+
+### Week 7+ — 持续内容与运营
+
+**优先级（基于 Week 1 GSC 数据反馈）**：
+- [ ] **第 2 篇文章（Week 7）**：GPT-5 mini vs Claude Haiku 4.5 — Real Production Cost Math（双高曝光关键词锁定）
+- [ ] **第 3 篇（Week 8）**：DeepSeek V4 vs OpenAI（PRD §5.2 计划，数据未验证但应试）
+- [ ] **第 4-5 篇（Week 9-10）**：Gemini 3.0 Pro vs GPT-5.5 长上下文 + How Much Does It Cost to Build a Chatbot
 - [ ] 剩余 4 篇博客文章交叉发布到 dev.to（按周节奏 1 篇）
-- [ ] alternativeto.net 收录提交（5 分钟）
-- [ ] BetaList / SideProjectors / launchingnext 提交（各 5 分钟）
-- [ ] Product Hunt launch 准备（等 GitHub stars > 10 + dev.to 浏览数 > 1K 再发）
+- [ ] alternativeto.net / BetaList / SideProjectors / launchingnext 收录提交（Week 8+）
+- [ ] Product Hunt launch 准备（Week 10+ 等 GitHub stars > 10 + dev.to 浏览 > 1K）
 - [ ] 第 3-6 个月按节奏每月 5 篇（优化类、场景类、深度 + 热点）
 - [ ] 第 12-16 周申请 AdSense（要求：30+ 篇文章、自然流量、4 个法律页齐全 ✅、3 个月运营史）
 - [ ] 启动联盟营销洽谈（OpenRouter / Together AI / Helicone）
@@ -717,6 +733,68 @@ Vercel UI 默认行为有时会让 apex `aicostcalc.net` 重定向到 `www.aicos
 ## 16. 变更日志
 
 > 每次"收口"在此追加一条记录。最新的在最上方。
+
+### 2026-05-12 — Week 6 第 1 篇收口（数据复盘 + Caching 专文发布）
+**类型**：content + analysis
+**摘要**：观察期结束，做完 Week 1 真实数据复盘，基于数据发布 Week 6 第 1 篇文章。
+
+**Week 1 真实数据**（2026-05-05 → 2026-05-12）：
+- 总曝光 1,859 次（+44.5% WoW，从 1,286）
+- 总点击 3 次（+50% WoW，从 2）
+- 平均排名 9.8（持平在 Google 第一页底部）
+- 平均 CTR 0.2%（持平，新域名常态）
+- 18 页已被索引（之前 17）+ 6 页等待中（4 已发现 / 2 重定向，全部正常）
+- GA4：8 用户 / 102 事件 / 1m05s 平均会话 / 100% Direct attribution
+
+**Top 5 查询关键词**（按曝光降序）：
+1. claude opus 4.7 api pricing may 2026 — 17 曝光 / 0 点击
+2. openai prompt caching pricing 2026 — 16 曝光 / 0 点击  🆕 高价值新出现
+3. gpt 5 mini pricing — 16 曝光 / 0 点击
+4. gpt 5.5 cost — 15 曝光 / 0 点击
+5. gpt-5-mini pricing — 15 曝光 / 0 点击
+
+**Top 排名页面**（按曝光）：
+- /blog/openai-api-pricing-explained-2026 — 979 曝光 / 0 点击（**52.7% 全站曝光**）
+- /claude-opus-4-7-cost-calculator — 365 曝光 / 2 点击 ✅
+- /gpt-5-mini-cost-calculator — 110 曝光 / 0 点击
+- /blog/claude-api-pricing-2026 — 101 曝光 / 0 点击
+- /gpt-5-5-cost-calculator — 89 曝光 / 1 点击 ✅
+- /claude-haiku-4-5-cost-calculator — 84 曝光 / 0 点击
+- 其余 4 个模型 page + 首页 共 ~150 曝光
+
+**核心洞察**：
+1. **OpenAI Pricing Explained 一篇贡献了 52.7% 全站曝光**——这是 Week 1 最关键发现，验证 SEO 内容投资正确
+2. **模型 landing page CTR > 博客文章**（0.40% vs 0%）——landing page 的 "Cost Calculator" title 匹配 transactional intent
+3. **关键词扩散开始**：从 2 个高曝光词 → 5 个，说明域名权威性建立中
+4. **CTR 低是新域名 + 第 9.8 位的必然结果**，不是产品问题，靠时间解决（3-6 月品牌识别度提升）
+
+**Week 6 第 1 篇文章发布**（commit `80bd017`）：
+- 文件：`content/blog/openai-prompt-caching-when-worth-it.md`
+- 标题：*OpenAI Prompt Caching in 2026: When You'll Save 75% (And When You Won't)*
+- 字数：~1,900
+- URL：https://aicostcalc.net/blog/openai-prompt-caching-when-worth-it
+- 数据驱动选题：979 曝光的 OpenAI Pricing Explained 是 "openai prompt caching" 查询的入口，这篇新文章直击 intent
+- 结构：9 章（机制 / 数学 / 4 个高价值场景 / 4 个反模式 / 缓存命中率测量 / break-even / Provider 对比 / 30 分钟清单 / 底线）
+- 内部链接：链回 OpenAI Pricing Explained / Claude API Pricing / Token Cost Guide / 首页计算器
+- Sitemap 自动同步到 22 个 URL（之前 21）
+
+**站内反馈通道上线**（commit `b54b67a`，5/5 实施，本次补记）：
+- 每个模型 landing page 价格表下方加 "⚠️ Spotted a wrong price? Report in 30s →" 链接
+- Footer "About" 栏加 "Report an error / feedback →" 链接
+- 跳转到 GitHub Issues 预填好结构化模板（title + body + label）
+- 零后端、零维护，公开透明
+- `lib/seo.ts` 添加 `reportPriceUrl(model)` / `reportFeedbackUrl()` 两个 helper
+
+**Week 7+ 内容方向调整**（基于数据）：
+- 原 PRD §5.2 第 2 个月计划"5 篇对比类"保留，但调整优先级：
+  - 🥇 GPT-5 mini vs Claude Haiku 4.5（双高曝光关键词锁定）
+  - 🥈 DeepSeek V4 vs OpenAI（PRD 原计划）
+  - 🥉 其他对比按部就班
+- 节奏调整：每周 1 篇深度文章（原计划每周 1-2 篇，但质量优先）
+
+**下次决策点 2026-05-19**：看 OpenAI Caching 这篇新文章发布 1 周后的曝光增长，确认 Week 7 第 2 篇文章发布时机。
+
+---
 
 ### 2026-05-05 — 社区发现期收口（README 改造 + dev.to 首发 + 进入战略观察期）
 **类型**：community + observation
