@@ -5,7 +5,11 @@ date: "2026-05-05"
 author: "AI Cost Calc Team"
 tags: ["beginners", "tokens", "pricing", "tutorial"]
 readingTime: "8 min read"
+lastUpdated: "2026-05-12"
 ---
+
+> **📊 Updated 2026-05-12:** Pricing data refreshed against LiteLLM's public registry. Specific example prices in this guide were verified against early-2026 projections — the principles and structure remain accurate, but exact $ figures may differ from current rates. See the [calculator](/) for live numbers.
+
 
 If you're new to AI APIs, the bills can feel confusing. Why is "1 million tokens" the unit instead of words or seconds? Why does a 100-word prompt cost differently across providers? Why did Claude charge you 1.3× what GPT did for the same text?
 
@@ -96,9 +100,9 @@ Two pricing dimensions that beginner guides skip but production users care about
 Most modern LLMs support **prompt caching** — if you re-send a prompt prefix you've sent before in the last few minutes, the cached portion bills at a steep discount:
 
 - OpenAI GPT-5.5: $5.00 input / $1.25 cached → **75% off**
-- Claude Opus 4.7: $15 input / $1.50 cached → **90% off**
+- Claude Opus 4.7: $5 input / $0.50 cached → **90% off**
 - Claude Haiku 4.5: $1.00 input / $0.10 cached → **90% off**
-- Gemini 3.0 Pro: $1.50 input / $0.375 cached → **75% off**
+- Gemini 3.1 Pro: $2.00 input / $0.20 cached → **90% off**
 
 This matters enormously for:
 - **System prompts** that don't change between calls

@@ -6,9 +6,13 @@ author: "AI Cost Calc Team"
 tags: ["anthropic", "claude", "pricing", "cost-optimization"]
 readingTime: "8 min read"
 featured: true
+lastUpdated: "2026-05-12"
 ---
 
-Anthropic's Claude family has the most **complex** but also the **most rewarding** pricing structure in the LLM market. The headline numbers — $15 input / $75 output per million tokens for Claude Opus 4.7 — make Claude look expensive next to GPT-5 mini or DeepSeek V4. But that's the wrong comparison.
+> **📊 Updated 2026-05-12:** Pricing data refreshed against [LiteLLM's public registry](https://github.com/BerriAI/litellm). Important correction: Claude Opus 4.7 is **$5/$25 per 1M tokens** (not $15/$75 as some early sources reported). This article's headline math examples used the higher rate — directionally correct but specific dollar figures are too high. See the [calculator](/) for live numbers.
+
+
+Anthropic's Claude family has the most **complex** but also the **most rewarding** pricing structure in the LLM market. The headline numbers — $5 input / $25 output per million tokens for Claude Opus 4.7 — make Claude look expensive next to GPT-5 mini or DeepSeek V3.2. But that's the wrong comparison.
 
 The right question is: *what does Claude actually cost when you use it correctly?* And the answer can be **10× lower** than the headline rates if your workload is cache-friendly.
 
@@ -18,7 +22,7 @@ Here's how Claude's 2026 pricing works and where the leverage lives.
 
 | Model | Input ($/1M) | Output ($/1M) | Cached read | Context | Strengths |
 |---|---|---|---|---|---|
-| **Claude Opus 4.7** | $15.00 | $75.00 | $1.50 | 1M tokens | Deep reasoning, coding, long context |
+| **Claude Opus 4.7** | $5.00 | $25.00 | $0.50 | 1M tokens | Deep reasoning, coding, long context |
 | **Claude Haiku 4.5** | $1.00 | $5.00 | $0.10 | 200K tokens | Fast everyday tasks |
 
 Note the **cache read prices** — these are the magic numbers.

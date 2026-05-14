@@ -6,7 +6,11 @@ author: "AI Cost Calc Team"
 tags: ["pricing", "comparison", "deepseek", "gemini", "cost-optimization"]
 readingTime: "7 min read"
 featured: true
+lastUpdated: "2026-05-12"
 ---
+
+> **📊 Updated 2026-05-12:** Pricing data refreshed against [LiteLLM's public model registry](https://github.com/BerriAI/litellm). Notable changes since publication: Claude Opus 4.7 dropped from $15/$75 to **$5/$25** (LiteLLM-verified), Mistral Large 3 dropped from $2.50/$7.50 to **$0.50/$1.50**, DeepSeek V4 → V3.2 ($0.28/$0.40). The ranking below reflects current verified prices.
+
 
 "Cheapest AI API" is a misleading question. The model that costs the least per token might be useless for your task — and the one that looks expensive might be 10× cheaper *for what you actually use it for*. So before we hand you the list, two caveats:
 
@@ -31,18 +35,18 @@ All 10 models are pre-loaded into [the calculator on the homepage](/) so you can
 
 | Rank | Model | Provider | Per-call cost | Best for |
 |---|---|---|---|---|
-| 1 | **GPT-5 mini** | OpenAI | $0.0006 | Default everyday small |
-| 2 | **Gemini 3.0 Flash** | Google | $0.0013 | Multimodal at scale |
-| 3 | **DeepSeek V4** | DeepSeek | $0.0009 | Coding, math, reasoning value |
-| 4 | **o4-mini** | OpenAI | $0.0027 | STEM reasoning |
-| 5 | **Claude Haiku 4.5** | Anthropic | $0.0035 | Anthropic ecosystem, caching-heavy workloads |
-| 6 | **Gemini 3.0 Pro** | Google | $0.0075 | Long context (2M tokens) |
-| 7 | **Mistral Large 3** | Mistral | $0.0058 | EU hosting, multilingual |
-| 8 | **Grok 4** | xAI | $0.0140 | Real-time X integration |
-| 9 | **GPT-5.5** | OpenAI | $0.0150 | Frontier multimodal |
-| 10 | **Claude Opus 4.7** | Anthropic | $0.0525 | Hard reasoning, 1M context |
+| 1 | **DeepSeek V3.2** | DeepSeek | $0.00048 | Cheapest by far — coding, math, reasoning |
+| 2 | **GPT-5 mini** | OpenAI | $0.00125 | Default everyday small |
+| 3 | **Mistral Large 3** | Mistral | $0.00125 | EU hosting, multilingual, big context |
+| 4 | **Gemini 3 Flash** | Google | $0.002 | Multimodal at scale |
+| 5 | **o4-mini** | OpenAI | $0.0033 | STEM reasoning |
+| 6 | **Claude Haiku 4.5** | Anthropic | $0.0035 | Anthropic ecosystem, caching-heavy workloads |
+| 7 | **Gemini 3.1 Pro** | Google | $0.008 | Long context (1M+ tokens) |
+| 8 | **Grok 4** | xAI | $0.0105 | Real-time X integration |
+| 9 | **Claude Opus 4.7** | Anthropic | $0.0175 | Deep reasoning, 1M context |
+| 10 | **GPT-5.5** | OpenAI | $0.020 | Frontier multimodal, biggest context |
 
-> **Numbers update monthly.** The figures above reflect rates verified May 2026. The [calculator](/) always shows the current snapshot.
+> **Numbers update monthly.** The figures above reflect rates verified 2026-05-12 against LiteLLM's public registry. The [calculator](/) always shows the current snapshot.
 
 ## #1: GPT-5 mini ($0.0006/call)
 
@@ -68,7 +72,7 @@ Trade-offs:
 
 If you're cost-sensitive and your workload is coding, math, or reasoning-heavy, DeepSeek V4 is the rational pick. The savings vs comparable Western models can fund 10× the volume.
 
-[See the full DeepSeek V4 calculator →](/deepseek-v4-cost-calculator)
+[See the full DeepSeek V3.2 calculator →](/deepseek-v3-2-cost-calculator)
 
 ## #3: Gemini 3.0 Flash ($0.0013/call)
 
@@ -80,7 +84,7 @@ Google's high-throughput multimodal model. The pitch:
 
 For multimodal pipelines (image classification, audio summarization, document QA), Gemini 3.0 Flash is the sweet spot. For pure text, GPT-5 mini is slightly cheaper but less capable on long context.
 
-[See the full Gemini 3.0 Flash calculator →](/gemini-3-0-flash-cost-calculator)
+[See the full Gemini 3 Flash calculator →](/gemini-3-flash-cost-calculator)
 
 ## #4: o4-mini ($0.0027/call)
 

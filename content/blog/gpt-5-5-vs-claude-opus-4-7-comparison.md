@@ -6,7 +6,11 @@ author: "AI Cost Calc Team"
 tags: ["openai", "anthropic", "comparison", "gpt-5", "claude-opus", "cost-optimization"]
 readingTime: "9 min read"
 featured: true
+lastUpdated: "2026-05-12"
 ---
+
+> **📊 Updated 2026-05-12:** Pricing data refreshed against [LiteLLM's public registry](https://github.com/BerriAI/litellm). The original article assumed Claude Opus 4.7 was $15/$75 — actual rate is **$5/$25**. This means **GPT-5.5 ($5/$30) is now MORE expensive than Opus on output**, not less. The "Opus is 3.5× more expensive" thesis below is incorrect at current prices; Opus is actually competitive or cheaper on output. The qualitative comparison (when each wins on capability) still holds.
+
 
 The two flagship reasoning models in May 2026 are **GPT-5.5** (OpenAI) and **Claude Opus 4.7** (Anthropic). Both are top-tier. Both are expensive. Both are great at different things — and the answer to "which should I use" is much less obvious than the marketing pages suggest.
 
@@ -19,18 +23,18 @@ This article breaks down the head-to-head in three dimensions:
 
 | Dimension | GPT-5.5 | Claude Opus 4.7 |
 |---|---|---|
-| **Input price** | $5.00 / 1M | $15.00 / 1M |
-| **Output price** | $20.00 / 1M | $75.00 / 1M |
-| **Cached input** | $1.25 / 1M (75% off) | $1.50 / 1M (90% off) |
-| **Batch input** | $2.50 / 1M | $7.50 / 1M |
-| **Batch output** | $10.00 / 1M | $37.50 / 1M |
-| **Context window** | 256K tokens | 1M tokens |
-| **Max output** | 32K tokens | 16K tokens |
+| **Input price** | $5.00 / 1M | $5.00 / 1M |
+| **Output price** | $30.00 / 1M | $25.00 / 1M |
+| **Cached input** | $0.50 / 1M (90% off) | $0.50 / 1M (90% off) |
+| **Batch input** | $2.50 / 1M | $2.50 / 1M |
+| **Batch output** | $15.00 / 1M | $12.50 / 1M |
+| **Context window** | 1M+ tokens | 1M tokens |
+| **Max output** | 128K tokens | 128K tokens |
 | **Vision** | ✓ | ✓ |
 | **Audio** | ✓ | — |
 | **Tool use** | Strong | Best-in-class |
 
-**Headline pricing**: Claude Opus 4.7 is **3.5× more expensive per call** than GPT-5.5 at face value.
+**Headline pricing**: These two flagship models are now **nearly identically priced** — GPT-5.5 input matches Opus exactly, and Opus is **20% cheaper on output** ($25 vs $30). The "Opus premium" of past versions is gone.
 
 **With caching applied**: the gap can collapse to under 2× or even invert in Opus's favor for specific workloads. Read on.
 

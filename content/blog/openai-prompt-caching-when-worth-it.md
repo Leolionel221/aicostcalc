@@ -208,11 +208,11 @@ OpenAI is simpler but less controllable:
 
 | Provider | Cache trigger | Discount | Cache write cost | Control |
 |---|---|---|---|---|
-| **OpenAI GPT-5.5** | Automatic prefix | 75% off | None | Low |
-| **OpenAI GPT-5 mini** | Automatic prefix | 75% off | None | Low |
+| **OpenAI GPT-5.5** | Automatic prefix | **90% off** ($0.50/1M cached) | None | Low |
+| **OpenAI GPT-5 mini** | Automatic prefix | **92% off** ($0.02/1M cached) | None | Low |
 | **Anthropic Claude Opus 4.7** | Explicit `cache_control` | **90% off** | 1.25× | High |
 | **Anthropic Claude Haiku 4.5** | Explicit `cache_control` | **90% off** | 1.25× | High |
-| **Google Gemini 3.0 Pro** | Context caching API | 75% off | None | Medium |
+| **Google Gemini 3.1 Pro** | Context caching API | **90% off** ($0.20/1M cached) | None | Medium |
 
 **Trade-offs**:
 - **OpenAI is easiest** — works with zero code changes if your prompts are already structured well

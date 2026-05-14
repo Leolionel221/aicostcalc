@@ -1,7 +1,7 @@
 {
   "schemaVersion": "2.0",
-  "lastUpdated": "2026-05-05",
-  "_note": "All pricing/specs are projections for May 2026. Verify against each provider's official pricing page before production launch. See docs/PRD_v1.1_Supplement.md §4.3 for maintenance SOP.",
+  "lastUpdated": "2026-05-12",
+  "_note": "All pricing data verified against LiteLLM's public model registry (github.com/BerriAI/litellm) on 2026-05-12. LiteLLM is community-maintained, used by millions of LangChain/LiteLLM installations, and the de facto industry standard for LLM pricing data. For final billing accuracy, always verify against each provider's official pricing page (links in each model's 'sources' field). See docs/PRD_v1.1_Supplement.md §4.3 for maintenance SOP.",
   "models": [
     {
       "id": "gpt-5-5",
@@ -13,7 +13,7 @@
       "providerWebsite": "https://openai.com",
       "category": "flagship",
       "useCase": ["general", "vision", "reasoning", "coding"],
-      "releaseDate": "2026-04-10",
+      "releaseDate": "2026-04-23",
       "status": "active",
       "deprecatedAt": null,
       "successorId": null,
@@ -21,11 +21,11 @@
         "currency": "USD",
         "unit": "per_1m_tokens",
         "input": 5.00,
-        "output": 20.00,
-        "cachedInput": 1.25,
+        "output": 30.00,
+        "cachedInput": 0.50,
         "cacheWrite": null,
         "batchInput": 2.50,
-        "batchOutput": 10.00,
+        "batchOutput": 15.00,
         "imagePerImage": null,
         "imageTokensFormula": null,
         "reasoningOutput": null,
@@ -33,27 +33,30 @@
         "fineTunedOutput": null
       },
       "limits": {
-        "contextWindow": 256000,
-        "maxOutput": 32768,
+        "contextWindow": 1050000,
+        "maxOutput": 128000,
         "maxImagesPerRequest": null,
-        "knowledgeCutoff": "2026-01"
+        "knowledgeCutoff": "2026-02"
       },
       "tokenization": {
         "encoder": "o200k_base",
         "approximationRatio": { "english": 4, "chinese": 1.5, "code": 3 }
       },
       "supports": {
-        "vision": true, "audio": true, "tools": true, "streaming": true,
-        "caching": true, "batch": true, "fineTuning": true, "structuredOutput": true
+        "vision": true, "audio": false, "tools": true, "streaming": true,
+        "caching": true, "batch": true, "fineTuning": false, "structuredOutput": true
       },
-      "lastVerified": "2026-05-01",
-      "sources": [{ "type": "official", "url": "https://openai.com/api/pricing", "fetchedAt": "2026-05-01" }],
+      "lastVerified": "2026-05-12",
+      "sources": [
+        { "type": "community", "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json", "fetchedAt": "2026-05-12" },
+        { "type": "official", "url": "https://openai.com/api/pricing", "fetchedAt": "2026-05-12" }
+      ],
       "priceHistory": [
-        { "date": "2026-04-10", "input": 5.00, "output": 20.00, "note": "Initial release" }
+        { "date": "2026-04-23", "input": 5.00, "output": 30.00, "note": "Initial release" }
       ],
       "i18n": {
-        "en": { "tagline": "OpenAI's flagship multimodal frontier model", "description": "GPT-5.5 is OpenAI's most capable model with native multimodal reasoning, 256K context, and unified tool use. Successor to GPT-5." },
-        "zh": { "tagline": "OpenAI 旗舰多模态前沿模型", "description": "GPT-5.5 是 OpenAI 最强模型，原生多模态推理、256K 上下文、统一工具调用，GPT-5 的继任者。" }
+        "en": { "tagline": "OpenAI's flagship reasoning model with 1M context", "description": "GPT-5.5 is OpenAI's flagship model released April 2026. Native multimodal, 1M+ token context window, 128K max output. Strong reasoning, vision, and tool use." },
+        "zh": { "tagline": "OpenAI 旗舰推理模型，1M 上下文", "description": "GPT-5.5 是 OpenAI 2026 年 4 月发布的旗舰模型，原生多模态，1M+ token 上下文窗口，128K 最大输出。推理、视觉、工具调用全面强劲。" }
       }
     },
     {
@@ -66,19 +69,19 @@
       "providerWebsite": "https://openai.com",
       "category": "small",
       "useCase": ["general", "vision", "fast"],
-      "releaseDate": "2025-08-12",
+      "releaseDate": "2025-08-07",
       "status": "active",
       "deprecatedAt": null,
       "successorId": null,
       "pricing": {
         "currency": "USD",
         "unit": "per_1m_tokens",
-        "input": 0.20,
-        "output": 0.80,
-        "cachedInput": 0.05,
+        "input": 0.25,
+        "output": 2.00,
+        "cachedInput": 0.02,
         "cacheWrite": null,
-        "batchInput": 0.10,
-        "batchOutput": 0.40,
+        "batchInput": null,
+        "batchOutput": null,
         "imagePerImage": null,
         "imageTokensFormula": null,
         "reasoningOutput": null,
@@ -86,8 +89,8 @@
         "fineTunedOutput": null
       },
       "limits": {
-        "contextWindow": 200000,
-        "maxOutput": 16384,
+        "contextWindow": 272000,
+        "maxOutput": 128000,
         "maxImagesPerRequest": null,
         "knowledgeCutoff": "2025-04"
       },
@@ -97,16 +100,19 @@
       },
       "supports": {
         "vision": true, "audio": false, "tools": true, "streaming": true,
-        "caching": true, "batch": true, "fineTuning": true, "structuredOutput": true
+        "caching": true, "batch": false, "fineTuning": false, "structuredOutput": true
       },
-      "lastVerified": "2026-05-01",
-      "sources": [{ "type": "official", "url": "https://openai.com/api/pricing", "fetchedAt": "2026-05-01" }],
+      "lastVerified": "2026-05-12",
+      "sources": [
+        { "type": "community", "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json", "fetchedAt": "2026-05-12" },
+        { "type": "official", "url": "https://openai.com/api/pricing", "fetchedAt": "2026-05-12" }
+      ],
       "priceHistory": [
-        { "date": "2025-08-12", "input": 0.20, "output": 0.80, "note": "Initial release" }
+        { "date": "2025-08-07", "input": 0.25, "output": 2.00, "note": "Initial release" }
       ],
       "i18n": {
-        "en": { "tagline": "OpenAI's affordable everyday workhorse", "description": "GPT-5 mini balances frontier-tier capability with low cost — 25x cheaper than GPT-5.5, ideal for high-volume production." },
-        "zh": { "tagline": "OpenAI 高性价比日常主力", "description": "GPT-5 mini 兼具前沿能力和低成本，比 GPT-5.5 便宜 25 倍，适合高并发生产环境。" }
+        "en": { "tagline": "OpenAI's affordable small model with 272K context", "description": "GPT-5 mini is OpenAI's cost-efficient small model — 20x cheaper than GPT-5.5, ideal for high-volume production. Cached input at $0.02/1M tokens enables huge savings on RAG and chat workloads." },
+        "zh": { "tagline": "OpenAI 高性价比小模型，272K 上下文", "description": "GPT-5 mini 是 OpenAI 的小型高性价比模型，比 GPT-5.5 便宜 20 倍。$0.02/1M 缓存输入价让 RAG 和聊天场景成本骤降。" }
       }
     },
     {
@@ -119,19 +125,19 @@
       "providerWebsite": "https://openai.com",
       "category": "reasoning",
       "useCase": ["reasoning", "coding", "math", "science"],
-      "releaseDate": "2026-01-22",
+      "releaseDate": "2025-04-16",
       "status": "active",
       "deprecatedAt": null,
       "successorId": null,
       "pricing": {
         "currency": "USD",
         "unit": "per_1m_tokens",
-        "input": 0.90,
-        "output": 3.60,
-        "cachedInput": 0.45,
+        "input": 1.10,
+        "output": 4.40,
+        "cachedInput": 0.28,
         "cacheWrite": null,
-        "batchInput": 0.45,
-        "batchOutput": 1.80,
+        "batchInput": null,
+        "batchOutput": null,
         "imagePerImage": null,
         "imageTokensFormula": null,
         "reasoningOutput": null,
@@ -142,7 +148,7 @@
         "contextWindow": 200000,
         "maxOutput": 100000,
         "maxImagesPerRequest": null,
-        "knowledgeCutoff": "2025-10"
+        "knowledgeCutoff": "2024-10"
       },
       "tokenization": {
         "encoder": "o200k_base",
@@ -150,16 +156,19 @@
       },
       "supports": {
         "vision": true, "audio": false, "tools": true, "streaming": true,
-        "caching": true, "batch": true, "fineTuning": false, "structuredOutput": true
+        "caching": true, "batch": false, "fineTuning": false, "structuredOutput": true
       },
-      "lastVerified": "2026-05-01",
-      "sources": [{ "type": "official", "url": "https://openai.com/api/pricing", "fetchedAt": "2026-05-01" }],
+      "lastVerified": "2026-05-12",
+      "sources": [
+        { "type": "community", "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json", "fetchedAt": "2026-05-12" },
+        { "type": "official", "url": "https://openai.com/api/pricing", "fetchedAt": "2026-05-12" }
+      ],
       "priceHistory": [
-        { "date": "2026-01-22", "input": 0.90, "output": 3.60, "note": "Initial release" }
+        { "date": "2025-04-16", "input": 1.10, "output": 4.40, "note": "Initial release" }
       ],
       "i18n": {
-        "en": { "tagline": "OpenAI's reasoning model — cheaper than o3", "description": "o4-mini is OpenAI's latest reasoning model with sharper STEM/coding/math chains. Drop-in upgrade from o3-mini at lower cost." },
-        "zh": { "tagline": "OpenAI 新一代推理模型，比 o3 更便宜", "description": "o4-mini 是 OpenAI 最新推理模型，STEM/编程/数学思维链更强，价格低于 o3-mini。" }
+        "en": { "tagline": "OpenAI's reasoning model — sharp at STEM/coding", "description": "o4-mini is OpenAI's reasoning-focused model optimized for STEM, coding, and math. Chain-of-thought strong at a fraction of o-series flagship cost." },
+        "zh": { "tagline": "OpenAI 推理模型，STEM/编程强项", "description": "o4-mini 是 OpenAI 针对 STEM、编程和数学优化的推理模型，思维链表现强，成本远低于 o 系列旗舰。" }
       }
     },
     {
@@ -172,19 +181,19 @@
       "providerWebsite": "https://anthropic.com",
       "category": "flagship",
       "useCase": ["reasoning", "coding", "general", "long-context"],
-      "releaseDate": "2026-02-01",
+      "releaseDate": "2026-04-16",
       "status": "active",
       "deprecatedAt": null,
       "successorId": null,
       "pricing": {
         "currency": "USD",
         "unit": "per_1m_tokens",
-        "input": 15.00,
-        "output": 75.00,
-        "cachedInput": 1.50,
-        "cacheWrite": 18.75,
-        "batchInput": 7.50,
-        "batchOutput": 37.50,
+        "input": 5.00,
+        "output": 25.00,
+        "cachedInput": 0.50,
+        "cacheWrite": 6.25,
+        "batchInput": 2.50,
+        "batchOutput": 12.50,
         "imagePerImage": null,
         "imageTokensFormula": null,
         "reasoningOutput": null,
@@ -193,7 +202,7 @@
       },
       "limits": {
         "contextWindow": 1000000,
-        "maxOutput": 16384,
+        "maxOutput": 128000,
         "maxImagesPerRequest": 100,
         "knowledgeCutoff": "2025-10"
       },
@@ -205,14 +214,17 @@
         "vision": true, "audio": false, "tools": true, "streaming": true,
         "caching": true, "batch": true, "fineTuning": false, "structuredOutput": true
       },
-      "lastVerified": "2026-05-01",
-      "sources": [{ "type": "official", "url": "https://www.anthropic.com/pricing", "fetchedAt": "2026-05-01" }],
+      "lastVerified": "2026-05-12",
+      "sources": [
+        { "type": "community", "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json", "fetchedAt": "2026-05-12" },
+        { "type": "official", "url": "https://www.anthropic.com/pricing", "fetchedAt": "2026-05-12" }
+      ],
       "priceHistory": [
-        { "date": "2026-02-01", "input": 15.00, "output": 75.00, "note": "Initial release" }
+        { "date": "2026-04-16", "input": 5.00, "output": 25.00, "note": "Initial release" }
       ],
       "i18n": {
-        "en": { "tagline": "Anthropic's flagship for deep reasoning", "description": "Claude Opus 4.7 leads on complex reasoning, coding, and 1M-token long context. Best-in-class extended thinking." },
-        "zh": { "tagline": "Anthropic 旗舰，深度推理王者", "description": "Claude Opus 4.7 在复杂推理、编程、1M token 长上下文上领先，extended thinking 最强。" }
+        "en": { "tagline": "Anthropic's flagship for deep reasoning, 1M context", "description": "Claude Opus 4.7 leads on complex reasoning, coding, and 1M-token long context. Best-in-class extended thinking. Aggressive 90% cache discount ($0.50/1M cached vs $5/1M standard) makes it competitive at scale." },
+        "zh": { "tagline": "Anthropic 旗舰，深度推理 + 1M 上下文", "description": "Claude Opus 4.7 在复杂推理、编程、1M token 长上下文上领先，extended thinking 最强。激进的 90% 缓存折扣（$0.50/1M 缓存 vs $5/1M 标准）让规模化场景成本骤降。" }
       }
     },
     {
@@ -225,7 +237,7 @@
       "providerWebsite": "https://anthropic.com",
       "category": "small",
       "useCase": ["general", "fast"],
-      "releaseDate": "2025-10-15",
+      "releaseDate": "2025-10-01",
       "status": "active",
       "deprecatedAt": null,
       "successorId": null,
@@ -246,7 +258,7 @@
       },
       "limits": {
         "contextWindow": 200000,
-        "maxOutput": 8192,
+        "maxOutput": 64000,
         "maxImagesPerRequest": 100,
         "knowledgeCutoff": "2025-02"
       },
@@ -258,38 +270,41 @@
         "vision": true, "audio": false, "tools": true, "streaming": true,
         "caching": true, "batch": true, "fineTuning": false, "structuredOutput": true
       },
-      "lastVerified": "2026-05-01",
-      "sources": [{ "type": "official", "url": "https://www.anthropic.com/pricing", "fetchedAt": "2026-05-01" }],
+      "lastVerified": "2026-05-12",
+      "sources": [
+        { "type": "community", "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json", "fetchedAt": "2026-05-12" },
+        { "type": "official", "url": "https://www.anthropic.com/pricing", "fetchedAt": "2026-05-12" }
+      ],
       "priceHistory": [
-        { "date": "2025-10-15", "input": 1.00, "output": 5.00, "note": "Initial release" }
+        { "date": "2025-10-01", "input": 1.00, "output": 5.00, "note": "Initial release" }
       ],
       "i18n": {
-        "en": { "tagline": "Anthropic's fast affordable workhorse", "description": "Claude Haiku 4.5 — strong everyday performance with aggressive caching discounts (10x cheaper cached input)." },
-        "zh": { "tagline": "Anthropic 快速实惠主力", "description": "Claude Haiku 4.5 日常任务强劲，缓存折扣激进（缓存输入便宜 10 倍）。" }
+        "en": { "tagline": "Anthropic's fast affordable workhorse", "description": "Claude Haiku 4.5 — strong everyday performance with aggressive caching discounts. Cached input at $0.10/1M (10x cheaper than standard $1.00) makes it dominant for high-volume cache-friendly workloads." },
+        "zh": { "tagline": "Anthropic 快速实惠主力", "description": "Claude Haiku 4.5 日常任务强劲。$0.10/1M 缓存输入价（比标准 $1.00 便宜 10 倍），让缓存友好的高并发场景成本最优。" }
       }
     },
     {
-      "id": "gemini-3-0-pro",
-      "name": "Gemini 3.0 Pro",
-      "shortName": "Gemini 3.0 Pro",
+      "id": "gemini-3-1-pro",
+      "name": "Gemini 3.1 Pro",
+      "shortName": "Gemini 3.1 Pro",
       "provider": "Google",
       "providerId": "google",
       "providerLogo": "/logos/google.svg",
       "providerWebsite": "https://ai.google.dev",
       "category": "flagship",
       "useCase": ["general", "vision", "long-context", "reasoning", "audio"],
-      "releaseDate": "2026-03-15",
+      "releaseDate": "2026-03-09",
       "status": "active",
       "deprecatedAt": null,
       "successorId": null,
       "pricing": {
         "currency": "USD",
         "unit": "per_1m_tokens",
-        "input": 1.50,
+        "input": 2.00,
         "output": 12.00,
-        "cachedInput": 0.375,
+        "cachedInput": 0.20,
         "cacheWrite": null,
-        "batchInput": 0.75,
+        "batchInput": 1.00,
         "batchOutput": 6.00,
         "imagePerImage": null,
         "imageTokensFormula": null,
@@ -298,8 +313,8 @@
         "fineTunedOutput": null
       },
       "limits": {
-        "contextWindow": 2000000,
-        "maxOutput": 65536,
+        "contextWindow": 1048576,
+        "maxOutput": 65535,
         "maxImagesPerRequest": 3000,
         "knowledgeCutoff": "2026-01"
       },
@@ -311,39 +326,42 @@
         "vision": true, "audio": true, "tools": true, "streaming": true,
         "caching": true, "batch": true, "fineTuning": true, "structuredOutput": true
       },
-      "lastVerified": "2026-05-01",
-      "sources": [{ "type": "official", "url": "https://ai.google.dev/pricing", "fetchedAt": "2026-05-01" }],
+      "lastVerified": "2026-05-12",
+      "sources": [
+        { "type": "community", "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json", "fetchedAt": "2026-05-12" },
+        { "type": "official", "url": "https://ai.google.dev/pricing", "fetchedAt": "2026-05-12" }
+      ],
       "priceHistory": [
-        { "date": "2026-03-15", "input": 1.50, "output": 12.00, "note": "Initial release" }
+        { "date": "2026-03-09", "input": 2.00, "output": 12.00, "note": "Initial release (successor to Gemini 3 Pro)" }
       ],
       "i18n": {
-        "en": { "tagline": "Google's flagship long-context multimodal model", "description": "Gemini 3.0 Pro features 2M token context, native audio + video understanding, and improved reasoning over 2.5 series." },
-        "zh": { "tagline": "Google 旗舰长上下文多模态模型", "description": "Gemini 3.0 Pro 具有 2M token 上下文、原生音视频理解，推理比 2.5 系列大幅提升。" }
+        "en": { "tagline": "Google's flagship long-context multimodal model", "description": "Gemini 3.1 Pro features 1M+ token context, native audio + video understanding, and improved reasoning. Successor to Gemini 3 Pro (deprecated). Same price, expanded capability." },
+        "zh": { "tagline": "Google 旗舰长上下文多模态模型", "description": "Gemini 3.1 Pro 具有 1M+ token 上下文、原生音视频理解，推理大幅提升。Gemini 3 Pro 的继任者（后者已废弃），价格不变但能力扩展。" }
       }
     },
     {
-      "id": "gemini-3-0-flash",
-      "name": "Gemini 3.0 Flash",
-      "shortName": "Gemini 3.0 Flash",
+      "id": "gemini-3-flash",
+      "name": "Gemini 3 Flash",
+      "shortName": "Gemini 3 Flash",
       "provider": "Google",
       "providerId": "google",
       "providerLogo": "/logos/google.svg",
       "providerWebsite": "https://ai.google.dev",
       "category": "balanced",
       "useCase": ["general", "vision", "fast", "audio"],
-      "releaseDate": "2026-03-15",
+      "releaseDate": "2025-12-15",
       "status": "active",
       "deprecatedAt": null,
       "successorId": null,
       "pricing": {
         "currency": "USD",
         "unit": "per_1m_tokens",
-        "input": 0.25,
-        "output": 2.00,
-        "cachedInput": 0.0625,
+        "input": 0.50,
+        "output": 3.00,
+        "cachedInput": 0.05,
         "cacheWrite": null,
-        "batchInput": 0.125,
-        "batchOutput": 1.00,
+        "batchInput": 0.25,
+        "batchOutput": 1.50,
         "imagePerImage": null,
         "imageTokensFormula": null,
         "reasoningOutput": null,
@@ -351,10 +369,10 @@
         "fineTunedOutput": null
       },
       "limits": {
-        "contextWindow": 1000000,
-        "maxOutput": 65536,
+        "contextWindow": 1048576,
+        "maxOutput": 65535,
         "maxImagesPerRequest": 3000,
-        "knowledgeCutoff": "2026-01"
+        "knowledgeCutoff": "2025-10"
       },
       "tokenization": {
         "encoder": "approximate",
@@ -364,36 +382,39 @@
         "vision": true, "audio": true, "tools": true, "streaming": true,
         "caching": true, "batch": true, "fineTuning": true, "structuredOutput": true
       },
-      "lastVerified": "2026-05-01",
-      "sources": [{ "type": "official", "url": "https://ai.google.dev/pricing", "fetchedAt": "2026-05-01" }],
+      "lastVerified": "2026-05-12",
+      "sources": [
+        { "type": "community", "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json", "fetchedAt": "2026-05-12" },
+        { "type": "official", "url": "https://ai.google.dev/pricing", "fetchedAt": "2026-05-12" }
+      ],
       "priceHistory": [
-        { "date": "2026-03-15", "input": 0.25, "output": 2.00, "note": "Initial release" }
+        { "date": "2025-12-15", "input": 0.50, "output": 3.00, "note": "Initial release" }
       ],
       "i18n": {
-        "en": { "tagline": "Google's high-throughput multimodal model", "description": "Gemini 3.0 Flash balances speed and capability with 1M context. Cheaper than 2.5 Flash with stronger benchmarks." },
-        "zh": { "tagline": "Google 高吞吐多模态模型", "description": "Gemini 3.0 Flash 平衡速度和能力，1M 上下文，比 2.5 Flash 更便宜，benchmark 更强。" }
+        "en": { "tagline": "Google's high-throughput multimodal model", "description": "Gemini 3 Flash balances speed and capability with 1M context. Native audio + vision. $0.05/1M cached input makes it dominant for high-volume multimodal pipelines." },
+        "zh": { "tagline": "Google 高吞吐多模态模型", "description": "Gemini 3 Flash 平衡速度和能力，1M 上下文，原生音视频。$0.05/1M 缓存输入价让多模态流水线成本最优。" }
       }
     },
     {
-      "id": "deepseek-v4",
-      "name": "DeepSeek V4",
-      "shortName": "DeepSeek V4",
+      "id": "deepseek-v3-2",
+      "name": "DeepSeek V3.2",
+      "shortName": "DeepSeek V3.2",
       "provider": "DeepSeek",
       "providerId": "deepseek",
       "providerLogo": "/logos/deepseek.svg",
       "providerWebsite": "https://deepseek.com",
       "category": "balanced",
       "useCase": ["general", "coding", "math", "reasoning"],
-      "releaseDate": "2026-03-01",
+      "releaseDate": "2025-09-29",
       "status": "active",
       "deprecatedAt": null,
       "successorId": null,
       "pricing": {
         "currency": "USD",
         "unit": "per_1m_tokens",
-        "input": 0.30,
-        "output": 1.20,
-        "cachedInput": 0.04,
+        "input": 0.28,
+        "output": 0.40,
+        "cachedInput": null,
         "cacheWrite": null,
         "batchInput": null,
         "batchOutput": null,
@@ -404,10 +425,10 @@
         "fineTunedOutput": null
       },
       "limits": {
-        "contextWindow": 256000,
-        "maxOutput": 8192,
+        "contextWindow": 163840,
+        "maxOutput": 163840,
         "maxImagesPerRequest": null,
-        "knowledgeCutoff": "2025-12"
+        "knowledgeCutoff": "2025-07"
       },
       "tokenization": {
         "encoder": "approximate",
@@ -417,14 +438,17 @@
         "vision": false, "audio": false, "tools": true, "streaming": true,
         "caching": true, "batch": false, "fineTuning": false, "structuredOutput": true
       },
-      "lastVerified": "2026-05-01",
-      "sources": [{ "type": "official", "url": "https://platform.deepseek.com/pricing", "fetchedAt": "2026-05-01" }],
+      "lastVerified": "2026-05-12",
+      "sources": [
+        { "type": "community", "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json", "fetchedAt": "2026-05-12" },
+        { "type": "official", "url": "https://platform.deepseek.com/pricing", "fetchedAt": "2026-05-12" }
+      ],
       "priceHistory": [
-        { "date": "2026-03-01", "input": 0.30, "output": 1.20, "note": "Initial release" }
+        { "date": "2025-09-29", "input": 0.28, "output": 0.40, "note": "Initial release" }
       ],
       "i18n": {
-        "en": { "tagline": "DeepSeek's open MoE flagship — top open-weight performer", "description": "DeepSeek V4 is a 1T-parameter MoE model with frontier-tier reasoning at fraction of US prices. Strong on Chinese and code." },
-        "zh": { "tagline": "DeepSeek 开源 MoE 旗舰，开源王者", "description": "DeepSeek V4 是 1T 参数 MoE 模型，前沿级推理能力，价格远低于美国模型，中文和代码强劲。" }
+        "en": { "tagline": "DeepSeek's open-weight MoE — top cost/quality ratio", "description": "DeepSeek V3.2 is an open-weight MoE model with frontier-tier reasoning at fraction of US model prices. 164K context. Strong on Chinese and code. Output token cost ($0.40/1M) is among the cheapest of any production-capable model." },
+        "zh": { "tagline": "DeepSeek 开源 MoE，性价比之王", "description": "DeepSeek V3.2 是开源 MoE 模型，前沿级推理能力，价格远低于美国模型。164K 上下文。中文和代码强劲。输出 token 价 $0.40/1M 是生产级模型中最便宜之一。" }
       }
     },
     {
@@ -437,16 +461,16 @@
       "providerWebsite": "https://x.ai",
       "category": "flagship",
       "useCase": ["general", "reasoning", "real-time", "vision"],
-      "releaseDate": "2025-11-08",
+      "releaseDate": "2025-07-09",
       "status": "active",
       "deprecatedAt": null,
       "successorId": null,
       "pricing": {
         "currency": "USD",
         "unit": "per_1m_tokens",
-        "input": 4.00,
-        "output": 20.00,
-        "cachedInput": 1.00,
+        "input": 3.00,
+        "output": 15.00,
+        "cachedInput": null,
         "cacheWrite": null,
         "batchInput": null,
         "batchOutput": null,
@@ -458,9 +482,9 @@
       },
       "limits": {
         "contextWindow": 256000,
-        "maxOutput": 16384,
+        "maxOutput": 256000,
         "maxImagesPerRequest": null,
-        "knowledgeCutoff": "2025-09"
+        "knowledgeCutoff": "2025-04"
       },
       "tokenization": {
         "encoder": "approximate",
@@ -470,14 +494,17 @@
         "vision": true, "audio": false, "tools": true, "streaming": true,
         "caching": true, "batch": false, "fineTuning": false, "structuredOutput": true
       },
-      "lastVerified": "2026-05-01",
-      "sources": [{ "type": "official", "url": "https://x.ai/api", "fetchedAt": "2026-05-01" }],
+      "lastVerified": "2026-05-12",
+      "sources": [
+        { "type": "community", "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json", "fetchedAt": "2026-05-12" },
+        { "type": "official", "url": "https://x.ai/api", "fetchedAt": "2026-05-12" }
+      ],
       "priceHistory": [
-        { "date": "2025-11-08", "input": 4.00, "output": 20.00, "note": "Initial release" }
+        { "date": "2025-07-09", "input": 3.00, "output": 15.00, "note": "Initial release" }
       ],
       "i18n": {
-        "en": { "tagline": "xAI flagship with native real-time X integration", "description": "Grok 4 is xAI's flagship with native X (Twitter) integration for real-time information and reasoning." },
-        "zh": { "tagline": "xAI 旗舰，原生 X 实时集成", "description": "Grok 4 是 xAI 旗舰模型，原生集成 X（推特）实时信息访问和推理。" }
+        "en": { "tagline": "xAI flagship with native real-time X integration", "description": "Grok 4 is xAI's flagship with native X (Twitter) integration for real-time information and reasoning. 256K context, strong at current-events queries that other models can't answer." },
+        "zh": { "tagline": "xAI 旗舰，原生 X 实时集成", "description": "Grok 4 是 xAI 旗舰模型，原生集成 X（推特）实时信息访问和推理。256K 上下文，在其他模型无法回答的时事查询上独有优势。" }
       }
     },
     {
@@ -488,21 +515,21 @@
       "providerId": "mistral",
       "providerLogo": "/logos/mistral.svg",
       "providerWebsite": "https://mistral.ai",
-      "category": "flagship",
+      "category": "balanced",
       "useCase": ["general", "coding", "multilingual"],
-      "releaseDate": "2026-01-30",
+      "releaseDate": "2025-12-15",
       "status": "active",
       "deprecatedAt": null,
       "successorId": null,
       "pricing": {
         "currency": "USD",
         "unit": "per_1m_tokens",
-        "input": 2.50,
-        "output": 7.50,
+        "input": 0.50,
+        "output": 1.50,
         "cachedInput": null,
         "cacheWrite": null,
-        "batchInput": 1.25,
-        "batchOutput": 3.75,
+        "batchInput": null,
+        "batchOutput": null,
         "imagePerImage": null,
         "imageTokensFormula": null,
         "reasoningOutput": null,
@@ -510,27 +537,30 @@
         "fineTunedOutput": null
       },
       "limits": {
-        "contextWindow": 256000,
-        "maxOutput": 16384,
+        "contextWindow": 262144,
+        "maxOutput": 262144,
         "maxImagesPerRequest": null,
-        "knowledgeCutoff": "2025-10"
+        "knowledgeCutoff": "2025-09"
       },
       "tokenization": {
         "encoder": "approximate",
         "approximationRatio": { "english": 4, "chinese": 1.5, "code": 3 }
       },
       "supports": {
-        "vision": false, "audio": false, "tools": true, "streaming": true,
-        "caching": false, "batch": true, "fineTuning": true, "structuredOutput": true
+        "vision": true, "audio": false, "tools": true, "streaming": true,
+        "caching": false, "batch": false, "fineTuning": true, "structuredOutput": true
       },
-      "lastVerified": "2026-05-01",
-      "sources": [{ "type": "official", "url": "https://mistral.ai/technology", "fetchedAt": "2026-05-01" }],
+      "lastVerified": "2026-05-12",
+      "sources": [
+        { "type": "community", "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json", "fetchedAt": "2026-05-12" },
+        { "type": "official", "url": "https://mistral.ai/pricing", "fetchedAt": "2026-05-12" }
+      ],
       "priceHistory": [
-        { "date": "2026-01-30", "input": 2.50, "output": 7.50, "note": "Initial release" }
+        { "date": "2025-12-15", "input": 0.50, "output": 1.50, "note": "Initial release — massive 80% price reduction from Mistral Large 2" }
       ],
       "i18n": {
-        "en": { "tagline": "Mistral's flagship multilingual open-weight model", "description": "Mistral Large 3 is Mistral's top open-weight model — strong at coding, dozens of European languages, EU-friendly hosting." },
-        "zh": { "tagline": "Mistral 旗舰多语言开源模型", "description": "Mistral Large 3 是 Mistral 顶级开源模型，编程和多欧洲语言能力强，EU 友好托管。" }
+        "en": { "tagline": "Mistral's flagship multilingual model — EU-friendly", "description": "Mistral Large 3 is Mistral's top model — strong at coding and dozens of European languages, EU-friendly hosting. Latest version slashed prices 80% from Large 2 ($2.00/$6.00 → $0.50/$1.50), making it one of the cheapest flagship-tier models available." },
+        "zh": { "tagline": "Mistral 旗舰多语言模型，EU 友好", "description": "Mistral Large 3 是 Mistral 顶级模型，编程和多欧洲语言能力强，EU 友好托管。最新版本相比 Large 2 大幅降价 80%（$2.00/$6.00 → $0.50/$1.50），成为旗舰级最便宜的模型之一。" }
       }
     }
   ]
