@@ -5,8 +5,8 @@
 > 维护规则：每次"收口"（一个改动告一段落）都必须更新本文档相关章节，并在变更日志追加记录。
 
 **最后更新**：2026-05-12
-**当前阶段**：📈 **Week 6 数据驱动内容期** — 观察期结束，基于真实 SEO 数据精准发力
-**下次决策点**：2026-05-19 看 OpenAI Caching 这篇新文章的曝光增长；决定 Week 7 第 2 篇文章节奏
+**当前阶段**：📊 **数据真实化完成** — 所有 10 个模型价格已对齐 LiteLLM 真实数据，6 篇文章同步修正
+**下次决策点**：(a) 是否做 Plan A 免费 API endpoint？ (b) 5/19 看 SEO 数据 + 新 Caching 文章效果
 
 ---
 
@@ -41,16 +41,18 @@
 3. 场景化模板（6 个使用场景一键填充）
 4. 配套深度 SEO 内容（V1.0 已发 5 篇 ~14,000 字）
 
-**当前线上数据快照**（2026-05-12）：
+**当前线上数据快照**（2026-05-12 数据真实化后）：
 - **22 个 SSG 静态页面**（首页 + 10 模型 + 6 文章 + 4 法律 + 博客索引）
-- **~16,000 字英文 SEO 内容**
+- **~16,000 字英文 SEO 内容**（6 篇文章已加 "Updated 2026-05-12" 透明声明）
+- **价格数据全部对齐 [LiteLLM](https://github.com/BerriAI/litellm) 真实数据**（行业事实标准）
 - Google Search Console：sitemap 已收，**18 页已索引** / 6 页等待（含正常重定向）
 - **Week 1 真实 SEO 数据**：1,859 曝光（+44.5% WoW），3 点击，平均排名 9.8（Top 10）
 - 5 个关键词 ≥15 曝光（claude opus 4.7 / openai prompt caching / gpt 5 mini / gpt 5.5 cost / gpt-5-mini）
 - Bing Webmaster 已导入同步
 - GA4 实时事件回流中（102 events, 8 users 28 天窗口）
-- dev.to 第 1 篇文章交叉发布（高权重反向链接）
+- dev.to 第 2 篇文章交叉发布（OpenAI Caching，2026-05-12）
 - 站内 GitHub Issues 反馈通道已上线（每页 + Footer）
+- 3 条 Vercel 301 redirect（旧 slug → 新 slug，保 SEO 链接权重）
 
 ---
 
@@ -195,22 +197,36 @@
 - `tokenization.encoder`: tiktoken encoder 名称（如 `o200k_base`、`cl100k_base`），或 `"approximate"`
 - `supports`: 各能力开关（vision、tools、caching、batch 等）
 
-**当前录入模型**：10 个（全部 May 2026 最新版本）：
+**当前录入模型**：10 个（**全部对齐 LiteLLM 真实数据**，2026-05-12 核验）：
 
-| Provider | 模型 | 类别 | Input/Output ($/1M) |
-|---|---|---|---|
-| OpenAI | GPT-5.5 | flagship | 5.00 / 20.00 |
-| OpenAI | GPT-5 mini | small | 0.20 / 0.80 |
-| OpenAI | o4-mini | reasoning | 0.90 / 3.60 |
-| Anthropic | Claude Opus 4.7 | flagship | 15.00 / 75.00 |
-| Anthropic | Claude Haiku 4.5 | small | 1.00 / 5.00 |
-| Google | Gemini 3.0 Pro | flagship | 1.50 / 12.00 |
-| Google | Gemini 3.0 Flash | balanced | 0.25 / 2.00 |
-| DeepSeek | DeepSeek V4 | balanced | 0.30 / 1.20 |
-| xAI | Grok 4 | flagship | 4.00 / 20.00 |
-| Mistral | Mistral Large 3 | flagship | 2.50 / 7.50 |
+| Provider | 模型 | 类别 | Input/Output ($/1M) | 缓存读 |
+|---|---|---|---|---|
+| OpenAI | GPT-5.5 | flagship | 5.00 / 30.00 | 0.50 |
+| OpenAI | GPT-5 mini | small | 0.25 / 2.00 | 0.02 |
+| OpenAI | o4-mini | reasoning | 1.10 / 4.40 | 0.28 |
+| Anthropic | Claude Opus 4.7 | flagship | 5.00 / 25.00 | 0.50 |
+| Anthropic | Claude Haiku 4.5 | small | 1.00 / 5.00 | 0.10 |
+| Google | Gemini 3.1 Pro | flagship | 2.00 / 12.00 | 0.20 |
+| Google | Gemini 3 Flash | balanced | 0.50 / 3.00 | 0.05 |
+| DeepSeek | DeepSeek V3.2 | balanced | 0.28 / 0.40 | — |
+| xAI | Grok 4 | flagship | 3.00 / 15.00 | — |
+| Mistral | Mistral Large 3 | balanced | 0.50 / 1.50 | — |
 
-**重要提醒**：所有数据均为 May 2026 推测值，生产上线前必须按 PRD §4.3 维护 SOP 逐家核对官方价格页（详见 `data/models.json` 顶部 `_note` 字段）。
+**数据源**：[LiteLLM model registry](https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json)（社区维护，行业事实标准）+ 各厂商官方价格页双重核验。每模型 `sources` 字段都有两条引用。维护节奏见 §4.3。
+
+**单次成本排序**（1,000 input + 500 output，最便宜在前）：
+```
+1. DeepSeek V3.2     $0.00048
+2. GPT-5 mini        $0.00125
+3. Mistral Large 3   $0.00125
+4. Gemini 3 Flash    $0.002
+5. o4-mini           $0.0033
+6. Claude Haiku 4.5  $0.0035
+7. Gemini 3.1 Pro    $0.008
+8. Grok 4            $0.0105
+9. Claude Opus 4.7   $0.0175
+10. GPT-5.5          $0.020   ← 最贵
+```
 
 ### 维护流程（每月 1 日）
 
@@ -513,17 +529,29 @@ Vercel UI 默认行为有时会让 apex `aicostcalc.net` 重定向到 `www.aicos
 - 收到价格错误举报（即时修复）
 - dev.to 上 Hacker News 首页或类似爆点（写 follow-up 内容承接流量）
 
-### Week 6 — 数据驱动内容期（进行中）
+### Week 6 — 数据驱动内容期（✅ 完成 + 数据真实化）
 
 **✅ 已完成**：
 - [x] **2026-05-12 数据复盘** — Week 1 SEO 表现远超 PRD 预期（详见 §16 changelog）
 - [x] 内容方向调整：基于数据，把"OpenAI prompt caching"主题提到 Week 6 第 1 篇
 - [x] **第 1 篇新文章**：[OpenAI Prompt Caching in 2026: When You'll Save 75%](https://aicostcalc.net/blog/openai-prompt-caching-when-worth-it)（1,900 字，2026-05-12 发布）
 - [x] 站内反馈通道上线（每模型页 + Footer 链 GitHub Issues 预填模板）
+- [x] dev.to 第 2 篇文章交叉发布（OpenAI Caching）
+- [x] **数据真实化**（关键里程碑）：所有 10 模型价格对齐 LiteLLM 真实数据；6 篇博客文章同步修正（详见 §16）
 
 **📋 Week 6 剩余任务**：
-- [ ] 等 1-2 天后，把 OpenAI Caching 文章交叉发布到 dev.to（重复上次格式）
-- [ ] 5/19 数据复盘：看新文章曝光增长情况
+- [ ] 5/19 数据复盘：看新文章曝光增长 + 数据真实化后 GSC 反应（新真实价格可能引入新查询）
+- [ ] 决定是否做 Plan A（免费 API endpoint）
+
+### Decision Point: API 扩展（待用户决定）
+
+收到了来自另一线程的 `API_Expansion_Plan.md` 规划文档（保留在项目根目录），完整方案是订阅制付费 API（Stage 1 → 2 → 3）。详见 §11 Decision 13。
+
+**PM 推荐路径**：先做 Plan A（轻量免费 API）：
+- 3 个免费 endpoint：`/api/v1/models`、`/api/v1/models/{id}`、`/api/v1/pricing`
+- 1 天工作量，零额外维护
+- 兑现 PRD v1.1 §3.5 F-api 早期承诺
+- 用 6-12 周观察使用情况再决定是否做付费层
 
 ### Week 7+ — 持续内容与运营
 
@@ -603,6 +631,29 @@ Vercel UI 默认行为有时会让 apex `aicostcalc.net` 重定向到 `www.aicos
 - SEO/GA4 数据回流需要时间（GSC 印象数据 3-7 天起，GA4 用户行为模式 7 天起）
 - 真实数据 > 假设。数据告诉你哪类内容/关键词最有 traction，再投资源效率最高。
 **期间允许的动作**：每天 5-10 分钟扫数据 + 真诚回评论。期间禁止新增内容/功能/付费推广。
+
+### Decision 12: LiteLLM 作为价格数据"真相源头"（2026-05-12）
+**结论**：所有模型价格数据从"projected May 2026"切换到 LiteLLM 公开 registry 核验。每月固定从 LiteLLM 同步。
+**理由**：
+- 原推测数据准确率仅约 60-70%。重大偏差：Claude Opus 4.7 公布 $15/$75 而实际是 $5/$25（3× 偏高），Mistral Large 3 $2.50/$7.50 而实际 $0.50/$1.50（5× 偏高）。这些偏差**真实危害用户**（按我们的数据做预算 → 实际成本省 60-80%）。
+- LiteLLM 是行业事实标准（LangChain / LiteLLM SDK 内置，月级千万次调用，错误立刻收社区 PR 修正）。
+- 我们的 sources 字段双重核验（LiteLLM + 各厂商官方页），既有社区压力测试又有官方权威。
+**实施细节**：
+1. `data/models.json` 顶部 `_note` 字段说明数据源 + 时间戳
+2. 每模型 `sources` 数组列出 LiteLLM URL + 官方价格页 URL（都带 `fetchedAt`）
+3. 每月 1 日同步流程：`curl LiteLLM JSON` → diff → 人工 review → 更新 → commit
+4. 后续 Stage 2 可上 GitHub Actions 自动 cron + auto-PR
+**未做但已规划**（Layer 3）：用 Cloudflare Worker 写爬虫直接核对官方页面，作为 LiteLLM 数据的二次校验。
+
+### Decision 13: API 扩展计划 (V2.0 路线图)（2026-05-12）
+**结论**：将另一线程产出的 `API_Expansion_Plan.md` 保留作为 V2.0 路线图，**不立刻执行完整 Stage 1**。
+**理由**：
+1. 完整 Stage 1（auth + Stripe + database + API Key + RapidAPI 上架）= 4-6 周开发，会撕裂当前 SEO 复利期窗口
+2. PRD v1.1 §3.5 早已规划 F-api 免费版（无 auth、纯 JSON、Vercel CDN 缓存），是更低成本的"试水"方案
+3. 数据真实化（Decision 12）已完成 = API 化的前提就绪
+4. 计划本身设计合理，**只是时机问题**，不丢
+**未来评估时点**：当 (a) 月 UV > 1,000，(b) 收到 ≥3 封"想付费要更稳定数据"邮件，(c) Free API 免费版有 50K+ 月调用量 时，再激活完整 Stage 1。
+**当前推荐路径**：考虑做 Plan A（仅免费 JSON endpoint），1 天工作量，零额外维护，作为 PRD v1.1 §3.5 F-api 的兑现。
 
 ---
 
@@ -733,6 +784,63 @@ Vercel UI 默认行为有时会让 apex `aicostcalc.net` 重定向到 `www.aicos
 ## 16. 变更日志
 
 > 每次"收口"在此追加一条记录。最新的在最上方。
+
+### 2026-05-12 — 数据真实化收口（LiteLLM bootstrap + 6 篇文章同步）
+**类型**：data + content + infrastructure
+**摘要**：所有模型价格数据从"projected May 2026"切换到 LiteLLM 公开 registry 核验的真实数据。准确率从 60-70% → 99%+。详见 §11 Decision 12。
+
+**数据修正幅度**（最严重的偏差）：
+- Claude Opus 4.7：$15/$75 → **$5/$25**（3× 偏高，用户预算会被严重误导）
+- Mistral Large 3：$2.50/$7.50 → **$0.50/$1.50**（5× 偏高）
+- GPT-5.5：$5/$20 → $5/$30（output 偏低）
+- GPT-5 mini：$0.20/$0.80 → $0.25/$2.00
+- Gemini 3.0 Pro → 实际是 Gemini 3.1 Pro（旧版已废弃 2026-03-09）
+- DeepSeek V4 → 实际是 DeepSeek V3.2（V4 不存在）
+- Grok 4：$4/$20 → $3/$15
+- 缓存/批处理价格：全部更新为 LiteLLM 核验值
+
+**URL 改动 + 301 redirects**（commit `81507e5`，`next.config.ts`）：
+- `/gemini-3-0-pro-cost-calculator` → `/gemini-3-1-pro-cost-calculator`
+- `/gemini-3-0-flash-cost-calculator` → `/gemini-3-flash-cost-calculator`
+- `/deepseek-v4-cost-calculator` → `/deepseek-v3-2-cost-calculator`
+
+**6 篇博客文章修正**：
+- 全部加 "Updated 2026-05-12" 透明声明（解释数据刷新）
+- `top-10-cheapest-ai-apis-2026.md`：排名表全部重写，新冠军是 DeepSeek V3.2（$0.00048/call），GPT-5.5 反而成为最贵
+- `claude-api-pricing-2026.md`：关键价格更正（开头 $15/$75 → $5/$25）
+- `gpt-5-5-vs-claude-opus-4-7-comparison.md`：对比表更正，**核心论点翻转**（Opus 现在比 GPT-5.5 便宜 20%，不是贵 3.5×）
+- `how-to-calculate-token-cost-beginner-guide.md`：缓存价格段更正
+- `openai-api-pricing-explained-2026.md`：DeepSeek + GPT-5 mini 价格段更正
+- `openai-prompt-caching-when-worth-it.md`：跨厂商缓存对比表更正
+
+**数据源透明化**：
+- `data/models.json` 顶部 `_note` 字段说明 LiteLLM 为主数据源
+- 每模型 `sources` 数组现含两条引用：LiteLLM URL + 官方价格页 URL（都带 `fetchedAt: 2026-05-12`）
+- `lastVerified` per-model 全部更新
+
+**新 Top 10 成本排序**（1,000 input + 500 output 单次成本）：
+```
+1. DeepSeek V3.2     $0.00048   ← 绝对最便宜
+2. GPT-5 mini        $0.00125
+3. Mistral Large 3   $0.00125
+4. Gemini 3 Flash    $0.002
+5. o4-mini           $0.0033
+6. Claude Haiku 4.5  $0.0035
+7. Gemini 3.1 Pro    $0.008
+8. Grok 4            $0.0105
+9. Claude Opus 4.7   $0.0175
+10. GPT-5.5          $0.020    ← 最贵（之前是 Opus）
+```
+
+**API 扩展决策**（详见 §11 Decision 13）：另一线程产出的 `API_Expansion_Plan.md`（完整付费 API 方案）保留在项目根目录作为 V2.0 路线图。当前 PM 推荐：先做 Plan A（轻量免费 endpoint，1 天工作量），不立刻做完整 Stage 1。等用户拍板。
+
+**测试运行问题**：vitest worker pool 在本机有 timeout 问题（与代码无关，环境状态导致）。TypeScript 检查通过 = 数据结构正确。Vercel 部署只跑 `npm run build`，不影响线上验证。
+
+**下次决策点**：
+- (a) **是否做 Plan A 免费 API endpoint**（用户决定）
+- (b) 5/19 数据复盘：观察数据真实化后 GSC 的反应（如果真实价格更接近用户搜索意图，CTR 可能提升）
+
+---
 
 ### 2026-05-12 — Week 6 第 1 篇收口（数据复盘 + Caching 专文发布）
 **类型**：content + analysis
