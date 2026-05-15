@@ -5,8 +5,8 @@
 > 维护规则：每次"收口"（一个改动告一段落）都必须更新本文档相关章节，并在变更日志追加记录。
 
 **最后更新**：2026-05-12
-**当前阶段**：📊 **数据真实化完成** — 所有 10 个模型价格已对齐 LiteLLM 真实数据，6 篇文章同步修正
-**下次决策点**：(a) 是否做 Plan A 免费 API endpoint？ (b) 5/19 看 SEO 数据 + 新 Caching 文章效果
+**当前阶段**：🚀 **Plan A 免费 API 已上线** — 3 个公开 endpoint + 完整 docs 页 + Nav/Footer/README 全部接入
+**下次决策点**：2026-05-19 数据复盘 — 看 SEO 数据 + 新 Caching 文章 + API 是否带来外部 referrer
 
 ---
 
@@ -41,11 +41,12 @@
 3. 场景化模板（6 个使用场景一键填充）
 4. 配套深度 SEO 内容（V1.0 已发 5 篇 ~14,000 字）
 
-**当前线上数据快照**（2026-05-12 数据真实化后）：
-- **22 个 SSG 静态页面**（首页 + 10 模型 + 6 文章 + 4 法律 + 博客索引）
+**当前线上数据快照**（2026-05-12 Plan A 上线后）：
+- **23 个 SSG 静态页面**（首页 + 10 模型 + 6 文章 + 4 法律 + 博客索引 + **API docs 页**）
+- **3 个公开 API endpoints**：`/api/v1/models`、`/api/v1/models/{id}`、`/api/v1/pricing`（CORS-enabled，CDN 缓存 24h，零 auth）
 - **~16,000 字英文 SEO 内容**（6 篇文章已加 "Updated 2026-05-12" 透明声明）
 - **价格数据全部对齐 [LiteLLM](https://github.com/BerriAI/litellm) 真实数据**（行业事实标准）
-- Google Search Console：sitemap 已收，**18 页已索引** / 6 页等待（含正常重定向）
+- Google Search Console：sitemap 已收（现 23 URL），**18 页已索引** / 6 页等待
 - **Week 1 真实 SEO 数据**：1,859 曝光（+44.5% WoW），3 点击，平均排名 9.8（Top 10）
 - 5 个关键词 ≥15 曝光（claude opus 4.7 / openai prompt caching / gpt 5 mini / gpt 5.5 cost / gpt-5-mini）
 - Bing Webmaster 已导入同步
@@ -99,9 +100,15 @@
 │   ├── providers.tsx                 # ThemeProvider 包装
 │   ├── globals.css                   # 设计 token + prose-content 文章排版
 │   ├── [slug]/page.tsx               # 模型独立 Landing Page (SSG 10 个)
+│   ├── api/
+│   │   ├── page.tsx                  # API 文档 + marketing 页 (SSG)
+│   │   └── v1/
+│   │       ├── models/route.ts       # GET /api/v1/models (含过滤)
+│   │       ├── models/[id]/route.ts  # GET /api/v1/models/{id}
+│   │       └── pricing/route.ts      # GET /api/v1/pricing (轻量)
 │   ├── blog/
 │   │   ├── page.tsx                  # 博客索引页
-│   │   └── [slug]/page.tsx           # 博客文章详情 (SSG 5 篇)
+│   │   └── [slug]/page.tsx           # 博客文章详情 (SSG 6 篇)
 │   ├── about/page.tsx                # 关于
 │   ├── privacy/page.tsx              # 隐私政策
 │   ├── terms/page.tsx                # 服务条款
@@ -109,7 +116,7 @@
 │   ├── icon.tsx                      # 32x32 favicon (next/og)
 │   ├── apple-icon.tsx                # 180x180 Apple touch icon
 │   ├── opengraph-image.tsx           # 1200x630 OG image
-│   ├── sitemap.ts                    # 自动生成 sitemap.xml (21 URL)
+│   ├── sitemap.ts                    # 自动生成 sitemap.xml (23 URL)
 │   └── robots.ts                     # 自动生成 robots.txt
 ├── components/
 │   ├── Calculator.tsx                # 核心计算器（含 Advanced Options）
@@ -540,18 +547,17 @@ Vercel UI 默认行为有时会让 apex `aicostcalc.net` 重定向到 `www.aicos
 - [x] **数据真实化**（关键里程碑）：所有 10 模型价格对齐 LiteLLM 真实数据；6 篇博客文章同步修正（详见 §16）
 
 **📋 Week 6 剩余任务**：
-- [ ] 5/19 数据复盘：看新文章曝光增长 + 数据真实化后 GSC 反应（新真实价格可能引入新查询）
-- [ ] 决定是否做 Plan A（免费 API endpoint）
+- [ ] 5/19 数据复盘：看新文章曝光增长 + 数据真实化后 GSC 反应（新真实价格可能引入新查询）+ API 是否带来外部 referrer
 
-### Decision Point: API 扩展（待用户决定）
+### Plan A 免费 API（✅ 完成 2026-05-12）
 
-收到了来自另一线程的 `API_Expansion_Plan.md` 规划文档（保留在项目根目录），完整方案是订阅制付费 API（Stage 1 → 2 → 3）。详见 §11 Decision 13。
+PRD v1.1 §3.5 F-api 早期承诺已兑现。3 个公开 endpoint + 完整 docs 页 + Nav/Footer/README 全面接入。详见 §16 changelog。
 
-**PM 推荐路径**：先做 Plan A（轻量免费 API）：
-- 3 个免费 endpoint：`/api/v1/models`、`/api/v1/models/{id}`、`/api/v1/pricing`
-- 1 天工作量，零额外维护
-- 兑现 PRD v1.1 §3.5 F-api 早期承诺
-- 用 6-12 周观察使用情况再决定是否做付费层
+**当前 API 监控指标**（5/19 复盘时看）：
+- 是否有 `aicostcalc.net/api/` 路径在 GSC 出现曝光
+- GA4 Referrers 是否出现外部站点调用我们 API
+- GitHub 是否收到"我用了你 API"的 issue / showcase
+- 未来 1-2 个月观察使用情况，决定是否激活完整 Stage 1（付费层）
 
 ### Week 7+ — 持续内容与运营
 
@@ -646,14 +652,14 @@ Vercel UI 默认行为有时会让 apex `aicostcalc.net` 重定向到 `www.aicos
 **未做但已规划**（Layer 3）：用 Cloudflare Worker 写爬虫直接核对官方页面，作为 LiteLLM 数据的二次校验。
 
 ### Decision 13: API 扩展计划 (V2.0 路线图)（2026-05-12）
-**结论**：将另一线程产出的 `API_Expansion_Plan.md` 保留作为 V2.0 路线图，**不立刻执行完整 Stage 1**。
+**结论**：将另一线程产出的 `API_Expansion_Plan.md` 保留作为 V2.0 路线图，**不立刻执行完整 Stage 1**。先做 Plan A 试水。
 **理由**：
 1. 完整 Stage 1（auth + Stripe + database + API Key + RapidAPI 上架）= 4-6 周开发，会撕裂当前 SEO 复利期窗口
 2. PRD v1.1 §3.5 早已规划 F-api 免费版（无 auth、纯 JSON、Vercel CDN 缓存），是更低成本的"试水"方案
 3. 数据真实化（Decision 12）已完成 = API 化的前提就绪
 4. 计划本身设计合理，**只是时机问题**，不丢
-**未来评估时点**：当 (a) 月 UV > 1,000，(b) 收到 ≥3 封"想付费要更稳定数据"邮件，(c) Free API 免费版有 50K+ 月调用量 时，再激活完整 Stage 1。
-**当前推荐路径**：考虑做 Plan A（仅免费 JSON endpoint），1 天工作量，零额外维护，作为 PRD v1.1 §3.5 F-api 的兑现。
+**Plan A 已执行（2026-05-12，commit `6356fb0`）**：3 个免费 endpoint + /api docs 页 + Nav/Footer/README 接入。详见 §16。
+**激活完整 Stage 1 的触发条件**：当 (a) 月 UV > 1,000，(b) 收到 ≥3 封"想付费要更稳定数据"邮件，(c) Free API 有 50K+ 月调用量 时，再激活付费层。
 
 ---
 
@@ -689,7 +695,7 @@ Vercel UI 默认行为有时会让 apex `aicostcalc.net` 重定向到 `www.aicos
 - [ ] **lockfile 兼容问题**：`package-lock.json` 未进 git（详见 §16 changelog 2026-05-04）。修复路径：nvm 装 Node 22 + npm 10 重新生成兼容 lockfile，或评估迁 pnpm。**优先级**：低（不阻塞任何事）
 - [ ] **i18n 多语言路由 (V1.1)**：把所有路由挪到 `app/[locale]/` 下（详见 §11 Decision 8）
 - [ ] **F-share / F-embed (V1.1)**（PRD v1.1 §3.4）：URL 编码深链接 + 复制为图片 + iframe 嵌入
-- [ ] **F-api 公开 JSON endpoint (V1.1)**（PRD v1.1 §3.5）：让其他开发者用我们数据 → 反向链接 + 权威性
+- [x] ~~F-api 公开 JSON endpoint~~ ✅ 已完成 2026-05-12 (Plan A，详见 §16)
 - [ ] **Vision per-image 定价支持 (V1.1)**：`data/models.json` schema 已预留 `pricing.imagePerImage` 字段，需启用 UI
 - [ ] **Reasoning tokens 支持 (V1.2)**：o4-mini / Opus 等推理模型有思考 tokens
 - [ ] **provider logo SVG 文件**：`public/logos/` 目前是空目录，需补 openai.svg / anthropic.svg / google.svg / deepseek.svg / xai.svg / mistral.svg
@@ -784,6 +790,58 @@ Vercel UI 默认行为有时会让 apex `aicostcalc.net` 重定向到 `www.aicos
 ## 16. 变更日志
 
 > 每次"收口"在此追加一条记录。最新的在最上方。
+
+### 2026-05-12 — Plan A 免费 API 上线收口（PRD v1.1 §3.5 F-api 兑现）
+**类型**：feat + infrastructure
+**摘要**：3 个公开 JSON API endpoint 上线，配套 /api 文档/marketing 页 + 全站接入。PRD v1.1 §3.5 早期规划的 F-api 终于交付。
+
+**新 endpoints**（全部 GET，CORS-enabled，无 auth）：
+- `GET /api/v1/models` — 全量数据 + 4 维过滤（provider / category / capability / status）
+- `GET /api/v1/models/{id}` — 单模型 lookup，404 时返回 availableIds 数组
+- `GET /api/v1/pricing` — 轻量价格-only payload
+
+**所有响应**：
+- `Cache-Control: public, max-age=3600, s-maxage=86400` — 浏览器 1h，Vercel Edge 24h
+- `Access-Control-Allow-Origin: *` — 任何前端可调
+- `_meta` 块带 dataSource / license / docs URL / error reporting URL
+- 零数据库、零 auth、零 rate limit middleware（依赖 Vercel CDN 兜底）
+
+**新页面 /api**（marketing + docs，~250 行）：
+- Hero "Free Public API · No auth · MIT" + 双 CTA
+- 30-second curl quickstart 区
+- 3 endpoint 详解 + 完整 filter 文档
+- TypeScript-style schema 完整参考
+- 数据准确性章节链 LiteLLM + provider 官方页
+- 6 个使用场景示例（dashboards / bots / extensions / FinOps / 路由）
+- MIT license + rate limit 说明
+
+**全站接入**：
+- Nav 添加 "API" 链
+- Footer "Tool" 栏添加 "Free API"
+- README 新增 "Public API (free, no auth)" 章节（含 3 个 curl 示例）
+- sitemap.ts 加入 `/api`（priority 0.7，changeFrequency: monthly）
+
+**TypeScript 修正**：`/api/v1/models/route.ts` 在 capability filter 用 `as unknown as Record<string, unknown>` 双重 cast（TS 严格模式要求）。type-check 通过。
+
+**为什么先做 Plan A**：
+- Plan B/C（带 Auth + Stripe + Database + Dashboard 的付费 API）= 4-6 周开发，与 SEO 复利窗口冲突
+- 数据真实化（Decision 12）已完成 = API 化的前提就绪
+- 免费 API 是反向链接磁铁——开发者在 GitHub README / 博客 / SO 答案里引用我们 API URL = 自然外链积累
+- 用 6-12 周观察使用情况后再决定是否激活付费层（Decision 13 触发条件）
+
+**未来监控（5/19 复盘）**：
+- GSC 是否出现 /api 路径曝光？
+- GA4 Referrers 是否出现"用了我们 API 的外部站点"？
+- GitHub 是否收到 showcase issue？
+- 整体外部反向链接数量是否有变化？
+
+**当前线上规模**：
+- 23 个 SSG 页面（首页 + 10 模型 + 6 博客 + 4 法律 + 博客索引 + API docs）
+- 3 个 API endpoints
+- ~16,000 字 SEO 内容
+- 全部数据 LiteLLM 核验，2026-05-12
+
+---
 
 ### 2026-05-12 — 数据真实化收口（LiteLLM bootstrap + 6 篇文章同步）
 **类型**：data + content + infrastructure
