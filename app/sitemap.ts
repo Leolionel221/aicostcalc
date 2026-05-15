@@ -44,5 +44,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.3,
   }));
 
-  return [homepage, ...modelPages, blogIndex, ...blogPosts, ...staticPages];
+  const apiDocs = {
+    url: `${SITE.url}/api`,
+    lastModified,
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  };
+
+  return [homepage, ...modelPages, apiDocs, blogIndex, ...blogPosts, ...staticPages];
 }

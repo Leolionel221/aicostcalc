@@ -47,6 +47,11 @@ export function Footer() {
                 </a>
               </li>
               <li>
+                <a href="/api" className="hover:text-foreground transition-colors">
+                  Free API
+                </a>
+              </li>
+              <li>
                 <a href="/blog" className="hover:text-foreground transition-colors">
                   Blog
                 </a>

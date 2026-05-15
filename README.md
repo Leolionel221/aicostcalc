@@ -69,6 +69,25 @@ In-depth content on AI API pricing:
 - [How to Calculate Token Cost: A Beginner's Guide](https://aicostcalc.net/blog/how-to-calculate-token-cost-beginner-guide)
 - [GPT-5.5 vs Claude Opus 4.7: Cost & Performance Comparison](https://aicostcalc.net/blog/gpt-5-5-vs-claude-opus-4-7-comparison)
 
+## Public API (free, no auth)
+
+This project exposes a free JSON API for the same model pricing data. No authentication, no rate limits for normal use, CORS-enabled, CDN-cached.
+
+```bash
+# All models
+curl https://aicostcalc.net/api/v1/models
+
+# Single model
+curl https://aicostcalc.net/api/v1/models/gpt-5-5
+
+# Lightweight pricing only
+curl https://aicostcalc.net/api/v1/pricing?provider=anthropic
+```
+
+Full documentation: [aicostcalc.net/api](https://aicostcalc.net/api)
+
+The data is MIT licensed. Build dashboards, bots, browser extensions, FinOps tools — whatever helps you understand AI API costs. If you build something cool, [open a GitHub issue](https://github.com/Leolionel221/aicostcalc/issues/new?title=Built+with+aicostcalc+API&labels=showcase) — we'll feature it.
+
 ## Tech stack
 
 | Layer | Choice |

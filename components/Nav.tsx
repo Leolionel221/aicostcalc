@@ -15,6 +15,9 @@ export function Nav() {
           <Link href="/" className="text-muted-foreground hover:text-foreground transition-colors">
             Calculator
           </Link>
+          <Link href="/api" className="text-muted-foreground hover:text-foreground transition-colors">
+            API
+          </Link>
           <Link href="/blog" className="text-muted-foreground hover:text-foreground transition-colors">
             Blog
           </Link>
