@@ -94,6 +94,185 @@
       }
     },
     {
+      "id": "gpt-5-6-sol",
+      "name": "GPT-5.6 Sol",
+      "shortName": "5.6 Sol",
+      "provider": "OpenAI",
+      "providerId": "openai",
+      "providerLogo": "/logos/openai.svg",
+      "providerWebsite": "https://openai.com",
+      "category": "flagship",
+      "useCase": [
+        "reasoning",
+        "coding",
+        "general",
+        "vision"
+      ],
+      "releaseDate": "2026-06-15",
+      "status": "active",
+      "deprecatedAt": null,
+      "successorId": null,
+      "pricing": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 5.0,
+        "output": 30.0,
+        "cachedInput": 0.5,
+        "cacheWrite": 6.25,
+        "batchInput": 2.5,
+        "batchOutput": 15.0,
+        "imagePerImage": null,
+        "imageTokensFormula": null,
+        "reasoningOutput": null,
+        "fineTunedInput": null,
+        "fineTunedOutput": null
+      },
+      "limits": {
+        "contextWindow": 1050000,
+        "maxOutput": 128000,
+        "maxImagesPerRequest": null,
+        "knowledgeCutoff": null
+      },
+      "tokenization": {
+        "encoder": "o200k_base",
+        "approximationRatio": {
+          "english": 4,
+          "chinese": 1.5,
+          "code": 3
+        }
+      },
+      "supports": {
+        "vision": true,
+        "audio": false,
+        "tools": true,
+        "streaming": true,
+        "caching": true,
+        "batch": true,
+        "fineTuning": false,
+        "structuredOutput": true
+      },
+      "lastVerified": "2026-07-18",
+      "sources": [
+        {
+          "type": "community",
+          "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
+          "fetchedAt": "2026-07-18"
+        },
+        {
+          "type": "official",
+          "url": "https://openai.com/api/pricing",
+          "fetchedAt": "2026-07-18"
+        }
+      ],
+      "priceHistory": [
+        {
+          "date": "2026-06-15",
+          "input": 5.0,
+          "output": 30.0,
+          "note": "Initial release"
+        }
+      ],
+      "i18n": {
+        "en": {
+          "tagline": "The flagship-tier variant of the GPT-5.6 family",
+          "description": "GPT-5.6 Sol is the flagship-tier variant of the 5.6 family (sol/terra/luna), priced identically to base GPT-5.6 at $5/$30 with the same 1M+ context and 90% caching discount."
+        },
+        "zh": {
+          "tagline": "GPT-5.6 家族旗舰档变体",
+          "description": "GPT-5.6 Sol 是 5.6 家族（sol/terra/luna）的旗舰档变体，与基础版 GPT-5.6 同价（$5/$30），同样 1M+ 上下文和 90% 缓存折扣。"
+        }
+      }
+    },
+    {
+      "id": "gpt-5-6-terra",
+      "name": "GPT-5.6 Terra",
+      "shortName": "5.6 Terra",
+      "provider": "OpenAI",
+      "providerId": "openai",
+      "providerLogo": "/logos/openai.svg",
+      "providerWebsite": "https://openai.com",
+      "category": "balanced",
+      "useCase": [
+        "general",
+        "coding",
+        "vision"
+      ],
+      "releaseDate": "2026-06-15",
+      "status": "active",
+      "deprecatedAt": null,
+      "successorId": null,
+      "pricing": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 2.5,
+        "output": 15.0,
+        "cachedInput": 0.25,
+        "cacheWrite": 3.12,
+        "batchInput": 1.25,
+        "batchOutput": 7.5,
+        "imagePerImage": null,
+        "imageTokensFormula": null,
+        "reasoningOutput": null,
+        "fineTunedInput": null,
+        "fineTunedOutput": null
+      },
+      "limits": {
+        "contextWindow": 1050000,
+        "maxOutput": 128000,
+        "maxImagesPerRequest": null,
+        "knowledgeCutoff": null
+      },
+      "tokenization": {
+        "encoder": "o200k_base",
+        "approximationRatio": {
+          "english": 4,
+          "chinese": 1.5,
+          "code": 3
+        }
+      },
+      "supports": {
+        "vision": true,
+        "audio": false,
+        "tools": true,
+        "streaming": true,
+        "caching": true,
+        "batch": true,
+        "fineTuning": false,
+        "structuredOutput": true
+      },
+      "lastVerified": "2026-07-18",
+      "sources": [
+        {
+          "type": "community",
+          "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
+          "fetchedAt": "2026-07-18"
+        },
+        {
+          "type": "official",
+          "url": "https://openai.com/api/pricing",
+          "fetchedAt": "2026-07-18"
+        }
+      ],
+      "priceHistory": [
+        {
+          "date": "2026-06-15",
+          "input": 2.5,
+          "output": 15.0,
+          "note": "Initial release"
+        }
+      ],
+      "i18n": {
+        "en": {
+          "tagline": "The mid-tier of the GPT-5.6 family — half the flagship price",
+          "description": "GPT-5.6 Terra is the balanced tier of the 5.6 family: $2.50/$15 per 1M tokens (half the flagship), same 1M+ context window and 128K output. The price/performance pick of OpenAI's lineup."
+        },
+        "zh": {
+          "tagline": "GPT-5.6 家族中坚档，旗舰半价",
+          "description": "GPT-5.6 Terra 是 5.6 家族的均衡档：$2.50/$15（旗舰半价），同样 1M+ 上下文和 128K 输出。OpenAI 系性价比之选。"
+        }
+      }
+    },
+    {
       "id": "gpt-5-6-luna",
       "name": "GPT-5.6 Luna",
       "shortName": "5.6 Luna",
@@ -452,6 +631,96 @@
       }
     },
     {
+      "id": "claude-fable-5",
+      "name": "Claude Fable 5",
+      "shortName": "Fable 5",
+      "provider": "Anthropic",
+      "providerId": "anthropic",
+      "providerLogo": "/logos/anthropic.svg",
+      "providerWebsite": "https://anthropic.com",
+      "category": "flagship",
+      "useCase": [
+        "reasoning",
+        "coding",
+        "general",
+        "long-context"
+      ],
+      "releaseDate": "2026-06-01",
+      "status": "active",
+      "deprecatedAt": null,
+      "successorId": null,
+      "pricing": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 10.0,
+        "output": 50.0,
+        "cachedInput": 1.0,
+        "cacheWrite": 12.5,
+        "batchInput": 5.0,
+        "batchOutput": 25.0,
+        "imagePerImage": null,
+        "imageTokensFormula": null,
+        "reasoningOutput": null,
+        "fineTunedInput": null,
+        "fineTunedOutput": null
+      },
+      "limits": {
+        "contextWindow": 1000000,
+        "maxOutput": 128000,
+        "maxImagesPerRequest": 100,
+        "knowledgeCutoff": null
+      },
+      "tokenization": {
+        "encoder": "approximate",
+        "approximationRatio": {
+          "english": 4,
+          "chinese": 1.5,
+          "code": 3
+        }
+      },
+      "supports": {
+        "vision": true,
+        "audio": false,
+        "tools": true,
+        "streaming": true,
+        "caching": true,
+        "batch": true,
+        "fineTuning": false,
+        "structuredOutput": true
+      },
+      "lastVerified": "2026-07-18",
+      "sources": [
+        {
+          "type": "community",
+          "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
+          "fetchedAt": "2026-07-18"
+        },
+        {
+          "type": "official",
+          "url": "https://www.anthropic.com/pricing",
+          "fetchedAt": "2026-07-18"
+        }
+      ],
+      "priceHistory": [
+        {
+          "date": "2026-06-01",
+          "input": 10.0,
+          "output": 50.0,
+          "note": "Initial release"
+        }
+      ],
+      "i18n": {
+        "en": {
+          "tagline": "Anthropic's premium flagship — top of the Claude 5 family",
+          "description": "Claude Fable 5 sits above Opus 4.8 as Anthropic's most capable model. $10/$50 per 1M tokens, 1M context, 128K output, 90% cache discount. For the hardest reasoning and agentic workloads where quality dominates cost."
+        },
+        "zh": {
+          "tagline": "Anthropic 顶级旗舰，Claude 5 家族之巅",
+          "description": "Claude Fable 5 位居 Opus 4.8 之上，是 Anthropic 最强模型。$10/$50（每 1M token），1M 上下文，128K 输出，90% 缓存折扣。适合质量重于成本的最难推理与 agent 场景。"
+        }
+      }
+    },
+    {
       "id": "claude-opus-4-8",
       "name": "Claude Opus 4.8",
       "shortName": "Opus 4.8",
@@ -805,6 +1074,96 @@
         "zh": {
           "tagline": "Anthropic 快速实惠主力",
           "description": "Claude Haiku 4.5 日常任务强劲。$0.10/1M 缓存输入价（比标准 $1.00 便宜 10 倍），让缓存友好的高并发场景成本最优。"
+        }
+      }
+    },
+    {
+      "id": "gemini-3-5-flash",
+      "name": "Gemini 3.5 Flash",
+      "shortName": "3.5 Flash",
+      "provider": "Google",
+      "providerId": "google",
+      "providerLogo": "/logos/google.svg",
+      "providerWebsite": "https://ai.google.dev",
+      "category": "balanced",
+      "useCase": [
+        "general",
+        "vision",
+        "fast",
+        "audio"
+      ],
+      "releaseDate": "2026-06-25",
+      "status": "active",
+      "deprecatedAt": null,
+      "successorId": null,
+      "pricing": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 1.5,
+        "output": 9.0,
+        "cachedInput": 0.15,
+        "cacheWrite": null,
+        "batchInput": 0.75,
+        "batchOutput": 4.5,
+        "imagePerImage": null,
+        "imageTokensFormula": null,
+        "reasoningOutput": null,
+        "fineTunedInput": null,
+        "fineTunedOutput": null
+      },
+      "limits": {
+        "contextWindow": 1048576,
+        "maxOutput": 65535,
+        "maxImagesPerRequest": 3000,
+        "knowledgeCutoff": null
+      },
+      "tokenization": {
+        "encoder": "approximate",
+        "approximationRatio": {
+          "english": 4,
+          "chinese": 1.5,
+          "code": 3
+        }
+      },
+      "supports": {
+        "vision": true,
+        "audio": true,
+        "tools": true,
+        "streaming": true,
+        "caching": true,
+        "batch": true,
+        "fineTuning": true,
+        "structuredOutput": true
+      },
+      "lastVerified": "2026-07-18",
+      "sources": [
+        {
+          "type": "community",
+          "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
+          "fetchedAt": "2026-07-18"
+        },
+        {
+          "type": "official",
+          "url": "https://ai.google.dev/pricing",
+          "fetchedAt": "2026-07-18"
+        }
+      ],
+      "priceHistory": [
+        {
+          "date": "2026-06-25",
+          "input": 1.5,
+          "output": 9.0,
+          "note": "Initial release"
+        }
+      ],
+      "i18n": {
+        "en": {
+          "tagline": "Google's next-gen Flash — stronger, pricier than Gemini 3 Flash",
+          "description": "Gemini 3.5 Flash is Google's newest Flash generation at $1.50/$9 per 1M tokens — 3x the price of Gemini 3 Flash but with substantially stronger reasoning. 1M context, native audio + vision."
+        },
+        "zh": {
+          "tagline": "Google 新一代 Flash，比 Gemini 3 Flash 更强也更贵",
+          "description": "Gemini 3.5 Flash 是 Google 最新一代 Flash，$1.50/$9（每 1M token）——是 Gemini 3 Flash 的 3 倍价格但推理显著更强。1M 上下文，原生音频 + 视觉。"
         }
       }
     },
