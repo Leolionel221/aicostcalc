@@ -112,9 +112,9 @@ export default function Home() {
             <MonthlyEstimator
               models={data.models}
               defaultModelIds={[
-                "gpt-5-5",
-                "claude-opus-4-7",
-                "gemini-3-0-pro",
+                "gpt-5-6",
+                "claude-opus-4-8",
+                "gemini-3-1-pro",
               ]}
             />
           </div>
