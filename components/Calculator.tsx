@@ -14,6 +14,7 @@ import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Switch } from "@/components/ui/switch";
 import { Card, CardContent } from "@/components/ui/card";
+import { AffiliateCTA } from "./AffiliateCTA";
 import { CostComparisonStrip } from "./CostComparison";
 import { ScenarioTemplates, type Scenario } from "./ScenarioTemplates";
 import { calculateCost, calculateComparison } from "@/lib/calculator";
@@ -303,6 +304,9 @@ export function Calculator({ models, defaultModelId }: CalculatorProps) {
 
         {/* F1.5 three-column comparison */}
         <CostComparisonStrip comparison={comparison} currency={currency} />
+
+        {/* Monetization: affiliate CTA in the highest-intent spot */}
+        <AffiliateCTA model={selectedModel} placement="calculator" />
       </CardContent>
     </Card>
   );

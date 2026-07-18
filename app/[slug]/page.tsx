@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRight, ExternalLink } from "lucide-react";
 import modelsData from "@/data/models.json";
 import type { ModelsData, Model } from "@/lib/types";
+import { AffiliateCTA } from "@/components/AffiliateCTA";
 import { Calculator } from "@/components/Calculator";
 import { ModelPricingTable } from "@/components/ModelPricingTable";
 import { ModelFAQ } from "@/components/ModelFAQ";
@@ -183,6 +184,9 @@ export default async function ModelPage({
             </p>
           </div>
           <ModelPricingTable model={model} />
+          <div className="mt-6">
+            <AffiliateCTA model={model} placement="model-page" />
+          </div>
           <p className="text-xs text-muted-foreground mt-4 text-center">
             Last verified {model.lastVerified} ·{" "}
             <a
