@@ -4,9 +4,10 @@
 >
 > 维护规则：每次"收口"（一个改动告一段落）都必须更新本文档相关章节，并在变更日志追加记录。
 
-**最后更新**：2026-05-12
-**当前阶段**：🚀 **Plan A 免费 API 已上线** — 3 个公开 endpoint + 完整 docs 页 + Nav/Footer/README 全部接入
-**下次决策点**：2026-05-19 数据复盘 — 看 SEO 数据 + 新 Caching 文章 + API 是否带来外部 referrer
+**最后更新**：2026-07-18
+**当前阶段**：💰 **收银台已安装** — 20 个模型（July 全量同步）+ Novita 联盟链接全站接入（首个真实变现机制）
+**运营节奏**：月度维护模式（每月 1 号 LiteLLM 同步 + 新模型补页 + GSC 月检），不再日盯数据
+**下次决策点**：2026-08-01 月度维护 + 看 affiliate_link_clicked 首批数据；AIMLAPI 审核通过后补接第二联盟位
 
 ---
 
@@ -41,19 +42,14 @@
 3. 场景化模板（6 个使用场景一键填充）
 4. 配套深度 SEO 内容（V1.0 已发 5 篇 ~14,000 字）
 
-**当前线上数据快照**（2026-05-12 Plan A 上线后）：
-- **23 个 SSG 静态页面**（首页 + 10 模型 + 6 文章 + 4 法律 + 博客索引 + **API docs 页**）
-- **3 个公开 API endpoints**：`/api/v1/models`、`/api/v1/models/{id}`、`/api/v1/pricing`（CORS-enabled，CDN 缓存 24h，零 auth）
-- **~16,000 字英文 SEO 内容**（6 篇文章已加 "Updated 2026-05-12" 透明声明）
-- **价格数据全部对齐 [LiteLLM](https://github.com/BerriAI/litellm) 真实数据**（行业事实标准）
-- Google Search Console：sitemap 已收（现 23 URL），**18 页已索引** / 6 页等待
-- **Week 1 真实 SEO 数据**：1,859 曝光（+44.5% WoW），3 点击，平均排名 9.8（Top 10）
-- 5 个关键词 ≥15 曝光（claude opus 4.7 / openai prompt caching / gpt 5 mini / gpt 5.5 cost / gpt-5-mini）
-- Bing Webmaster 已导入同步
-- GA4 实时事件回流中（102 events, 8 users 28 天窗口）
-- dev.to 第 2 篇文章交叉发布（OpenAI Caching，2026-05-12）
-- 站内 GitHub Issues 反馈通道已上线（每页 + Footer）
-- 3 条 Vercel 301 redirect（旧 slug → 新 slug，保 SEO 链接权重）
+**当前线上数据快照**（2026-07-18 收银台安装后）：
+- **33 个 SSG 静态页面**（首页 + **20 模型** + 6 文章 + 4 法律 + 博客索引 + API docs 页）
+- **💰 变现已上线**：Novita 联盟链接（10%/180 天）接入计算器结果区 + 全部 20 模型页；AIMLAPI（30% lifetime）申请中
+- **3 个公开 API endpoints**：`/api/v1/models`（现返回 20 模型）、`/api/v1/models/{id}`、`/api/v1/pricing`
+- **价格数据全部对齐 [LiteLLM](https://github.com/BerriAI/litellm)**，lastUpdated 2026-07-18
+- **SEO 现状**（7 周自然实验后）：28 天 568 曝光 / 排名 41.8 / 日曝光翻倍趋势；Google 已把站点重分类为"工具"（"ai cost calculator" 为第一查询）——工具页是主资产，博客降级
+- Bing Webmaster 已导入同步；GA4 事件回流中；dev.to 2 篇交叉文章；GitHub Issues 反馈通道在线
+- 3 条 Vercel 301 redirect（旧 slug → 新 slug）
 
 ---
 
@@ -661,6 +657,16 @@ PRD v1.1 §3.5 F-api 早期承诺已兑现。3 个公开 endpoint + 完整 docs 
 **Plan A 已执行（2026-05-12，commit `6356fb0`）**：3 个免费 endpoint + /api docs 页 + Nav/Footer/README 接入。详见 §16。
 **激活完整 Stage 1 的触发条件**：当 (a) 月 UV > 1,000，(b) 收到 ≥3 封"想付费要更稳定数据"邮件，(c) Free API 有 50K+ 月调用量 时，再激活付费层。
 
+### Decision 14: 联盟策略从 OpenRouter 转向 Novita + AIMLAPI（2026-07-18）
+**结论**：放弃 PRD §6.2 的 OpenRouter 联盟假设（浏览器实测证伪：无自助推荐计划），改接 Novita AI（10%/180 天，已上线）+ AIMLAPI（30% lifetime 现金，申请中）。
+**理由**：
+1. OpenRouter 后台无 Referral 入口，相关 URL 全 404——PRD 假设从未成立
+2. 全生态调研（官方页验证）显示真付现金且受众匹配的只有 AIMLAPI 和 Novita；观测工具（Helicone/Langfuse）全无计划；Groq/Together/Fireworks 无计划或假货
+3. Novita host 开源模型（DeepSeek 系），与我们"最便宜模型"数据叙事天然契合
+**诚实守卫**：`novitaServes()` 保证不向用户虚假声称 Novita 承载专有模型（GPT/Claude/Gemini）——专有模型页只做"开源替代省钱"话术。
+**合规**：所有联盟链接 `rel="sponsored"`（Google 链接方案）+ 可见披露（FTC）+ GA4 事件追踪。
+**何时复审**：affiliate_link_clicked 月度数据回流后评估各位点转化；AIMLAPI 通过后评估是否作为专有模型页的主 CTA。
+
 ---
 
 ## 12. 待办与挂起项
@@ -790,6 +796,50 @@ PRD v1.1 §3.5 F-api 早期承诺已兑现。3 个公开 endpoint + 完整 docs 
 ## 16. 变更日志
 
 > 每次"收口"在此追加一条记录。最新的在最上方。
+
+### 2026-07-18 — 复活日收口：July 全量数据同步 + 收银台安装（3 commits）
+**类型**：data + monetization + strategy
+**摘要**：7 周静默期后回归。数据同步 10→20 模型；证伪 OpenRouter 联盟假设；完成联盟计划全生态调研；拿到 Novita 推荐链接并全站接入——**站点上线 11 周后第一次拥有真实变现机制**。
+
+**7 周自然实验结论**（2026-05-28 → 07-18 零干预）：
+- 28 天窗口内日曝光从 ~15 → ~30（翻倍），排名 47.5 → 41.8（缓慢回升）
+- **Google 重新分类了站点身份**：5 月的内容型查询（openai prompt caching pricing 等）消失，工具型查询接管（"ai cost calculator" 113 曝光成为第一查询）——印证 5 月数据（landing page CTR 0.4% vs 博客 0%）：**工具页是真资产，博客不是**
+- 战略结论：顺着 Google 给的身份加码工具页，博客降级
+
+**July 数据同步**（commits `2074582` + `a3a4d4e`）：
+- 10 个旧模型 vs LiteLLM 全量核对：零价格变化，lastVerified 刷新
+- 新增 10 个模型（10→20）：GPT-5.6 全家族（base/Sol/Terra/Luna）、Claude Fable 5（$10/$50 顶级旗舰）、Claude Opus 4.8、Claude Sonnet 5、Gemini 3.5 Flash、Grok 4.5（比 Grok 4 便宜 60%）、DeepSeek V4-Flash（$0.14/$0.28 新最便宜王）
+- 20 张 SSG 工具页全部 200，sitemap 自动扩展
+- 修复存量 bug：首页 MonthlyEstimator 引用 5/12 已改名的 gemini-3-0-pro（静默失效 2 个月）
+- **维护方法教训**：第一轮用关键词模式搜漏了 4 个模型（用户抓到 Fable 5/Sol/Terra，复扫又抓到 Gemini 3.5 Flash）。以后每月同步必须用**全量扫描 + 有意识排除清单**，排除项写进 commit message 备查
+- 有意识排除（8 月复审）：gpt-5-nano、deepseek-v4-pro、grok-4.3、grok-4-1-fast、mistral-medium-3-5
+
+**OpenRouter 联盟假设证伪**（浏览器实测）：
+- 在用户真实 OpenRouter 后台逐页验证：Settings 无 Referral 入口、/settings/referrals 与 /referrals 均 404、Credits 页仅充值
+- **PRD §6.2 "OpenRouter 联盟返利"从一开始就不成立**；第三方声称的推荐计划即使存在也返 credits 不返现金
+- 顺带：帮用户走完 OpenRouter 新账户引导（Individual、跳过支付方式、生成的 API key 未记录未使用）
+
+**联盟计划全生态调研**（子任务，全部官方页验证）：
+- 🥇 AIMLAPI：up to 30% lifetime 现金（Wise/PayPal，Rewardful 申请制）——受众完美同构，**待用户申请**
+- 🥈 Novita AI：10%/180 天/无上限，自助——**已接入**
+- 🥉 Pinecone 10% 首年（PartnerStack）/ RunPod / Vast.ai——留作内容页补充
+- 证伪：观测工具全无计划、Groq/Together/Fireworks/Replicate 无计划或同名假货、LLM Gateway credits 不可提现
+
+**收银台安装**（commit `8918107`）：
+- `lib/affiliate.ts`：伙伴注册表 + novitaServes() 诚实守卫（Novita 只 host 开源模型，不虚假声称承载 GPT/Claude）
+- `components/AffiliateCTA.tsx`：DeepSeek 模型→直接 CTA；专有模型→"开源替代省钱"话术
+- 合规三件套：`rel="sponsored"`（Google 链接方案合规，SEO 恢复期关键）+ 可见 affiliate 披露（FTC）+ `affiliate_link_clicked` GA4 事件（5 月埋的计数器终于有收银台可数）
+- 接入位：计算器结果区 + 全部 20 个模型页（最高购买意图位）
+- 已线上验证：ref 参数、sponsored rel、披露文案全部到位
+
+**Novita 推荐链接**：`https://novita.ai/?ref=mjgzzjc8&utm_source=affiliate`（10% 佣金，写入 lib/affiliate.ts）
+
+**待用户动作**：
+1. AIMLAPI 申请（aimlapi.com/affiliate → Apply Now → Rewardful 表单，渠道写 aicostcalc.net）——通过后把链接给我补接
+2. Novita 联盟仪表盘初始密码修改（novita.ai/affiliate-new 页面下方有初始凭据，未被我记录）
+3. GSC 手动催索引 10 个新模型页（可选加速）
+
+---
 
 ### 2026-05-12 — Plan A 免费 API 上线收口（PRD v1.1 §3.5 F-api 兑现）
 **类型**：feat + infrastructure
