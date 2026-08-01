@@ -1,7 +1,7 @@
 {
   "schemaVersion": "2.0",
-  "lastUpdated": "2026-07-18",
-  "_note": "All pricing verified against LiteLLM's public model registry (github.com/BerriAI/litellm) on 2026-07-18. LiteLLM is community-maintained and the de facto industry standard for LLM pricing data. For final billing accuracy, always verify against each provider's official pricing page (links in each model's 'sources' field). See docs/PRD_v1.1_Supplement.md §4.3 for maintenance SOP.",
+  "lastUpdated": "2026-08-01",
+  "_note": "All pricing verified against LiteLLM's public model registry (github.com/BerriAI/litellm) on 2026-08-01. LiteLLM is community-maintained and the de facto industry standard for LLM pricing data. For final billing accuracy, always verify against each provider's official pricing page (links in each model's 'sources' field). See docs/PRD_v1.1_Supplement.md §4.3 for maintenance SOP.",
   "models": [
     {
       "id": "gpt-5-6",
@@ -61,17 +61,17 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-07-18",
+      "lastVerified": "2026-08-01",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-07-18"
+          "fetchedAt": "2026-08-01"
         },
         {
           "type": "official",
           "url": "https://openai.com/api/pricing",
-          "fetchedAt": "2026-07-18"
+          "fetchedAt": "2026-08-01"
         }
       ],
       "priceHistory": [
@@ -151,17 +151,17 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-07-18",
+      "lastVerified": "2026-08-01",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-07-18"
+          "fetchedAt": "2026-08-01"
         },
         {
           "type": "official",
           "url": "https://openai.com/api/pricing",
-          "fetchedAt": "2026-07-18"
+          "fetchedAt": "2026-08-01"
         }
       ],
       "priceHistory": [
@@ -204,12 +204,12 @@
       "pricing": {
         "currency": "USD",
         "unit": "per_1m_tokens",
-        "input": 2.5,
-        "output": 15.0,
-        "cachedInput": 0.25,
-        "cacheWrite": 3.12,
-        "batchInput": 1.25,
-        "batchOutput": 7.5,
+        "input": 2.0,
+        "output": 12.0,
+        "cachedInput": 0.2,
+        "cacheWrite": 2.5,
+        "batchInput": 1.0,
+        "batchOutput": 6.0,
         "imagePerImage": null,
         "imageTokensFormula": null,
         "reasoningOutput": null,
@@ -240,17 +240,17 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-07-18",
+      "lastVerified": "2026-08-01",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-07-18"
+          "fetchedAt": "2026-08-01"
         },
         {
           "type": "official",
           "url": "https://openai.com/api/pricing",
-          "fetchedAt": "2026-07-18"
+          "fetchedAt": "2026-08-01"
         }
       ],
       "priceHistory": [
@@ -259,16 +259,22 @@
           "input": 2.5,
           "output": 15.0,
           "note": "Initial release"
+        },
+        {
+          "date": "2026-08-01",
+          "input": 2.0,
+          "output": 12.0,
+          "note": "Price reduction from $2.5/$15.0"
         }
       ],
       "i18n": {
         "en": {
           "tagline": "The mid-tier of the GPT-5.6 family — half the flagship price",
-          "description": "GPT-5.6 Terra is the balanced tier of the 5.6 family: $2.50/$15 per 1M tokens (half the flagship), same 1M+ context window and 128K output. The price/performance pick of OpenAI's lineup."
+          "description": "GPT-5.6 Terra is the balanced tier of the 5.6 family: $2/$12 per 1M tokens after the July 2026 price cut, same 1M+ context window and 128K output as the flagship. The price/performance pick of OpenAI's lineup."
         },
         "zh": {
           "tagline": "GPT-5.6 家族中坚档，旗舰半价",
-          "description": "GPT-5.6 Terra 是 5.6 家族的均衡档：$2.50/$15（旗舰半价），同样 1M+ 上下文和 128K 输出。OpenAI 系性价比之选。"
+          "description": "GPT-5.6 Terra 是 5.6 家族的均衡档：经 2026 年 7 月降价后为 $2/$12（每 1M token），与旗舰同样的 1M+ 上下文和 128K 输出。OpenAI 系性价比之选。"
         }
       }
     },
@@ -293,12 +299,12 @@
       "pricing": {
         "currency": "USD",
         "unit": "per_1m_tokens",
-        "input": 1.0,
-        "output": 6.0,
-        "cachedInput": 0.1,
-        "cacheWrite": 1.25,
-        "batchInput": 0.5,
-        "batchOutput": 3.0,
+        "input": 0.2,
+        "output": 1.2,
+        "cachedInput": 0.02,
+        "cacheWrite": 0.25,
+        "batchInput": 0.1,
+        "batchOutput": 0.6,
         "imagePerImage": null,
         "imageTokensFormula": null,
         "reasoningOutput": null,
@@ -329,17 +335,17 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-07-18",
+      "lastVerified": "2026-08-01",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-07-18"
+          "fetchedAt": "2026-08-01"
         },
         {
           "type": "official",
           "url": "https://openai.com/api/pricing",
-          "fetchedAt": "2026-07-18"
+          "fetchedAt": "2026-08-01"
         }
       ],
       "priceHistory": [
@@ -348,16 +354,22 @@
           "input": 1.0,
           "output": 6.0,
           "note": "Initial release"
+        },
+        {
+          "date": "2026-08-01",
+          "input": 0.2,
+          "output": 1.2,
+          "note": "Price reduction from $1.0/$6.0"
         }
       ],
       "i18n": {
         "en": {
-          "tagline": "OpenAI's light tier of the 5.6 family — full 1M context at 1/5 the price",
-          "description": "GPT-5.6 Luna is the efficient tier of the GPT-5.6 family: same 1M+ context window at $1/$6 per 1M tokens — 5x cheaper than the flagship, with $0.10 cached input."
+          "tagline": "OpenAI's cheapest 1M-context model — 25x cheaper than flagship",
+          "description": "GPT-5.6 Luna is the efficient tier of the GPT-5.6 family. After the July 2026 price cut it runs at $0.20/$1.20 per 1M tokens — 25x cheaper than the flagship — while keeping the full 1M+ context window. Cached input at $0.02/1M."
         },
         "zh": {
-          "tagline": "OpenAI 5.6 家族轻量档，1/5 价格享 1M 上下文",
-          "description": "GPT-5.6 Luna 是 GPT-5.6 家族的高效档：同样 1M+ 上下文窗口，价格仅 $1/$6（旗舰的 1/5），缓存输入 $0.10。"
+          "tagline": "OpenAI 最便宜的 1M 上下文模型，比旗舰便宜 25 倍",
+          "description": "GPT-5.6 Luna 是 GPT-5.6 家族的高效档。经 2026 年 7 月降价后为 $0.20/$1.20（每 1M token），比旗舰便宜 25 倍，同时保留完整 1M+ 上下文窗口。缓存输入 $0.02/1M。"
         }
       }
     },
@@ -419,17 +431,17 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-07-18",
+      "lastVerified": "2026-08-01",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-07-18"
+          "fetchedAt": "2026-08-01"
         },
         {
           "type": "official",
           "url": "https://openai.com/api/pricing",
-          "fetchedAt": "2026-07-18"
+          "fetchedAt": "2026-08-01"
         }
       ],
       "priceHistory": [
@@ -508,17 +520,17 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-07-18",
+      "lastVerified": "2026-08-01",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-07-18"
+          "fetchedAt": "2026-08-01"
         },
         {
           "type": "official",
           "url": "https://openai.com/api/pricing",
-          "fetchedAt": "2026-07-18"
+          "fetchedAt": "2026-08-01"
         }
       ],
       "priceHistory": [
@@ -598,17 +610,17 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-07-18",
+      "lastVerified": "2026-08-01",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-07-18"
+          "fetchedAt": "2026-08-01"
         },
         {
           "type": "official",
           "url": "https://openai.com/api/pricing",
-          "fetchedAt": "2026-07-18"
+          "fetchedAt": "2026-08-01"
         }
       ],
       "priceHistory": [
@@ -627,6 +639,96 @@
         "zh": {
           "tagline": "OpenAI 推理模型，STEM/编程强项",
           "description": "o4-mini 是 OpenAI 针对 STEM、编程和数学优化的推理模型，思维链表现强，成本远低于 o 系列旗舰。"
+        }
+      }
+    },
+    {
+      "id": "claude-opus-5",
+      "name": "Claude Opus 5",
+      "shortName": "Opus 5",
+      "provider": "Anthropic",
+      "providerId": "anthropic",
+      "providerLogo": "/logos/anthropic.svg",
+      "providerWebsite": "https://anthropic.com",
+      "category": "flagship",
+      "useCase": [
+        "reasoning",
+        "coding",
+        "general",
+        "long-context"
+      ],
+      "releaseDate": "2026-07-25",
+      "status": "active",
+      "deprecatedAt": null,
+      "successorId": null,
+      "pricing": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 5.0,
+        "output": 25.0,
+        "cachedInput": 0.5,
+        "cacheWrite": 6.25,
+        "batchInput": 2.5,
+        "batchOutput": 12.5,
+        "imagePerImage": null,
+        "imageTokensFormula": null,
+        "reasoningOutput": null,
+        "fineTunedInput": null,
+        "fineTunedOutput": null
+      },
+      "limits": {
+        "contextWindow": 1000000,
+        "maxOutput": 128000,
+        "maxImagesPerRequest": 100,
+        "knowledgeCutoff": null
+      },
+      "tokenization": {
+        "encoder": "approximate",
+        "approximationRatio": {
+          "english": 4,
+          "chinese": 1.5,
+          "code": 3
+        }
+      },
+      "supports": {
+        "vision": true,
+        "audio": false,
+        "tools": true,
+        "streaming": true,
+        "caching": true,
+        "batch": true,
+        "fineTuning": false,
+        "structuredOutput": true
+      },
+      "lastVerified": "2026-08-01",
+      "sources": [
+        {
+          "type": "community",
+          "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
+          "fetchedAt": "2026-08-01"
+        },
+        {
+          "type": "official",
+          "url": "https://www.anthropic.com/pricing",
+          "fetchedAt": "2026-08-01"
+        }
+      ],
+      "priceHistory": [
+        {
+          "date": "2026-07-25",
+          "input": 5.0,
+          "output": 25.0,
+          "note": "Initial release"
+        }
+      ],
+      "i18n": {
+        "en": {
+          "tagline": "Anthropic's new Opus generation — successor to Opus 4.8",
+          "description": "Claude Opus 5 opens the Opus 5 generation at unchanged pricing ($5/$25), with 1M context, 128K output and a 90% cache discount. Same cost as Opus 4.8, stronger reasoning and agentic performance."
+        },
+        "zh": {
+          "tagline": "Anthropic 新一代 Opus，Opus 4.8 继任者",
+          "description": "Claude Opus 5 开启 Opus 5 世代，价格不变（$5/$25），1M 上下文、128K 输出、90% 缓存折扣。与 Opus 4.8 同价但推理和 agent 能力更强。"
         }
       }
     },
@@ -688,17 +790,17 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-07-18",
+      "lastVerified": "2026-08-01",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-07-18"
+          "fetchedAt": "2026-08-01"
         },
         {
           "type": "official",
           "url": "https://www.anthropic.com/pricing",
-          "fetchedAt": "2026-07-18"
+          "fetchedAt": "2026-08-01"
         }
       ],
       "priceHistory": [
@@ -778,17 +880,17 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-07-18",
+      "lastVerified": "2026-08-01",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-07-18"
+          "fetchedAt": "2026-08-01"
         },
         {
           "type": "official",
           "url": "https://www.anthropic.com/pricing",
-          "fetchedAt": "2026-07-18"
+          "fetchedAt": "2026-08-01"
         }
       ],
       "priceHistory": [
@@ -867,17 +969,17 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-07-18",
+      "lastVerified": "2026-08-01",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-07-18"
+          "fetchedAt": "2026-08-01"
         },
         {
           "type": "official",
           "url": "https://www.anthropic.com/pricing",
-          "fetchedAt": "2026-07-18"
+          "fetchedAt": "2026-08-01"
         }
       ],
       "priceHistory": [
@@ -957,17 +1059,17 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-07-18",
+      "lastVerified": "2026-08-01",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-07-18"
+          "fetchedAt": "2026-08-01"
         },
         {
           "type": "official",
           "url": "https://www.anthropic.com/pricing",
-          "fetchedAt": "2026-07-18"
+          "fetchedAt": "2026-08-01"
         }
       ],
       "priceHistory": [
@@ -1045,17 +1147,17 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-07-18",
+      "lastVerified": "2026-08-01",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-07-18"
+          "fetchedAt": "2026-08-01"
         },
         {
           "type": "official",
           "url": "https://www.anthropic.com/pricing",
-          "fetchedAt": "2026-07-18"
+          "fetchedAt": "2026-08-01"
         }
       ],
       "priceHistory": [
@@ -1074,6 +1176,96 @@
         "zh": {
           "tagline": "Anthropic 快速实惠主力",
           "description": "Claude Haiku 4.5 日常任务强劲。$0.10/1M 缓存输入价（比标准 $1.00 便宜 10 倍），让缓存友好的高并发场景成本最优。"
+        }
+      }
+    },
+    {
+      "id": "gemini-3-6-flash",
+      "name": "Gemini 3.6 Flash",
+      "shortName": "3.6 Flash",
+      "provider": "Google",
+      "providerId": "google",
+      "providerLogo": "/logos/google.svg",
+      "providerWebsite": "https://ai.google.dev",
+      "category": "balanced",
+      "useCase": [
+        "general",
+        "vision",
+        "fast",
+        "audio"
+      ],
+      "releaseDate": "2026-07-20",
+      "status": "active",
+      "deprecatedAt": null,
+      "successorId": null,
+      "pricing": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 1.5,
+        "output": 7.5,
+        "cachedInput": 0.15,
+        "cacheWrite": null,
+        "batchInput": 0.75,
+        "batchOutput": 3.75,
+        "imagePerImage": null,
+        "imageTokensFormula": null,
+        "reasoningOutput": null,
+        "fineTunedInput": null,
+        "fineTunedOutput": null
+      },
+      "limits": {
+        "contextWindow": 1048576,
+        "maxOutput": 65536,
+        "maxImagesPerRequest": 3000,
+        "knowledgeCutoff": null
+      },
+      "tokenization": {
+        "encoder": "approximate",
+        "approximationRatio": {
+          "english": 4,
+          "chinese": 1.5,
+          "code": 3
+        }
+      },
+      "supports": {
+        "vision": true,
+        "audio": true,
+        "tools": true,
+        "streaming": true,
+        "caching": true,
+        "batch": true,
+        "fineTuning": true,
+        "structuredOutput": true
+      },
+      "lastVerified": "2026-08-01",
+      "sources": [
+        {
+          "type": "community",
+          "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
+          "fetchedAt": "2026-08-01"
+        },
+        {
+          "type": "official",
+          "url": "https://ai.google.dev/pricing",
+          "fetchedAt": "2026-08-01"
+        }
+      ],
+      "priceHistory": [
+        {
+          "date": "2026-07-20",
+          "input": 1.5,
+          "output": 7.5,
+          "note": "Initial release"
+        }
+      ],
+      "i18n": {
+        "en": {
+          "tagline": "Google's newest Flash — cheaper output than Gemini 3.5 Flash",
+          "description": "Gemini 3.6 Flash succeeds Gemini 3.5 Flash with 17% cheaper output ($7.50 vs $9.00) at the same input price. 1M context, native audio + vision, 90% cache discount."
+        },
+        "zh": {
+          "tagline": "Google 最新 Flash，输出比 3.5 Flash 更便宜",
+          "description": "Gemini 3.6 Flash 接替 Gemini 3.5 Flash，输入同价但输出便宜 17%（$7.50 vs $9.00）。1M 上下文，原生音视频，90% 缓存折扣。"
         }
       }
     },
@@ -1135,17 +1327,17 @@
         "fineTuning": true,
         "structuredOutput": true
       },
-      "lastVerified": "2026-07-18",
+      "lastVerified": "2026-08-01",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-07-18"
+          "fetchedAt": "2026-08-01"
         },
         {
           "type": "official",
           "url": "https://ai.google.dev/pricing",
-          "fetchedAt": "2026-07-18"
+          "fetchedAt": "2026-08-01"
         }
       ],
       "priceHistory": [
@@ -1164,6 +1356,96 @@
         "zh": {
           "tagline": "Google 新一代 Flash，比 Gemini 3 Flash 更强也更贵",
           "description": "Gemini 3.5 Flash 是 Google 最新一代 Flash，$1.50/$9（每 1M token）——是 Gemini 3 Flash 的 3 倍价格但推理显著更强。1M 上下文，原生音频 + 视觉。"
+        }
+      }
+    },
+    {
+      "id": "gemini-3-5-flash-lite",
+      "name": "Gemini 3.5 Flash Lite",
+      "shortName": "3.5 Flash Lite",
+      "provider": "Google",
+      "providerId": "google",
+      "providerLogo": "/logos/google.svg",
+      "providerWebsite": "https://ai.google.dev",
+      "category": "small",
+      "useCase": [
+        "general",
+        "vision",
+        "fast",
+        "audio"
+      ],
+      "releaseDate": "2026-07-10",
+      "status": "active",
+      "deprecatedAt": null,
+      "successorId": null,
+      "pricing": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.3,
+        "output": 2.5,
+        "cachedInput": 0.03,
+        "cacheWrite": null,
+        "batchInput": 0.15,
+        "batchOutput": 1.25,
+        "imagePerImage": null,
+        "imageTokensFormula": null,
+        "reasoningOutput": null,
+        "fineTunedInput": null,
+        "fineTunedOutput": null
+      },
+      "limits": {
+        "contextWindow": 1048576,
+        "maxOutput": 65536,
+        "maxImagesPerRequest": 3000,
+        "knowledgeCutoff": null
+      },
+      "tokenization": {
+        "encoder": "approximate",
+        "approximationRatio": {
+          "english": 4,
+          "chinese": 1.5,
+          "code": 3
+        }
+      },
+      "supports": {
+        "vision": true,
+        "audio": true,
+        "tools": true,
+        "streaming": true,
+        "caching": true,
+        "batch": true,
+        "fineTuning": true,
+        "structuredOutput": true
+      },
+      "lastVerified": "2026-08-01",
+      "sources": [
+        {
+          "type": "community",
+          "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
+          "fetchedAt": "2026-08-01"
+        },
+        {
+          "type": "official",
+          "url": "https://ai.google.dev/pricing",
+          "fetchedAt": "2026-08-01"
+        }
+      ],
+      "priceHistory": [
+        {
+          "date": "2026-07-10",
+          "input": 0.3,
+          "output": 2.5,
+          "note": "Initial release"
+        }
+      ],
+      "i18n": {
+        "en": {
+          "tagline": "Google's budget multimodal tier — 1M context at $0.30/$2.50",
+          "description": "Gemini 3.5 Flash Lite is Google's low-cost multimodal tier: 1M context, native audio + vision, at $0.30/$2.50 per 1M tokens — 5x cheaper than Gemini 3.5 Flash. Cached input at $0.03/1M."
+        },
+        "zh": {
+          "tagline": "Google 经济多模态档，1M 上下文仅 $0.30/$2.50",
+          "description": "Gemini 3.5 Flash Lite 是 Google 的低成本多模态档：1M 上下文、原生音视频，价格 $0.30/$2.50（每 1M token），比 Gemini 3.5 Flash 便宜 5 倍。缓存输入 $0.03/1M。"
         }
       }
     },
@@ -1226,17 +1508,17 @@
         "fineTuning": true,
         "structuredOutput": true
       },
-      "lastVerified": "2026-07-18",
+      "lastVerified": "2026-08-01",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-07-18"
+          "fetchedAt": "2026-08-01"
         },
         {
           "type": "official",
           "url": "https://ai.google.dev/pricing",
-          "fetchedAt": "2026-07-18"
+          "fetchedAt": "2026-08-01"
         }
       ],
       "priceHistory": [
@@ -1316,17 +1598,17 @@
         "fineTuning": true,
         "structuredOutput": true
       },
-      "lastVerified": "2026-07-18",
+      "lastVerified": "2026-08-01",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-07-18"
+          "fetchedAt": "2026-08-01"
         },
         {
           "type": "official",
           "url": "https://ai.google.dev/pricing",
-          "fetchedAt": "2026-07-18"
+          "fetchedAt": "2026-08-01"
         }
       ],
       "priceHistory": [
@@ -1405,17 +1687,17 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-07-18",
+      "lastVerified": "2026-08-01",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-07-18"
+          "fetchedAt": "2026-08-01"
         },
         {
           "type": "official",
           "url": "https://platform.deepseek.com/pricing",
-          "fetchedAt": "2026-07-18"
+          "fetchedAt": "2026-08-01"
         }
       ],
       "priceHistory": [
@@ -1495,17 +1777,17 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-07-18",
+      "lastVerified": "2026-08-01",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-07-18"
+          "fetchedAt": "2026-08-01"
         },
         {
           "type": "official",
           "url": "https://platform.deepseek.com/pricing",
-          "fetchedAt": "2026-07-18"
+          "fetchedAt": "2026-08-01"
         }
       ],
       "priceHistory": [
@@ -1585,17 +1867,17 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-07-18",
+      "lastVerified": "2026-08-01",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-07-18"
+          "fetchedAt": "2026-08-01"
         },
         {
           "type": "official",
           "url": "https://x.ai/api",
-          "fetchedAt": "2026-07-18"
+          "fetchedAt": "2026-08-01"
         }
       ],
       "priceHistory": [
@@ -1675,17 +1957,17 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-07-18",
+      "lastVerified": "2026-08-01",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-07-18"
+          "fetchedAt": "2026-08-01"
         },
         {
           "type": "official",
           "url": "https://x.ai/api",
-          "fetchedAt": "2026-07-18"
+          "fetchedAt": "2026-08-01"
         }
       ],
       "priceHistory": [
@@ -1764,17 +2046,17 @@
         "fineTuning": true,
         "structuredOutput": true
       },
-      "lastVerified": "2026-07-18",
+      "lastVerified": "2026-08-01",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-07-18"
+          "fetchedAt": "2026-08-01"
         },
         {
           "type": "official",
           "url": "https://mistral.ai/pricing",
-          "fetchedAt": "2026-07-18"
+          "fetchedAt": "2026-08-01"
         }
       ],
       "priceHistory": [

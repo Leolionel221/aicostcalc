@@ -113,8 +113,8 @@ export default function Home() {
               models={data.models}
               defaultModelIds={[
                 "gpt-5-6",
-                "claude-opus-4-8",
-                "gemini-3-1-pro",
+                "claude-opus-5",
+                "gemini-3-6-flash",
               ]}
             />
           </div>
