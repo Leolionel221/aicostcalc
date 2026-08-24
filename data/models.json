@@ -1857,7 +1857,7 @@
         "unit": "per_1m_tokens",
         "input": 2.0,
         "output": 6.0,
-        "cachedInput": 0.99,
+        "cachedInput": 0.35,
         "cacheWrite": null,
         "batchInput": null,
         "batchOutput": null,

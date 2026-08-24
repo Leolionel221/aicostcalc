@@ -18,8 +18,16 @@
  * registry failing to parse, aborts the whole run and leaves the data untouched.
  *
  * Usage:
- *   node scripts/sync-prices.mjs            # report only, exit 0/1
+ *   node scripts/sync-prices.mjs            # report only
  *   node scripts/sync-prices.mjs --write    # apply mechanical corrections
+ *
+ * Exit codes — the workflow branches on these, so they are part of the contract:
+ *   0  clean: everything matches, nothing new
+ *   1  informational: drift applied and/or new models to report
+ *   2  could not read the registry (network, or the feed looks truncated)
+ *   3  guard tripped: a price moved more than MAX_DELTA_PCT. Nothing written,
+ *      needs a human. Must never be reported as a passing run — the site is
+ *      still serving a number this script refused to touch.
  */
 
 import fs from "node:fs";
@@ -218,7 +226,7 @@ async function main() {
     console.log("### 🛑 Aborted — implausible price movement\n");
     suspicious.forEach((s) => console.log(`- ${s}`));
     console.log(`\nNothing was written. A move over ${MAX_DELTA_PCT}% is more likely a bad upstream entry than a real price change; confirm against the provider's own pricing page, then apply by hand.\n`);
-    process.exit(1);
+    process.exit(3);
   }
 
   if (WRITE && drift.length) {
