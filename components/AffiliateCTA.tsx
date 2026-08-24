@@ -63,8 +63,7 @@ export function AffiliateCTA({ model, placement }: AffiliateCTAProps) {
           ) : (
             <>
               <div className="text-sm font-semibold">
-                Cutting costs? Open models start at $
-                {OPEN_MODEL_FLOOR.toFixed(2)}/1M
+                {`Cutting costs? Open models start at $${OPEN_MODEL_FLOOR.toFixed(2)}/1M`}
               </div>
               <p className="mt-1 text-xs text-muted-foreground">
                 DeepSeek, Kimi &amp; 200+ open models on {NOVITA.name} — often
