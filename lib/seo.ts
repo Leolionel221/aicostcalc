@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import type { Model } from "./types";
+import { buildFAQs } from "./faq";
 
 const SITE_URL = "https://aicostcalc.net";
 const SITE_NAME = "AI API Cost Calculator";
@@ -63,11 +64,6 @@ export function modelJsonLd(model: Model) {
       price: "0",
       priceCurrency: "USD",
     },
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "4.8",
-      ratingCount: "127",
-    },
     featureList: [
       "Real-time cost calculation",
       "Cached input pricing",
@@ -89,11 +85,6 @@ export function siteJsonLd() {
     url: SITE_URL,
     description:
       "Calculate and compare API pricing for OpenAI, Anthropic, Google, DeepSeek and 10+ LLM models. Free tool, updated monthly.",
-    potentialAction: {
-      "@type": "SearchAction",
-      target: `${SITE_URL}/{search_term}`,
-      "query-input": "required name=search_term",
-    },
   };
 }
 
@@ -224,4 +215,26 @@ export function reportFeedbackUrl(): string {
   });
 
   return `${ISSUES_URL}?${params.toString()}`;
+}
+
+/**
+ * Build a Schema.org FAQPage JSON-LD for a model page.
+ *
+ * Sourced from buildFAQs() — the same function the visible <ModelFAQ>
+ * accordion renders from. Google requires FAQ markup to match on-page
+ * content; sharing the source is what keeps that true as the copy changes.
+ */
+export function faqJsonLd(model: Model) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: buildFAQs(model).map((faq) => ({
+      "@type": "Question",
+      name: faq.q,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.a,
+      },
+    })),
+  };
 }

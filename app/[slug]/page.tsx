@@ -15,6 +15,7 @@ import {
   modelMetadata,
   modelJsonLd,
   breadcrumbJsonLd,
+  faqJsonLd,
   reportPriceUrl,
 } from "@/lib/seo";
 
@@ -102,6 +103,11 @@ export default async function ModelPage({
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(breadcrumbJsonLd(model)),
         }}
+      />
+      {/* FAQPage — mirrors the visible <ModelFAQ> accordion below, same source. */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd(model)) }}
       />
 
       {/* Hero */}
