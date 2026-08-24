@@ -785,8 +785,14 @@ PRD v1.1 §3.5 F-api 早期承诺已兑现。3 个公开 endpoint + 完整 docs 
    ```
    期望 `200` + 约 50 万字节。若是 `404` + 约 1.5K，说明该 ID 在 Google 侧已失效——
    此时页面上 `typeof gtag === "function"` 和 dataLayer 都**看起来正常**（那是内联代码
-   干的），但库从未执行，永远不会发出 `/g/collect`。判据只有两个：上面这个 curl，
-   以及浏览器里 `performance.getEntriesByType('resource')` 中有没有 collect 请求。
+   干的），但库从未执行，永远不会发出 `/g/collect`。
+6. **浏览器里最快的一条判据**——在站点页面 Console 跑：
+   ```js
+   [!!window.google_tag_data, performance.getEntriesByType('resource')
+     .filter(e => e.name.includes('/collect')).length]
+   ```
+   期望 `[true, 1]`。`google_tag_data` / `google_tag_manager` / `gaGlobal` 这几个全局
+   **只有真实库执行后才会出现**，内联片段造不出来 —— 比看 `typeof gtag` 可靠得多。
 
 ---
 
@@ -844,7 +850,13 @@ PRD v1.1 §3.5 F-api 早期承诺已兑现。3 个公开 endpoint + 完整 docs 
 4. `app/layout.tsx` 改为无条件挂载（不再依赖 env 是否存在）
 5. §9 补上完整 GA4 坐标表 —— **本次绕圈的根源就是文档只记了账号邮箱、没记具体是哪个属性**
 
-**教训**：判断 GA 是否真的在工作，只认两个信号 —— gtag/js 的 HTTP 状态与体积、以及有没有 `/g/collect` 请求。脚本标签在、gtag 是函数、dataLayer 有内容，这三样**全都可以在完全失效时正常显示**。
+**教训**：判断 GA 是否真的在工作，只认三个信号 —— gtag/js 的 HTTP 状态与体积、有没有 `/g/collect` 请求、`window.google_tag_data` 是否存在。脚本标签在、gtag 是函数、dataLayer 有内容，这三样**全都可以在完全失效时正常显示**。
+
+**修复后验证（2026-08-24 实测通过）**：
+- 线上 23 个模型页 + 首页全部返回 200 且只含 `G-2YK8KQ5K2N`，旧 ID 无残留
+- 浏览器实访：`/g/collect?v=2&tid=G-2YK8KQ5K2N` 已发出，`google_tag_data` / `google_tag_manager` / `gaGlobal` 三个全局齐全 ✅
+
+**注意别把这个当成流量问题的解**：同期 GSC 28 天为 568 次曝光 / **0 点击**，平均排名 41.8。这次修的是"数据看得见"，不是"数据变多"。埋点修好后 GA4 仍会接近 0 —— 那是排名问题，与埋点无关。
 
 ### 2026-08-01 — 8 月月度维护（首次常规维护，抓到真实降价事件）
 **类型**：data（月度 SOP）
