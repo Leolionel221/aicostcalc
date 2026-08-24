@@ -5,7 +5,7 @@
 > 维护规则：每次"收口"（一个改动告一段落）都必须更新本文档相关章节，并在变更日志追加记录。
 
 **最后更新**：2026-08-24
-**当前阶段**：🔧 **月度维护模式** — 23 个模型；8/24 修复了一个隐蔽的 GA4 断链（衡量 ID 在 Google 侧失效）
+**当前阶段**：🔧 **月度维护模式** — 23 个模型；8/24 修了 GA4 断链 + 三处结构化数据/内容可见性问题
 **运营节奏**：每月 1 号 30 分钟（LiteLLM 全量扫描 → diff → 补新模型 → push），其余时间不看数据
 **下次决策点**：2026-09-01 月度维护；AIMLAPI 审核通过后补接第二联盟位（30% vs Novita 10%）
 
@@ -282,8 +282,14 @@
 - `modelMetadata(model)` — 给 Next.js 用的完整 Metadata 对象
 - `modelJsonLd(model)` — Schema.org SoftwareApplication
 - `breadcrumbJsonLd(model)` — BreadcrumbList
-- `siteJsonLd()` — WebSite + SearchAction（首页用）
+- `faqJsonLd(model)` — FAQPage，问答来自 `lib/faq.ts` 的 `buildFAQs()`
+- `siteJsonLd()` — WebSite（首页用）
 - `SITE` 常量 — 单一域名/品牌名真相源头
+
+⚠️ **结构化数据两条硬规矩**（2026-08-24 踩过，见 §16）：
+
+1. **不许标记站点没有的东西。** 曾经 `modelJsonLd` 里写死 `aggregateRating: 4.8 / 127 条评分` —— 站点从来没有评分功能，这是编造的，属于 Google 明令禁止、可触发人工处罚的类别。同理删掉了指向不存在搜索功能的 `SearchAction`。加任何标记前先问：页面上真有这个东西吗？
+2. **FAQ 标记必须与可见内容同源。** `faqJsonLd` 和可见的 `<ModelFAQ>` 手风琴都调用 `lib/faq.ts` 的 `buildFAQs()`。不要为了省事手写第二份问答副本 —— 一旦两边漂移，标记就在描述页面上不存在的文字。
 
 ### 5.5 `lib/analytics.ts`
 
@@ -821,6 +827,38 @@ PRD v1.1 §3.5 F-api 早期承诺已兑现。3 个公开 endpoint + 完整 docs 
 ## 16. 变更日志
 
 > 每次"收口"在此追加一条记录。最新的在最上方。
+
+### 2026-08-24 — 移除伪造评分标记，让 FAQ 内容真正进入 HTML
+**类型**：fix（SEO / 结构化数据）
+**背景**：GA4 修好后开始查"为什么排名 41.8"，扫现有 SEO 代码时撞到三个问题，都在线上 23 个模型页上。
+
+**问题 1 — 伪造评分（政策违规）**
+`modelJsonLd` 里硬编码了 `aggregateRating: ratingValue 4.8 / ratingCount 127`。站点没有任何评分功能，这 127 条评分不存在。Google 结构化数据政策明确禁止自造评价标记。已删除。
+
+**问题 2 — 无效 SearchAction**
+`siteJsonLd` 声明了 sitelinks 搜索框，target 指向 `/{search_term}`，但站点没有搜索功能。已删除。
+
+**问题 3 — 站点把自己的内容藏起来了（影响最大）**
+`ModelFAQ` 用 `{open && ...}` 条件渲染答案。SSG 时 `openIdx` 初始为 0，**只有第一条答案进入 HTML，其余全部不在**。实测确认：7 条答案里 6 条爬虫看不到。
+
+跨 23 个页面就是 **138 段已经写好的长尾文本从未被送出去** —— 而那些正是真实搜索句式：「Does X support prompt caching」「What's the context window of X」「Can I use the Batch API with X」。
+
+修法：答案始终挂载，改用 CSS（`grid-rows-[0fr]` ↔ `[1fr]`）折叠。
+
+**顺带补上 FAQPage 结构化数据**：`buildFAQs` 从组件抽到 `lib/faq.ts`，服务端 JSON-LD 与可见手风琴共用同一数据源。**顺序很重要** —— 必须先修问题 3：在答案还没进 HTML 时加 FAQPage，标记的就是页面上不存在的文字，等于用一个违规换另一个违规。
+
+**验证（线上全量扫描，23/23 通过）**：
+| 检查项 | 结果 |
+|---|---|
+| 伪造 `aggregateRating` | 0 页残留 |
+| 无效 `SearchAction` | 已清除 |
+| FAQPage JSON-LD 可解析 | 23/23 |
+| 结构化问答总条数 | 148（按模型能力 4–7 条不等） |
+| 标记中的答案文本能在页面 HTML 找到 | 148/148 |
+
+**边界说明**：这些是确凿的技术缺陷，修了是净收益。但**不要据此断言排名会因此回升** —— 本项目 5 月有过过度归因的教训（把排名崩塌归咎于"Updated"横幅，实际主因是蜜月期结束）。这次同样只能说：违规移除了，138 段内容变可索引了，FAQ 富摘要有了资格。效果看 9 月的 GSC。
+
+**下一步（已定，但刻意分批）**：模型对比页。原计划 30–40 对，**实测数据后砍到 8–10 对** —— 12 对样本里 10 对不存在盈亏平衡点（一方在任何输入/输出比下都更便宜），只有 2 对在缓存/批处理下排序翻转，`claude-opus-5 vs claude-sonnet-5`、`claude-opus-5 vs claude-fable-5` 的规格差异是 **0 项**。硬凑 30 页会产出大量换名字的同一张表，正是 doorway page 特征。只做规格差异 ≥5 项的那些，且等本次改动进索引后再上。
 
 ### 2026-08-24 — 修复 GA4 断链：衡量 ID 在 Google 侧失效
 **类型**：fix（埋点）
