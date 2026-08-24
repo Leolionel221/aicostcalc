@@ -5,7 +5,7 @@
 > 维护规则：每次"收口"（一个改动告一段落）都必须更新本文档相关章节，并在变更日志追加记录。
 
 **最后更新**：2026-08-24
-**当前阶段**：🔧 **月度维护模式** — 23 个模型；8/24 修了 GA4 断链 + 三处结构化数据/内容可见性问题
+**当前阶段**：🤖 **每日自动对账模式** — 30 个模型；价格同步已自动化，人工只负责新模型文案
 **运营节奏**：每月 1 号 30 分钟（LiteLLM 全量扫描 → diff → 补新模型 → push），其余时间不看数据
 **下次决策点**：2026-09-01 月度维护；AIMLAPI 审核通过后补接第二联盟位（30% vs Novita 10%）
 
@@ -231,17 +231,33 @@
 10. GPT-5.5          $0.020   ← 最贵
 ```
 
-### 维护流程（每月 1 日）
+### 维护流程（已自动化，2026-08-24 起）
 
-详见 `docs/PRD_v1.1_Supplement.md` §4.3。简版：
-1. 查每家官方价格页（清单见 PRD §9.3）
-2. 更新 `data/models.json`，更新 `lastUpdated` 和 `lastVerified`
-3. 价格变动追加到 `priceHistory`
-4. `git commit -m "data: monthly pricing update YYYY-MM"`
-5. push → 自动触发 Vercel 部署
-6. 发博客文章公告（"AI API Pricing Update — May 2026"）
+**每天 06:15 UTC，GitHub Actions 自动跑** `.github/workflows/sync-prices.yml`：
 
----
+| 情况 | 处理方式 |
+|---|---|
+| 已收录模型价格/上下文/缓存价漂移 | **自动修正并提交** → 触发 Vercel 部署 |
+| 出现未收录的新模型 | **开/更新 Issue**（标签 `price-sync`），不自动加 |
+| 单项价格变动 > 60% | **中止，不写任何数据**，workflow 报错 |
+| registry 拉取失败或条目数 < 1000 | 中止并报错 |
+
+本地随时可手动跑：
+
+```bash
+node scripts/sync-prices.mjs           # 只报告
+node scripts/sync-prices.mjs --write   # 应用机械修正
+```
+
+**你（人）唯一需要做的事**：收到 `price-sync` Issue 时，判断这个新模型值不值得收录。
+
+- **值得** → 在 `data/models.json` 加一条（照抄相邻条目的结构），并**务必**把 id → registry key 的映射加进 `scripts/sync-prices.mjs` 的 `REGISTRY_KEYS`，否则它明天还会被当成新模型报一遍
+- **不值得** → 在 `data/sync-ignore.json` 加一条 pattern **并写清原因**，以后不再打扰
+
+⚠️ **为什么新模型不自动加**：加一个模型需要 name / shortName / tagline / description / category / useCase —— registry 一个都没有。自动生成就是编造，本项目 2026-05 已经因为编造数据栽过一次。
+
+⚠️ **`releaseDate` 允许为 null**：registry 没有发布日期。页面会渲染成「Released 2026-08」给读者看，编一个和真的分辨不出来，所以未知就是 null，页面显示 —。
+
 
 ## 5. 关键模块设计
 
@@ -827,6 +843,59 @@ PRD v1.1 §3.5 F-api 早期承诺已兑现。3 个公开 endpoint + 完整 docs 
 ## 16. 变更日志
 
 > 每次"收口"在此追加一条记录。最新的在最上方。
+
+### 2026-08-24 — 时效性问题的结构性解决 + 30 个模型
+**类型**：feat（自动化）+ data + seo
+**触发**：用户原话 —— "这个时效性是个问题啊，每次都要想起来才更新，用户可不买账，有没有更好的方案"
+
+同一天早些时候刚发现 4 条价格错了（见下一条记录）。**每月手动同步已被事实证伪**，所以不是修数据，是修流程。
+
+#### 1. 每日自动对账
+`scripts/sync-prices.mjs` + `.github/workflows/sync-prices.yml`，每天 06:15 UTC。设计取舍：
+
+- **机械字段自动写**：已收录模型的价格 / 上下文 / 缓存价，直接提交并触发部署
+- **需要判断的不自动写**：新模型要 name / tagline / category / useCase，registry 一个都没有 → 开 Issue 报告
+- **护栏**：单项价格变动 > 60% 就**中止全部写入**并报错。宁可漏一次真实降价，也不让一条坏的上游数据自动上线
+- **`data/sync-ignore.json`**：每条"不收录"的决定连同**原因**一起记录。加它之前每天报 83 条（混着上一代型号），加完 9 条
+
+时间选 06:15 而非整点：GitHub 的 cron 在整点最拥挤，会被延迟。
+
+#### 2. 博客价格改为构建时渲染（用户选的方案 2）
+`lib/blog-tokens.ts`，markdown 里写 `{{price:claude-opus-4-7}}` 这类占位符，构建时取值。**解析不出来直接抛错** —— 模型 ID 改名会让构建失败，而不是发布一个印着 `{{price:xxx}}` 的页面。6 篇文章共 94 个占位符。
+
+关键是区分两类内容：
+- **参考型**（模型 → 价格表）→ 占位符，永远当前
+- **教学型算例** → 改为**显式假设值**（"illustrative round rates"）。算例的价值在方法不在数字，标明是假设值后就永远自洽
+
+顺带修掉两处实质错误：
+- `claude-api-pricing-2026.md` 的缓存派生价 $18.75 / $1.50 是按旧价 $15 算的
+- `gpt-5-5-vs-claude-opus-4-7-comparison.md` **整篇结论是反的**：两者输入同为 $5，Opus 输出 $25 比 GPT-5.5 的 $30 **更便宜**，"Opus 贵 3.5 倍"从头就不成立。定价段落已重写，并保留一段说明结论为何反转
+
+#### 3. 新增 7 个模型（23 → 30）
+全部来自 registry 且已排除废弃型号：
+
+| 模型 | 定价 | 上下文 | 备注 |
+|---|---|---|---|
+| `claude-mythos-5` | $10/$50 | 1M | **Anthropic 新线，正是靠自动扫描发现的** |
+| `gpt-5-6-cyber` | $12.50/$75 | 400K | GPT-5.6 家族第四变体（Sol/Terra/Luna 排名中位数 10.3） |
+| `gpt-5-5-pro` | $30/$180 | 1050K | 全站最贵 |
+| `deepseek-v4-pro` | $1.32/$3.96 | 1M | |
+| `gemini-3-7-flash` | $0.75/$3.75 | 1048K | 比 3.6 新一代、同价 |
+| `grok-4-6` | $2/$6 | 500K | |
+| `grok-4-3` | $1.25/$2.50 | 1M | |
+
+`claude-mythos-5` 是这套自动化的第一个战果 —— 按旧流程要到 9 月 1 日才会发现。
+
+#### 4. title / H1 改为 pricing 优先（合并 `seo/pricing-first-titles`）
+依据同日 GSC 数据：`fable 5 cost calculator` 排 8.5 名但只有 6 次曝光，`claude fable 5 api pricing` 排 57.6 名却有 52 次曝光。
+
+- title：`{Model} API Pricing — Cost Calculator 2026`
+- H1：`{Model} API Pricing & Cost Calculator`
+- **slug 不动**，第 8.5 名是真金
+
+**待观察**：新标题需要 Google 重抓才生效，且与同日的结构化数据改动混在一起（原计划分两天，用户要求当天做掉）。归因时注意这一点。
+
+**遗留**：`gemini-3.1-flash-lite`、`mistral/glm-5-2` 仍在新模型报告里，待判断收不收。
 
 ### 2026-08-24 — 4 个模型价格与 registry 不符，全量重新校准
 **类型**：fix（数据准确性）—— **本项目第二次栽在同一件事上**
