@@ -1,9 +1,24 @@
 "use client";
 
 import { ExternalLink } from "lucide-react";
+import modelsData from "@/data/models.json";
 import { NOVITA, novitaServes, novitaUrl } from "@/lib/affiliate";
 import { track } from "@/lib/analytics";
-import type { Model } from "@/lib/types";
+import type { Model, ModelsData } from "@/lib/types";
+
+/**
+ * Cheapest input price among the open-weight models Novita actually hosts.
+ *
+ * Derived from data/models.json rather than hardcoded: this line previously
+ * read "$0.14/1M", which was a DeepSeek V4-Flash price that turned out not to
+ * match the LiteLLM registry (corrected 2026-08-24 to $0.44). A number typed
+ * into ad copy has no way of noticing when the data moves; a computed one does.
+ */
+const OPEN_MODEL_FLOOR = Math.min(
+  ...(modelsData as ModelsData).models
+    .filter((m) => m.providerId === "deepseek")
+    .map((m) => m.pricing.input),
+);
 
 interface AffiliateCTAProps {
   model: Model;
@@ -48,7 +63,8 @@ export function AffiliateCTA({ model, placement }: AffiliateCTAProps) {
           ) : (
             <>
               <div className="text-sm font-semibold">
-                Cutting costs? Open models start at $0.14/1M
+                Cutting costs? Open models start at $
+                {OPEN_MODEL_FLOOR.toFixed(2)}/1M
               </div>
               <p className="mt-1 text-xs text-muted-foreground">
                 DeepSeek, Kimi &amp; 200+ open models on {NOVITA.name} — often

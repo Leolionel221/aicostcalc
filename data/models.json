@@ -1,6 +1,6 @@
 {
   "schemaVersion": "2.0",
-  "lastUpdated": "2026-08-01",
+  "lastUpdated": "2026-08-24",
   "_note": "All pricing verified against LiteLLM's public model registry (github.com/BerriAI/litellm) on 2026-08-01. LiteLLM is community-maintained and the de facto industry standard for LLM pricing data. For final billing accuracy, always verify against each provider's official pricing page (links in each model's 'sources' field). See docs/PRD_v1.1_Supplement.md §4.3 for maintenance SOP.",
   "models": [
     {
@@ -25,9 +25,9 @@
       "pricing": {
         "currency": "USD",
         "unit": "per_1m_tokens",
-        "input": 5.0,
-        "output": 30.0,
-        "cachedInput": 0.5,
+        "input": 4.0,
+        "output": 20.0,
+        "cachedInput": 0.4,
         "cacheWrite": 6.25,
         "batchInput": 2.5,
         "batchOutput": 15.0,
@@ -38,7 +38,7 @@
         "fineTunedOutput": null
       },
       "limits": {
-        "contextWindow": 1050000,
+        "contextWindow": 922000,
         "maxOutput": 128000,
         "maxImagesPerRequest": null,
         "knowledgeCutoff": null
@@ -61,12 +61,12 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-08-01",
+      "lastVerified": "2026-08-24",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-08-01"
+          "fetchedAt": "2026-08-24"
         },
         {
           "type": "official",
@@ -80,16 +80,22 @@
           "input": 5.0,
           "output": 30.0,
           "note": "Initial release"
+        },
+        {
+          "date": "2026-08-24",
+          "input": 4.0,
+          "output": 20.0,
+          "note": "Corrected to match LiteLLM registry (site previously listed $5.0/$30.0)"
         }
       ],
       "i18n": {
         "en": {
           "tagline": "OpenAI's newest flagship — successor to GPT-5.5",
-          "description": "GPT-5.6 is OpenAI's flagship released June 2026, succeeding GPT-5.5 at the same price with improved reasoning and tool use. 1M+ context, 128K max output, 90% caching discount."
+          "description": "GPT-5.6 is OpenAI's flagship released June 2026, succeeding GPT-5.5 at $4/$20 per 1M tokens — 20% cheaper input and 33% cheaper output than GPT-5.5 — with improved reasoning and tool use. 922K context, 128K max output, 90% caching discount."
         },
         "zh": {
           "tagline": "OpenAI 最新旗舰，GPT-5.5 继任者",
-          "description": "GPT-5.6 是 OpenAI 2026 年 6 月发布的旗舰，价格与 GPT-5.5 持平但推理和工具调用更强。1M+ 上下文，128K 最大输出，90% 缓存折扣。"
+          "description": "GPT-5.6 是 OpenAI 2026 年 6 月发布的旗舰，接替 GPT-5.5，定价 $4/$20（每 1M token）—— 输入便宜 20%、输出便宜 33%，推理与工具调用同步提升。922K 上下文，128K 最大输出，90% 缓存折扣。"
         }
       }
     },
@@ -115,9 +121,9 @@
       "pricing": {
         "currency": "USD",
         "unit": "per_1m_tokens",
-        "input": 5.0,
-        "output": 30.0,
-        "cachedInput": 0.5,
+        "input": 4.0,
+        "output": 20.0,
+        "cachedInput": 0.4,
         "cacheWrite": 6.25,
         "batchInput": 2.5,
         "batchOutput": 15.0,
@@ -128,7 +134,7 @@
         "fineTunedOutput": null
       },
       "limits": {
-        "contextWindow": 1050000,
+        "contextWindow": 922000,
         "maxOutput": 128000,
         "maxImagesPerRequest": null,
         "knowledgeCutoff": null
@@ -151,12 +157,12 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-08-01",
+      "lastVerified": "2026-08-24",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-08-01"
+          "fetchedAt": "2026-08-24"
         },
         {
           "type": "official",
@@ -170,16 +176,22 @@
           "input": 5.0,
           "output": 30.0,
           "note": "Initial release"
+        },
+        {
+          "date": "2026-08-24",
+          "input": 4.0,
+          "output": 20.0,
+          "note": "Corrected to match LiteLLM registry (site previously listed $5.0/$30.0)"
         }
       ],
       "i18n": {
         "en": {
           "tagline": "The flagship-tier variant of the GPT-5.6 family",
-          "description": "GPT-5.6 Sol is the flagship-tier variant of the 5.6 family (sol/terra/luna), priced identically to base GPT-5.6 at $5/$30 with the same 1M+ context and 90% caching discount."
+          "description": "GPT-5.6 Sol is the flagship-tier variant of the 5.6 family (sol/terra/luna), priced identically to base GPT-5.6 at $4/$20 with the same 922K context and 90% caching discount."
         },
         "zh": {
           "tagline": "GPT-5.6 家族旗舰档变体",
-          "description": "GPT-5.6 Sol 是 5.6 家族（sol/terra/luna）的旗舰档变体，与基础版 GPT-5.6 同价（$5/$30），同样 1M+ 上下文和 90% 缓存折扣。"
+          "description": "GPT-5.6 Sol 是 5.6 家族（sol/terra/luna）的旗舰档变体，与基础版 GPT-5.6 同价（$4/$20），同样 922K 上下文和 90% 缓存折扣。"
         }
       }
     },
@@ -217,7 +229,7 @@
         "fineTunedOutput": null
       },
       "limits": {
-        "contextWindow": 1050000,
+        "contextWindow": 922000,
         "maxOutput": 128000,
         "maxImagesPerRequest": null,
         "knowledgeCutoff": null
@@ -240,12 +252,12 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-08-01",
+      "lastVerified": "2026-08-24",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-08-01"
+          "fetchedAt": "2026-08-24"
         },
         {
           "type": "official",
@@ -270,11 +282,11 @@
       "i18n": {
         "en": {
           "tagline": "The mid-tier of the GPT-5.6 family — half the flagship price",
-          "description": "GPT-5.6 Terra is the balanced tier of the 5.6 family: $2/$12 per 1M tokens after the July 2026 price cut, same 1M+ context window and 128K output as the flagship. The price/performance pick of OpenAI's lineup."
+          "description": "GPT-5.6 Terra is the balanced tier of the 5.6 family: $2/$12 per 1M tokens after the July 2026 price cut, same 922K context window and 128K output as the flagship. The price/performance pick of OpenAI's lineup."
         },
         "zh": {
           "tagline": "GPT-5.6 家族中坚档，旗舰半价",
-          "description": "GPT-5.6 Terra 是 5.6 家族的均衡档：经 2026 年 7 月降价后为 $2/$12（每 1M token），与旗舰同样的 1M+ 上下文和 128K 输出。OpenAI 系性价比之选。"
+          "description": "GPT-5.6 Terra 是 5.6 家族的均衡档：经 2026 年 7 月降价后为 $2/$12（每 1M token），与旗舰同样的 922K 上下文和 128K 输出。OpenAI 系性价比之选。"
         }
       }
     },
@@ -312,7 +324,7 @@
         "fineTunedOutput": null
       },
       "limits": {
-        "contextWindow": 1050000,
+        "contextWindow": 922000,
         "maxOutput": 128000,
         "maxImagesPerRequest": null,
         "knowledgeCutoff": null
@@ -335,12 +347,12 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-08-01",
+      "lastVerified": "2026-08-24",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-08-01"
+          "fetchedAt": "2026-08-24"
         },
         {
           "type": "official",
@@ -364,12 +376,12 @@
       ],
       "i18n": {
         "en": {
-          "tagline": "OpenAI's cheapest 1M-context model — 25x cheaper than flagship",
-          "description": "GPT-5.6 Luna is the efficient tier of the GPT-5.6 family. After the July 2026 price cut it runs at $0.20/$1.20 per 1M tokens — 25x cheaper than the flagship — while keeping the full 1M+ context window. Cached input at $0.02/1M."
+          "tagline": "The cheapest long-context model OpenAI ships — 20x under the flagship",
+          "description": "GPT-5.6 Luna is the efficient tier of the GPT-5.6 family. After the July 2026 price cut it runs at $0.20/$1.20 per 1M tokens — 20x cheaper than the flagship — while keeping the full 922K context window. Cached input at $0.02/1M."
         },
         "zh": {
-          "tagline": "OpenAI 最便宜的 1M 上下文模型，比旗舰便宜 25 倍",
-          "description": "GPT-5.6 Luna 是 GPT-5.6 家族的高效档。经 2026 年 7 月降价后为 $0.20/$1.20（每 1M token），比旗舰便宜 25 倍，同时保留完整 1M+ 上下文窗口。缓存输入 $0.02/1M。"
+          "tagline": "OpenAI 最便宜的长上下文模型 —— 比旗舰便宜 20 倍",
+          "description": "GPT-5.6 Luna 是 GPT-5.6 家族的高效档。经 2026 年 7 月降价后为 $0.20/$1.20（每 1M token），比旗舰便宜 20 倍，同时保留完整 922K 上下文窗口。缓存输入 $0.02/1M。"
         }
       }
     },
@@ -486,7 +498,7 @@
         "unit": "per_1m_tokens",
         "input": 0.25,
         "output": 2.0,
-        "cachedInput": 0.02,
+        "cachedInput": 0.025,
         "cacheWrite": null,
         "batchInput": null,
         "batchOutput": null,
@@ -520,12 +532,12 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-08-01",
+      "lastVerified": "2026-08-24",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-08-01"
+          "fetchedAt": "2026-08-24"
         },
         {
           "type": "official",
@@ -576,7 +588,7 @@
         "unit": "per_1m_tokens",
         "input": 1.1,
         "output": 4.4,
-        "cachedInput": 0.28,
+        "cachedInput": 0.275,
         "cacheWrite": null,
         "batchInput": null,
         "batchOutput": null,
@@ -610,12 +622,12 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-08-01",
+      "lastVerified": "2026-08-24",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-08-01"
+          "fetchedAt": "2026-08-24"
         },
         {
           "type": "official",
@@ -1201,9 +1213,9 @@
       "pricing": {
         "currency": "USD",
         "unit": "per_1m_tokens",
-        "input": 1.5,
-        "output": 7.5,
-        "cachedInput": 0.15,
+        "input": 0.75,
+        "output": 3.75,
+        "cachedInput": 0.075,
         "cacheWrite": null,
         "batchInput": 0.75,
         "batchOutput": 3.75,
@@ -1237,12 +1249,12 @@
         "fineTuning": true,
         "structuredOutput": true
       },
-      "lastVerified": "2026-08-01",
+      "lastVerified": "2026-08-24",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-08-01"
+          "fetchedAt": "2026-08-24"
         },
         {
           "type": "official",
@@ -1256,16 +1268,22 @@
           "input": 1.5,
           "output": 7.5,
           "note": "Initial release"
+        },
+        {
+          "date": "2026-08-24",
+          "input": 0.75,
+          "output": 3.75,
+          "note": "Corrected to match LiteLLM registry (site previously listed $1.5/$7.5)"
         }
       ],
       "i18n": {
         "en": {
-          "tagline": "Google's newest Flash — cheaper output than Gemini 3.5 Flash",
-          "description": "Gemini 3.6 Flash succeeds Gemini 3.5 Flash with 17% cheaper output ($7.50 vs $9.00) at the same input price. 1M context, native audio + vision, 90% cache discount."
+          "tagline": "Google's newest Flash — half the price of Gemini 3.5 Flash",
+          "description": "Gemini 3.6 Flash succeeds Gemini 3.5 Flash and undercuts it on both sides: $0.75 input (50% cheaper) and $3.75 output (58% cheaper) per 1M tokens. 1M context, native audio + vision, 90% cache discount."
         },
         "zh": {
-          "tagline": "Google 最新 Flash，输出比 3.5 Flash 更便宜",
-          "description": "Gemini 3.6 Flash 接替 Gemini 3.5 Flash，输入同价但输出便宜 17%（$7.50 vs $9.00）。1M 上下文，原生音视频，90% 缓存折扣。"
+          "tagline": "Google 最新 Flash，价格是 Gemini 3.5 Flash 的一半",
+          "description": "Gemini 3.6 Flash 接替 Gemini 3.5 Flash，输入输出双降：输入 $0.75（便宜 50%）、输出 $3.75（便宜 58%），每 1M token。1M 上下文，原生音视频，90% 缓存折扣。"
         }
       }
     },
@@ -1486,7 +1504,7 @@
       },
       "limits": {
         "contextWindow": 1048576,
-        "maxOutput": 65535,
+        "maxOutput": 65536,
         "maxImagesPerRequest": 3000,
         "knowledgeCutoff": "2026-01"
       },
@@ -1508,12 +1526,12 @@
         "fineTuning": true,
         "structuredOutput": true
       },
-      "lastVerified": "2026-08-01",
+      "lastVerified": "2026-08-24",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-08-01"
+          "fetchedAt": "2026-08-24"
         },
         {
           "type": "official",
@@ -1651,8 +1669,8 @@
       "pricing": {
         "currency": "USD",
         "unit": "per_1m_tokens",
-        "input": 0.14,
-        "output": 0.28,
+        "input": 0.44,
+        "output": 1.32,
         "cachedInput": null,
         "cacheWrite": null,
         "batchInput": null,
@@ -1665,7 +1683,7 @@
       },
       "limits": {
         "contextWindow": 1000000,
-        "maxOutput": 8192,
+        "maxOutput": 393216,
         "maxImagesPerRequest": null,
         "knowledgeCutoff": null
       },
@@ -1687,12 +1705,12 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-08-01",
+      "lastVerified": "2026-08-24",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-08-01"
+          "fetchedAt": "2026-08-24"
         },
         {
           "type": "official",
@@ -1706,16 +1724,22 @@
           "input": 0.14,
           "output": 0.28,
           "note": "Initial release"
+        },
+        {
+          "date": "2026-08-24",
+          "input": 0.44,
+          "output": 1.32,
+          "note": "Corrected to match LiteLLM registry (site previously listed $0.14/$0.28)"
         }
       ],
       "i18n": {
         "en": {
-          "tagline": "The new cheapest production model — $0.14/$0.28 with 1M context",
-          "description": "DeepSeek V4-Flash takes the cheapest-model crown from V3.2: $0.14 input / $0.28 output per 1M tokens with a 1M context window. The most aggressive price point of any production-capable model."
+          "tagline": "1M context at budget pricing — $0.44/$1.32",
+          "description": "DeepSeek V4-Flash pairs a 1M context window with budget pricing: $0.44 input / $1.32 output per 1M tokens. DeepSeek V3.2 remains cheaper at $0.28/$0.40, but caps out at 163K context — V4-Flash is the pick when you need the long window."
         },
         "zh": {
-          "tagline": "新一代最便宜生产级模型，$0.14/$0.28 + 1M 上下文",
-          "description": "DeepSeek V4-Flash 从 V3.2 手中接过最便宜王座：$0.14 输入 / $0.28 输出（每 1M token），1M 上下文窗口。生产级模型中最激进的价格。"
+          "tagline": "预算价格拿到 1M 上下文 —— $0.44/$1.32",
+          "description": "DeepSeek V4-Flash 用预算级价格提供 1M 上下文：输入 $0.44 / 输出 $1.32（每 1M token）。DeepSeek V3.2 仍然更便宜（$0.28/$0.40），但上下文只有 163K —— 需要长窗口时选 V4-Flash。"
         }
       }
     },
@@ -1833,7 +1857,7 @@
         "unit": "per_1m_tokens",
         "input": 2.0,
         "output": 6.0,
-        "cachedInput": 0.5,
+        "cachedInput": 0.3,
         "cacheWrite": null,
         "batchInput": null,
         "batchOutput": null,
@@ -1867,12 +1891,12 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-08-01",
+      "lastVerified": "2026-08-24",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-08-01"
+          "fetchedAt": "2026-08-24"
         },
         {
           "type": "official",
