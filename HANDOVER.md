@@ -828,6 +828,59 @@ PRD v1.1 §3.5 F-api 早期承诺已兑现。3 个公开 endpoint + 完整 docs 
 
 > 每次"收口"在此追加一条记录。最新的在最上方。
 
+### 2026-08-24 — GSC 数据快照：找到"排错说法"的问题
+**类型**：analysis（无代码改动）
+**背景**：修完埋点和结构化数据后进 GSC 查实际表现。数据会滚动过期，这里存档。
+
+**28 天（2026/7/26–8/22）**
+| 指标 | 值 | 备注 |
+|---|---|---|
+| 曝光 | **1320** | 上一次记录是 568，涨 2.3 倍 |
+| 点击 | 4 | |
+| CTR | 0.3% | |
+| 平均排名 | 48.1 | |
+| 查询数 | **263** | 长尾在形成 |
+
+**热门查询 + 排名（关键在排名列）**
+| 查询 | 曝光 | 排名 |
+|---|---|---|
+| claude fable 5 api **pricing** | 52 | 57.6 |
+| claude fable 5 **pricing** | 22 | 60.3 |
+| claude sonnet 5 **pricing** | 21 | 76.5 |
+| llm **cost calculator** | 13 | 75.7 |
+| ai **cost calculator** | 13 | 85.0 |
+| gpt 5.5 **price** | 11 | 18.9 |
+| fable 5 **cost calculator** | 6 | **8.5** |
+
+**结论：站点在没人搜的说法上排第一页，在需求 10 倍的说法上排第 58 名。**
+
+`fable 5 cost calculator` 排 **8.5**（首页），因为页面 title / H1 / slug 全是 "Cost Calculator"。但同一个模型的 "pricing" 类查询合计 **74 次曝光**（vs "cost calculator" 类 6 次），排名却是 57–60。
+
+现状：
+- title：`{Model} Cost Calculator — 2026 API Pricing` ——"pricing" 埋在破折号后
+- H1：`{Model} Cost Calculator` ——**完全没有 "pricing"**
+
+**建议改法（下一步动作）**：
+- title → `{Model} API Pricing — Cost Calculator 2026`（需求词前置）
+- H1 → `{Model} API Pricing & Cost Calculator`（两种说法都保留）
+- **slug 不动**。`-cost-calculator` 那 8.5 名是真金，且本项目 5 月改过 3 次 slug、留下 3 条 301，教训够了。
+
+**另一个信号**：Claude Fable 5 是 7 月新模型，单它就贡献 80 次曝光。说明**新模型上线速度本身就是流量杠杆** —— 每月 1 号的同步节奏对刚发布的模型可能太慢。
+
+**索引状态**
+- 已编入索引 27 / 未编入索引 16
+- 未索引拆解：自动重定向 6（正常）+ 备用规范页 1（正常）+ 已发现未抓取 6 + **已抓取但拒绝收录 3**
+- **被拒收的 3 个全是博客文章**：`openai-api-pricing-explained-2026`、`claude-api-pricing-2026`、`openai-prompt-caching-when-worth-it`。加上"已发现未抓取"里的 2 篇，**6 篇博客里 5 篇没进索引**。模型页一个没被拒。→ 博客这条线 Google 用脚投票了，别再投入。
+- 本次已对 4 个新模型页请求索引：`claude-opus-5`、`deepseek-v4-flash`、`gemini-3-6-flash`、`gemini-3-5-flash-lite`（全部返回"已添加到优先抓取队列"）
+
+**站点地图**
+- `sitemap.xml`：成功，36 个网址，8/24 刚读取 ✅
+- ⚠️ 有一条垃圾提交：`https://aicostcalc.net/gpt-5-6-cost-calculator` 于 7/18 被当成 sitemap 提交，类型"未知"、状态"1 项错误"、发现 0 页。应删除（待用户确认）。
+
+**增强功能**：「评价摘要 19 个有效」—— 这正是当天删掉的伪造 `aggregateRating`，证实 Google 确实采信并在搜索结果里展示了那个不存在的 4.8 分。删除后这个数字应在数周内归零。
+
+**GSC 账号**：`lionelchen221@gmail.com`（注意：与 GA4 用的 `alexleochen305@gmail.com` **不是同一个**，属性为 `sc-domain:aicostcalc.net`）
+
 ### 2026-08-24 — 移除伪造评分标记，让 FAQ 内容真正进入 HTML
 **类型**：fix（SEO / 结构化数据）
 **背景**：GA4 修好后开始查"为什么排名 41.8"，扫现有 SEO 代码时撞到三个问题，都在线上 23 个模型页上。
