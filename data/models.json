@@ -2101,6 +2101,602 @@
           "description": "Mistral Large 3 是 Mistral 顶级模型，编程和多欧洲语言能力强，EU 友好托管。最新版本相比 Large 2 大幅降价 80%（$2.00/$6.00 → $0.50/$1.50），成为旗舰级最便宜的模型之一。"
         }
       }
+    },
+    {
+      "id": "claude-mythos-5",
+      "name": "Claude Mythos 5",
+      "shortName": "Mythos 5",
+      "provider": "Anthropic",
+      "providerId": "anthropic",
+      "providerLogo": "/logos/anthropic.svg",
+      "providerWebsite": "https://anthropic.com",
+      "category": "flagship",
+      "useCase": [
+        "reasoning",
+        "general",
+        "long-context",
+        "vision"
+      ],
+      "releaseDate": null,
+      "status": "active",
+      "deprecatedAt": null,
+      "successorId": null,
+      "pricing": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 10.0,
+        "output": 50.0,
+        "cachedInput": 1.0,
+        "cacheWrite": null,
+        "batchInput": null,
+        "batchOutput": null,
+        "imagePerImage": null,
+        "imageTokensFormula": null,
+        "reasoningOutput": null,
+        "fineTunedInput": null,
+        "fineTunedOutput": null
+      },
+      "limits": {
+        "contextWindow": 1000000,
+        "maxOutput": 128000,
+        "maxImagesPerRequest": null,
+        "knowledgeCutoff": null
+      },
+      "tokenization": {
+        "encoder": "approximate",
+        "approximationRatio": {
+          "english": 4,
+          "chinese": 1.5,
+          "code": 3
+        }
+      },
+      "supports": {
+        "vision": true,
+        "audio": false,
+        "tools": true,
+        "streaming": true,
+        "caching": true,
+        "batch": false,
+        "fineTuning": false,
+        "structuredOutput": true
+      },
+      "lastVerified": "2026-08-24",
+      "sources": [
+        {
+          "type": "community",
+          "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
+          "fetchedAt": "2026-08-24"
+        }
+      ],
+      "priceHistory": [
+        {
+          "date": "2026-08-24",
+          "input": 10.0,
+          "output": 50.0,
+          "note": "First listed; verified against LiteLLM registry"
+        }
+      ],
+      "i18n": {
+        "en": {
+          "tagline": "Anthropic's Mythos line — Fable 5 pricing, 1M context",
+          "description": "Claude Mythos 5 is priced at $10 input / $50 output per 1M tokens with a 1M context window and 128K max output, and cached input at $1/1M. A 1,000-in / 500-out call costs $0.03500."
+        },
+        "zh": {
+          "tagline": "Anthropic 的 Mythos 线，与 Fable 5 同价，1M 上下文",
+          "description": "Claude Mythos 5 定价为输入 $10 / 输出 $50（每 1M token），1M 上下文窗口，128K 最大输出，缓存输入 $1/1M。 一次 1000 输入 / 500 输出的调用约 $0.03500。"
+        }
+      }
+    },
+    {
+      "id": "gpt-5-6-cyber",
+      "name": "GPT-5.6 Cyber",
+      "shortName": "5.6 Cyber",
+      "provider": "OpenAI",
+      "providerId": "openai",
+      "providerLogo": "/logos/openai.svg",
+      "providerWebsite": "https://openai.com",
+      "category": "flagship",
+      "useCase": [
+        "coding",
+        "reasoning",
+        "general",
+        "vision"
+      ],
+      "releaseDate": null,
+      "status": "active",
+      "deprecatedAt": null,
+      "successorId": null,
+      "pricing": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 12.5,
+        "output": 75.0,
+        "cachedInput": 1.25,
+        "cacheWrite": null,
+        "batchInput": null,
+        "batchOutput": null,
+        "imagePerImage": null,
+        "imageTokensFormula": null,
+        "reasoningOutput": null,
+        "fineTunedInput": null,
+        "fineTunedOutput": null
+      },
+      "limits": {
+        "contextWindow": 400000,
+        "maxOutput": 128000,
+        "maxImagesPerRequest": null,
+        "knowledgeCutoff": null
+      },
+      "tokenization": {
+        "encoder": "o200k_base",
+        "approximationRatio": {
+          "english": 4,
+          "chinese": 1.5,
+          "code": 3
+        }
+      },
+      "supports": {
+        "vision": true,
+        "audio": false,
+        "tools": true,
+        "streaming": true,
+        "caching": true,
+        "batch": false,
+        "fineTuning": false,
+        "structuredOutput": true
+      },
+      "lastVerified": "2026-08-24",
+      "sources": [
+        {
+          "type": "community",
+          "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
+          "fetchedAt": "2026-08-24"
+        }
+      ],
+      "priceHistory": [
+        {
+          "date": "2026-08-24",
+          "input": 12.5,
+          "output": 75.0,
+          "note": "First listed; verified against LiteLLM registry"
+        }
+      ],
+      "i18n": {
+        "en": {
+          "tagline": "The fourth GPT-5.6 variant — priced above the base flagship",
+          "description": "GPT-5.6 Cyber is priced at $12.5 input / $75 output per 1M tokens with a 400K context window and 128K max output, and cached input at $1.25/1M. A 1,000-in / 500-out call costs $0.05000."
+        },
+        "zh": {
+          "tagline": "GPT-5.6 家族第四个变体，定价高于基础旗舰",
+          "description": "GPT-5.6 Cyber 定价为输入 $12.5 / 输出 $75（每 1M token），400K 上下文窗口，128K 最大输出，缓存输入 $1.25/1M。 一次 1000 输入 / 500 输出的调用约 $0.05000。"
+        }
+      }
+    },
+    {
+      "id": "gemini-3-7-flash",
+      "name": "Gemini 3.7 Flash",
+      "shortName": "3.7 Flash",
+      "provider": "Google",
+      "providerId": "google",
+      "providerLogo": "/logos/google.svg",
+      "providerWebsite": "https://ai.google.dev",
+      "category": "fast",
+      "useCase": [
+        "general",
+        "fast",
+        "vision",
+        "audio",
+        "long-context"
+      ],
+      "releaseDate": null,
+      "status": "active",
+      "deprecatedAt": null,
+      "successorId": null,
+      "pricing": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.75,
+        "output": 3.75,
+        "cachedInput": 0.075,
+        "cacheWrite": null,
+        "batchInput": 0.375,
+        "batchOutput": 1.875,
+        "imagePerImage": null,
+        "imageTokensFormula": null,
+        "reasoningOutput": null,
+        "fineTunedInput": null,
+        "fineTunedOutput": null
+      },
+      "limits": {
+        "contextWindow": 1048576,
+        "maxOutput": 65536,
+        "maxImagesPerRequest": null,
+        "knowledgeCutoff": null
+      },
+      "tokenization": {
+        "encoder": "approximate",
+        "approximationRatio": {
+          "english": 4,
+          "chinese": 1.5,
+          "code": 3
+        }
+      },
+      "supports": {
+        "vision": true,
+        "audio": true,
+        "tools": true,
+        "streaming": true,
+        "caching": true,
+        "batch": true,
+        "fineTuning": false,
+        "structuredOutput": true
+      },
+      "lastVerified": "2026-08-24",
+      "sources": [
+        {
+          "type": "community",
+          "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
+          "fetchedAt": "2026-08-24"
+        }
+      ],
+      "priceHistory": [
+        {
+          "date": "2026-08-24",
+          "input": 0.75,
+          "output": 3.75,
+          "note": "First listed; verified against LiteLLM registry"
+        }
+      ],
+      "i18n": {
+        "en": {
+          "tagline": "Google's newest Flash — same price as 3.6, newer generation",
+          "description": "Gemini 3.7 Flash is priced at $0.75 input / $3.75 output per 1M tokens with a 1M context window and 66K max output, and cached input at $0.07/1M. A 1,000-in / 500-out call costs $0.00262."
+        },
+        "zh": {
+          "tagline": "Google 最新 Flash，与 3.6 同价但更新一代",
+          "description": "Gemini 3.7 Flash 定价为输入 $0.75 / 输出 $3.75（每 1M token），1M 上下文窗口，66K 最大输出，缓存输入 $0.07/1M。 一次 1000 输入 / 500 输出的调用约 $0.00262。"
+        }
+      }
+    },
+    {
+      "id": "deepseek-v4-pro",
+      "name": "DeepSeek V4-Pro",
+      "shortName": "V4-Pro",
+      "provider": "DeepSeek",
+      "providerId": "deepseek",
+      "providerLogo": "/logos/deepseek.svg",
+      "providerWebsite": "https://deepseek.com",
+      "category": "flagship",
+      "useCase": [
+        "reasoning",
+        "coding",
+        "general",
+        "long-context"
+      ],
+      "releaseDate": null,
+      "status": "active",
+      "deprecatedAt": null,
+      "successorId": null,
+      "pricing": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 1.32,
+        "output": 3.96,
+        "cachedInput": 0.044,
+        "cacheWrite": null,
+        "batchInput": null,
+        "batchOutput": null,
+        "imagePerImage": null,
+        "imageTokensFormula": null,
+        "reasoningOutput": null,
+        "fineTunedInput": null,
+        "fineTunedOutput": null
+      },
+      "limits": {
+        "contextWindow": 1000000,
+        "maxOutput": 393216,
+        "maxImagesPerRequest": null,
+        "knowledgeCutoff": null
+      },
+      "tokenization": {
+        "encoder": "approximate",
+        "approximationRatio": {
+          "english": 4,
+          "chinese": 1.5,
+          "code": 3
+        }
+      },
+      "supports": {
+        "vision": false,
+        "audio": false,
+        "tools": true,
+        "streaming": true,
+        "caching": true,
+        "batch": false,
+        "fineTuning": false,
+        "structuredOutput": true
+      },
+      "lastVerified": "2026-08-24",
+      "sources": [
+        {
+          "type": "community",
+          "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
+          "fetchedAt": "2026-08-24"
+        }
+      ],
+      "priceHistory": [
+        {
+          "date": "2026-08-24",
+          "input": 1.32,
+          "output": 3.96,
+          "note": "First listed; verified against LiteLLM registry"
+        }
+      ],
+      "i18n": {
+        "en": {
+          "tagline": "DeepSeek's flagship — 1M context, 393K max output",
+          "description": "DeepSeek V4-Pro is priced at $1.32 input / $3.96 output per 1M tokens with a 1M context window and 393K max output, and cached input at $0.04/1M. A 1,000-in / 500-out call costs $0.00330."
+        },
+        "zh": {
+          "tagline": "DeepSeek 旗舰，1M 上下文、393K 最大输出",
+          "description": "DeepSeek V4-Pro 定价为输入 $1.32 / 输出 $3.96（每 1M token），1M 上下文窗口，393K 最大输出，缓存输入 $0.04/1M。 一次 1000 输入 / 500 输出的调用约 $0.00330。"
+        }
+      }
+    },
+    {
+      "id": "grok-4-6",
+      "name": "Grok 4.6",
+      "shortName": "Grok 4.6",
+      "provider": "xAI",
+      "providerId": "xai",
+      "providerLogo": "/logos/xai.svg",
+      "providerWebsite": "https://x.ai",
+      "category": "flagship",
+      "useCase": [
+        "general",
+        "reasoning",
+        "real-time",
+        "vision"
+      ],
+      "releaseDate": null,
+      "status": "active",
+      "deprecatedAt": null,
+      "successorId": null,
+      "pricing": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 2.0,
+        "output": 6.0,
+        "cachedInput": 0.5,
+        "cacheWrite": null,
+        "batchInput": null,
+        "batchOutput": null,
+        "imagePerImage": null,
+        "imageTokensFormula": null,
+        "reasoningOutput": null,
+        "fineTunedInput": null,
+        "fineTunedOutput": null
+      },
+      "limits": {
+        "contextWindow": 500000,
+        "maxOutput": 500000,
+        "maxImagesPerRequest": null,
+        "knowledgeCutoff": null
+      },
+      "tokenization": {
+        "encoder": "approximate",
+        "approximationRatio": {
+          "english": 4,
+          "chinese": 1.5,
+          "code": 3
+        }
+      },
+      "supports": {
+        "vision": true,
+        "audio": false,
+        "tools": true,
+        "streaming": true,
+        "caching": true,
+        "batch": false,
+        "fineTuning": false,
+        "structuredOutput": true
+      },
+      "lastVerified": "2026-08-24",
+      "sources": [
+        {
+          "type": "community",
+          "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
+          "fetchedAt": "2026-08-24"
+        }
+      ],
+      "priceHistory": [
+        {
+          "date": "2026-08-24",
+          "input": 2.0,
+          "output": 6.0,
+          "note": "First listed; verified against LiteLLM registry"
+        }
+      ],
+      "i18n": {
+        "en": {
+          "tagline": "xAI's newest flagship — same rates as Grok 4.5",
+          "description": "Grok 4.6 is priced at $2 input / $6 output per 1M tokens with a 500K context window and 500K max output, and cached input at $0.50/1M. A 1,000-in / 500-out call costs $0.00500."
+        },
+        "zh": {
+          "tagline": "xAI 最新旗舰，价格与 Grok 4.5 相同",
+          "description": "Grok 4.6 定价为输入 $2 / 输出 $6（每 1M token），500K 上下文窗口，500K 最大输出，缓存输入 $0.50/1M。 一次 1000 输入 / 500 输出的调用约 $0.00500。"
+        }
+      }
+    },
+    {
+      "id": "grok-4-3",
+      "name": "Grok 4.3",
+      "shortName": "Grok 4.3",
+      "provider": "xAI",
+      "providerId": "xai",
+      "providerLogo": "/logos/xai.svg",
+      "providerWebsite": "https://x.ai",
+      "category": "mid",
+      "useCase": [
+        "general",
+        "reasoning",
+        "long-context",
+        "vision"
+      ],
+      "releaseDate": null,
+      "status": "active",
+      "deprecatedAt": null,
+      "successorId": null,
+      "pricing": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 1.25,
+        "output": 2.5,
+        "cachedInput": 0.2,
+        "cacheWrite": null,
+        "batchInput": null,
+        "batchOutput": null,
+        "imagePerImage": null,
+        "imageTokensFormula": null,
+        "reasoningOutput": null,
+        "fineTunedInput": null,
+        "fineTunedOutput": null
+      },
+      "limits": {
+        "contextWindow": 1000000,
+        "maxOutput": 1000000,
+        "maxImagesPerRequest": null,
+        "knowledgeCutoff": null
+      },
+      "tokenization": {
+        "encoder": "approximate",
+        "approximationRatio": {
+          "english": 4,
+          "chinese": 1.5,
+          "code": 3
+        }
+      },
+      "supports": {
+        "vision": true,
+        "audio": false,
+        "tools": true,
+        "streaming": true,
+        "caching": true,
+        "batch": false,
+        "fineTuning": false,
+        "structuredOutput": true
+      },
+      "lastVerified": "2026-08-24",
+      "sources": [
+        {
+          "type": "community",
+          "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
+          "fetchedAt": "2026-08-24"
+        }
+      ],
+      "priceHistory": [
+        {
+          "date": "2026-08-24",
+          "input": 1.25,
+          "output": 2.5,
+          "note": "First listed; verified against LiteLLM registry"
+        }
+      ],
+      "i18n": {
+        "en": {
+          "tagline": "xAI's value tier — 1M context at well under flagship rates",
+          "description": "Grok 4.3 is priced at $1.25 input / $2.5 output per 1M tokens with a 1M context window and 1M max output, and cached input at $0.20/1M. A 1,000-in / 500-out call costs $0.00250."
+        },
+        "zh": {
+          "tagline": "xAI 性价比档，1M 上下文，价格远低于旗舰",
+          "description": "Grok 4.3 定价为输入 $1.25 / 输出 $2.5（每 1M token），1M 上下文窗口，1M 最大输出，缓存输入 $0.20/1M。 一次 1000 输入 / 500 输出的调用约 $0.00250。"
+        }
+      }
+    },
+    {
+      "id": "gpt-5-5-pro",
+      "name": "GPT-5.5 Pro",
+      "shortName": "5.5 Pro",
+      "provider": "OpenAI",
+      "providerId": "openai",
+      "providerLogo": "/logos/openai.svg",
+      "providerWebsite": "https://openai.com",
+      "category": "flagship",
+      "useCase": [
+        "reasoning",
+        "coding",
+        "long-context",
+        "vision"
+      ],
+      "releaseDate": null,
+      "status": "active",
+      "deprecatedAt": null,
+      "successorId": null,
+      "pricing": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 30.0,
+        "output": 180.0,
+        "cachedInput": 3.0,
+        "cacheWrite": null,
+        "batchInput": 15.0,
+        "batchOutput": 90.0,
+        "imagePerImage": null,
+        "imageTokensFormula": null,
+        "reasoningOutput": null,
+        "fineTunedInput": null,
+        "fineTunedOutput": null
+      },
+      "limits": {
+        "contextWindow": 1050000,
+        "maxOutput": 128000,
+        "maxImagesPerRequest": null,
+        "knowledgeCutoff": null
+      },
+      "tokenization": {
+        "encoder": "o200k_base",
+        "approximationRatio": {
+          "english": 4,
+          "chinese": 1.5,
+          "code": 3
+        }
+      },
+      "supports": {
+        "vision": true,
+        "audio": false,
+        "tools": true,
+        "streaming": true,
+        "caching": true,
+        "batch": true,
+        "fineTuning": false,
+        "structuredOutput": false
+      },
+      "lastVerified": "2026-08-24",
+      "sources": [
+        {
+          "type": "community",
+          "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
+          "fetchedAt": "2026-08-24"
+        }
+      ],
+      "priceHistory": [
+        {
+          "date": "2026-08-24",
+          "input": 30.0,
+          "output": 180.0,
+          "note": "First listed; verified against LiteLLM registry"
+        }
+      ],
+      "i18n": {
+        "en": {
+          "tagline": "OpenAI's reasoning-max tier — the most expensive model listed here",
+          "description": "GPT-5.5 Pro is priced at $30 input / $180 output per 1M tokens with a 1M context window and 128K max output, and cached input at $3/1M. A 1,000-in / 500-out call costs $0.12000."
+        },
+        "zh": {
+          "tagline": "OpenAI 的极限推理档，本站收录中最贵的模型",
+          "description": "GPT-5.5 Pro 定价为输入 $30 / 输出 $180（每 1M token），1M 上下文窗口，128K 最大输出，缓存输入 $3/1M。 一次 1000 输入 / 500 输出的调用约 $0.12000。"
+        }
+      }
     }
   ]
 }

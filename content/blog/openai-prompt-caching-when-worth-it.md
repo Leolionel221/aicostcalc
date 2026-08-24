@@ -19,7 +19,7 @@ This guide breaks down exactly when OpenAI prompt caching is worth implementing,
 Since late 2024, OpenAI has supported automatic prompt caching on its main reasoning models. The mechanics:
 
 - **Trigger**: Any prompt prefix you've sent within the last 5-10 minutes is eligible for caching.
-- **Discount**: Cached input is billed at **50% of standard rates** on most current models, and up to **75% off** on GPT-5.5 ($5/1M → $1.25/1M cached).
+- **Discount**: Cached input is billed at a steep discount — on {{name:gpt-5-5}} it drops from {{in:gpt-5-5}}/1M to {{cached:gpt-5-5}}/1M, a 90% cut.
 - **No flag to flip**: Caching is automatic. You don't enable it. You don't request it. It just happens — if your prompts are structured to be cacheable.
 
 Compared to Anthropic's explicit caching system (where you mark blocks with `cache_control`), OpenAI's approach is simpler but **less controllable**. You don't get to choose what's cached; OpenAI's system decides based on prefix hash matching.
@@ -38,8 +38,10 @@ Let's price a customer-support chatbot built on GPT-5 mini:
 
 ### Without caching
 
+> The daily-cost walkthrough below uses **illustrative round rates** ($0.20 input / $0.80 output, $0.05 cached) so the arithmetic is easy to verify. Current real rates for every model are on the [calculator](/); the provider table at the end of this article is pulled live.
+
 ```
-Input cost  = 80,000 × 2,600 / 1M × $0.20 = $41.60
+Input cost  = 80,000 × 2,600 / 1M × $0.20 = $41.60   # illustrative rates
 Output cost = 80,000 × 250   / 1M × $0.80 = $16.00
 Total       = $57.60 / day = $1,728 / month
 ```
@@ -208,11 +210,11 @@ OpenAI is simpler but less controllable:
 
 | Provider | Cache trigger | Discount | Cache write cost | Control |
 |---|---|---|---|---|
-| **OpenAI GPT-5.5** | Automatic prefix | **90% off** ($0.50/1M cached) | None | Low |
-| **OpenAI GPT-5 mini** | Automatic prefix | **92% off** ($0.02/1M cached) | None | Low |
+| **{{name:gpt-5-5}}** | Automatic prefix | {{cached:gpt-5-5}}/1M cached (from {{in:gpt-5-5}}) | None | Low |
+| **{{name:gpt-5-mini}}** | Automatic prefix | {{cached:gpt-5-mini}}/1M cached (from {{in:gpt-5-mini}}) | None | Low |
 | **Anthropic Claude Opus 4.7** | Explicit `cache_control` | **90% off** | 1.25× | High |
 | **Anthropic Claude Haiku 4.5** | Explicit `cache_control` | **90% off** | 1.25× | High |
-| **Google Gemini 3.1 Pro** | Context caching API | **90% off** ($0.20/1M cached) | None | Medium |
+| **{{name:gemini-3-1-pro}}** | Context caching API | {{cached:gemini-3-1-pro}}/1M cached (from {{in:gemini-3-1-pro}}) | None | Medium |
 
 **Trade-offs**:
 - **OpenAI is easiest** — works with zero code changes if your prompts are already structured well

@@ -9,7 +9,7 @@ featured: true
 lastUpdated: "2026-05-12"
 ---
 
-> **📊 Updated 2026-05-12:** Pricing data refreshed against [LiteLLM's public registry](https://github.com/BerriAI/litellm). The original article assumed Claude Opus 4.7 was $15/$75 — actual rate is **$5/$25**. This means **GPT-5.5 ($5/$30) is now MORE expensive than Opus on output**, not less. The "Opus is 3.5× more expensive" thesis below is incorrect at current prices; Opus is actually competitive or cheaper on output. The qualitative comparison (when each wins on capability) still holds.
+> **📊 Prices on this page are live** — pulled from the site dataset at build time, last verified **{{updated}}**. This article originally argued Opus carried a large price premium. It does not: at current rates the two models share an input price and Opus is *cheaper* on output. The pricing sections below have been rewritten accordingly; the capability comparison is unchanged.
 
 
 The two flagship reasoning models in May 2026 are **GPT-5.5** (OpenAI) and **Claude Opus 4.7** (Anthropic). Both are top-tier. Both are expensive. Both are great at different things — and the answer to "which should I use" is much less obvious than the marketing pages suggest.
@@ -23,18 +23,17 @@ This article breaks down the head-to-head in three dimensions:
 
 | Dimension | GPT-5.5 | Claude Opus 4.7 |
 |---|---|---|
-| **Input price** | $5.00 / 1M | $5.00 / 1M |
-| **Output price** | $30.00 / 1M | $25.00 / 1M |
-| **Cached input** | $0.50 / 1M (90% off) | $0.50 / 1M (90% off) |
-| **Batch input** | $2.50 / 1M | $2.50 / 1M |
-| **Batch output** | $15.00 / 1M | $12.50 / 1M |
-| **Context window** | 1M+ tokens | 1M tokens |
+| **Input price** | {{in:gpt-5-5}} / 1M | {{in:claude-opus-4-7}} / 1M |
+| **Output price** | {{out:gpt-5-5}} / 1M | {{out:claude-opus-4-7}} / 1M |
+| **Cached input** | {{cached:gpt-5-5}} / 1M | {{cached:claude-opus-4-7}} / 1M |
+| **Batch (in/out)** | {{batch-pair:gpt-5-5}} | {{batch-pair:claude-opus-4-7}} |
+| **Context window** | {{ctx:gpt-5-5}} | {{ctx:claude-opus-4-7}} |
 | **Max output** | 128K tokens | 128K tokens |
 | **Vision** | ✓ | ✓ |
 | **Audio** | ✓ | — |
 | **Tool use** | Strong | Best-in-class |
 
-**Headline pricing**: These two flagship models are now **nearly identically priced** — GPT-5.5 input matches Opus exactly, and Opus is **20% cheaper on output** ($25 vs $30). The "Opus premium" of past versions is gone.
+**Headline pricing**: These two flagship models are **nearly identically priced** — input matches exactly, and Opus is cheaper on output ({{out:claude-opus-4-7}} vs {{out:gpt-5-5}}). The "Opus premium" of earlier generations is gone.
 
 **With caching applied**: the gap can collapse to under 2× or even invert in Opus's favor for specific workloads. Read on.
 
@@ -63,34 +62,26 @@ User message + retrieved code = 1,000 tokens (varies per call).
 Output = 800 tokens.
 Volume: 1,000 calls/day, 95% cache hit rate after warmup.
 
-**GPT-5.5 (with caching)**:
-```
-Daily input cost = (5,000 × 1,000 × 0.95 / 1M) × $1.25 cached  → $5.94
-                 + (5,000 × 1,000 × 0.05 / 1M) × $5.00 standard → $1.25
-                 + (1,000 × 1,000 / 1M) × $5.00 standard        → $5.00
-Daily output cost = (800 × 1,000 / 1M) × $20.00                  → $16.00
-Total/day = $28.19
-```
+At the rates in the table above, the two models are priced **identically on input** and
+Opus 4.7 is **{{out:claude-opus-4-7}} vs {{out:gpt-5-5}} on output** — cheaper. Since both offer
+the same 90% cached-input discount, caching moves both sides by the same proportion and does not
+change who wins.
 
-**Claude Opus 4.7 (with caching)**:
-```
-Daily input cost = (5,000 × 1,000 × 0.95 / 1M) × $1.50 cached  → $7.13
-                 + (5,000 × 1,000 × 0.05 / 1M) × $15.00 standard → $3.75
-                 + (1,000 × 1,000 / 1M) × $15.00 standard        → $15.00
-Daily output cost = (800 × 1,000 / 1M) × $75.00                  → $60.00
-Total/day = $85.88
-```
+That makes the comparison unusually simple:
 
-**With caching: Opus is 3× more expensive than GPT-5.5** — output cost still dominates. So caching doesn't fully close the gap when output is heavy.
+- **Output-heavy work** (essay generation, code synthesis, long reports): Opus 4.7 is cheaper,
+  and the gap widens with output length. Output is the only line item where the two differ.
+- **Input-heavy work** (classification, extraction, RAG over long documents): the two are
+  effectively the same price. Pick on capability, not cost.
+- **Batch workloads**: Opus 4.7's batch output rate is also the lower of the two
+  ({{batch-pair:claude-opus-4-7}} vs {{batch-pair:gpt-5-5}}).
 
-But for **input-heavy, output-light workloads** like classification or extraction (1,000 calls/day, 5K cached input + 1K user input + 100 output):
+> **What changed.** The original version of this article was written against a widely-circulated
+> figure of $15/$75 for Opus 4.7. That figure was wrong. Once corrected, the "Opus premium"
+> that framed the whole comparison simply disappears — a useful reminder that the headline
+> number is worth verifying before you build a cost model on it.
 
-```
-GPT-5.5  daily total = $5.94 + $1.25 + $5.00 + ($0.10 × 1000 × $20/1M) = $14.19
-Opus 4.7 daily total = $7.13 + $3.75 + $15.00 + ($0.10 × 1000 × $75/1M) = $33.38
-```
-
-Still 2.4× more, but tighter. The takeaway: **caching narrows the gap but doesn't eliminate it**. Output cost is the killer.
+Plug your own token mix into the [calculator](/) for exact figures at today's rates.
 
 ## When Opus wins anyway
 
@@ -152,7 +143,7 @@ OpenAI has historically had higher rate limits per tier and more mature infrastr
 
 ### 4. Output volume tasks
 
-If you're generating long outputs (essays, reports, code at scale), GPT-5.5's $20/1M output vs Opus's $75/1M is a **3.75× cost gap that no caching can close**. For these workloads, Opus is structurally more expensive.
+If you're generating long outputs (essays, reports, code at scale), output price is the only lever that matters — and Opus 4.7 holds it at {{out:claude-opus-4-7}}/1M against GPT-5.5's {{out:gpt-5-5}}/1M. **No amount of caching changes this**, because caching never discounts output.
 
 ### 5. Cost-sensitive everyday tasks
 

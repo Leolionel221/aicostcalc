@@ -74,7 +74,15 @@ export interface Model {
   providerWebsite: string;
   category: ModelCategory;
   useCase: string[];
-  releaseDate: string;
+  /**
+   * Provider announcement date, YYYY-MM-DD.
+   *
+   * Null when unknown: the LiteLLM registry carries pricing and limits but no
+   * release dates, so models discovered through the daily sync start without
+   * one. The page renders a dash rather than a guess — this field is shown to
+   * readers, and an invented date is indistinguishable from a real one.
+   */
+  releaseDate: string | null;
   status: ModelStatus;
   deprecatedAt: string | null;
   successorId: string | null;

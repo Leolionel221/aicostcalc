@@ -9,7 +9,7 @@ featured: true
 lastUpdated: "2026-05-12"
 ---
 
-> **📊 Updated 2026-05-12:** Pricing data refreshed against LiteLLM's public registry. Notable corrections from original draft: GPT-5.5 output is **$30/1M** (not $20), GPT-5 mini is **$0.25/$2.00** (not $0.20/$0.80), GPT-5 mini cached input is **$0.02/1M** (not $0.05). Math examples below directionally hold but specific dollar figures may differ.
+> **📊 Prices on this page are live** — pulled from the site dataset at build time, last verified **{{updated}}**.
 
 
 If you're shipping production features on top of OpenAI's API in 2026, the headline price-per-token is no longer the number that matters. Between **prompt caching**, **Batch API discounts**, and the divergent pricing across **GPT-5.5**, **GPT-5 mini**, and **o4-mini**, the real cost of a workload can vary by **5×–10×** depending on how you architect it.
@@ -139,7 +139,7 @@ Every 100 tokens of unnecessary system prompt × thousands of calls/day = real m
 
 ### 6. Consider OpenAI alternatives for cheap workloads
 
-DeepSeek V3.2 ($0.28 input / $0.40 output) and Gemini 3 Flash ($0.50 / $3.00) are competitive vs GPT-5 mini for many classification and extraction tasks. DeepSeek V3.2 in particular is 5× cheaper on output. Test them on a sample before committing.
+{{name:deepseek-v3-2}} ({{price:deepseek-v3-2}}) and {{name:gemini-3-flash}} ({{pair:gemini-3-flash}}) are competitive vs {{name:gpt-5-mini}} for many classification and extraction tasks. DeepSeek V3.2 in particular is 5× cheaper on output. Test them on a sample before committing.
 
 ## When OpenAI is worth the premium
 

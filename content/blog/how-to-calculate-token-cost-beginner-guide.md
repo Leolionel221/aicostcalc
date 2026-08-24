@@ -52,7 +52,7 @@ Two-direction billing:
 - **Input tokens** (what you send) — usually the cheaper side
 - **Output tokens** (what the model generates) — usually 3-5× more expensive than input
 
-Both are priced **per 1 million tokens** at the standard rates. So if a model is "$2.50 input / $10 output", that means:
+Both are priced **per 1 million tokens** at the standard rates. Every worked example below uses **made-up round rates** so the arithmetic is easy to follow — real current prices are on the [calculator](/). So if a model is "$2.50 input / $10 output", that means:
 
 - Sending 1M tokens of input → $2.50
 - Receiving 1M tokens of output → $10.00
@@ -78,12 +78,12 @@ Calls per month   = 1,000 × 5 × 30 = 150,000
 Total input       = 150,000 × 1,500 = 225M tokens
 Total output      = 150,000 × 200 = 30M tokens
 
-At $2.50/$10 (GPT-5.5):
+At $2.50/$10 (illustrative flagship rate):
   Input  cost = 225 × $2.50 = $562.50
   Output cost = 30  × $10   = $300.00
   Monthly total = $862.50
 
-At $0.20/$0.80 (GPT-5 mini):
+At $0.20/$0.80 (illustrative small-model rate):
   Input  cost = 225 × $0.20 = $45.00
   Output cost = 30  × $0.80 = $24.00
   Monthly total = $69.00
@@ -99,9 +99,9 @@ Two pricing dimensions that beginner guides skip but production users care about
 
 Most modern LLMs support **prompt caching** — if you re-send a prompt prefix you've sent before in the last few minutes, the cached portion bills at a steep discount:
 
-- OpenAI GPT-5.5: $5.00 input / $1.25 cached → **75% off**
-- Claude Opus 4.7: $5 input / $0.50 cached → **90% off**
-- Claude Haiku 4.5: $1.00 input / $0.10 cached → **90% off**
+- OpenAI {{name:gpt-5-5}}: {{in:gpt-5-5}} input / {{cached:gpt-5-5}} cached
+- {{name:claude-opus-4-7}}: {{in:claude-opus-4-7}} input / {{cached:claude-opus-4-7}} cached → **90% off**
+- {{name:claude-haiku-4-5}}: {{in:claude-haiku-4-5}} input / {{cached:claude-haiku-4-5}} cached → **90% off**
 - Gemini 3.1 Pro: $2.00 input / $0.20 cached → **90% off**
 
 This matters enormously for:

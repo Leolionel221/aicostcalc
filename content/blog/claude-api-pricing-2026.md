@@ -9,10 +9,10 @@ featured: true
 lastUpdated: "2026-05-12"
 ---
 
-> **📊 Updated 2026-05-12:** Pricing data refreshed against [LiteLLM's public registry](https://github.com/BerriAI/litellm). Important correction: Claude Opus 4.7 is **$5/$25 per 1M tokens** (not $15/$75 as some early sources reported). This article's headline math examples used the higher rate — directionally correct but specific dollar figures are too high. See the [calculator](/) for live numbers.
+> **📊 Prices on this page are live** — pulled from the site's dataset at build time, last verified **{{updated}}**. Worked examples further down use fixed illustrative rates (stated inline) so the arithmetic stays checkable; the reference tables are always current.
 
 
-Anthropic's Claude family has the most **complex** but also the **most rewarding** pricing structure in the LLM market. The headline numbers — $5 input / $25 output per million tokens for Claude Opus 4.7 — make Claude look expensive next to GPT-5 mini or DeepSeek V3.2. But that's the wrong comparison.
+Anthropic's Claude family has the most **complex** but also the **most rewarding** pricing structure in the LLM market. The headline numbers — {{price:claude-opus-4-7}} for Claude Opus 4.7 — make Claude look expensive next to GPT-5 mini or DeepSeek V3.2. But that's the wrong comparison.
 
 The right question is: *what does Claude actually cost when you use it correctly?* And the answer can be **10× lower** than the headline rates if your workload is cache-friendly.
 
@@ -22,8 +22,8 @@ Here's how Claude's 2026 pricing works and where the leverage lives.
 
 | Model | Input ($/1M) | Output ($/1M) | Cached read | Context | Strengths |
 |---|---|---|---|---|---|
-| **Claude Opus 4.7** | $5.00 | $25.00 | $0.50 | 1M tokens | Deep reasoning, coding, long context |
-| **Claude Haiku 4.5** | $1.00 | $5.00 | $0.10 | 200K tokens | Fast everyday tasks |
+| **Claude Opus 4.7** | {{in:claude-opus-4-7}} | {{out:claude-opus-4-7}} | {{cached:claude-opus-4-7}} | {{ctx:claude-opus-4-7}} | Deep reasoning, coding, long context |
+| **Claude Haiku 4.5** | {{in:claude-haiku-4-5}} | {{out:claude-haiku-4-5}} | {{cached:claude-haiku-4-5}} | {{ctx:claude-haiku-4-5}} | Fast everyday tasks |
 
 Note the **cache read prices** — these are the magic numbers.
 
@@ -33,10 +33,10 @@ Most providers (OpenAI, Gemini) implement caching as **automatic prefix matching
 
 Anthropic implemented caching as an **explicit, controllable system** with two prices:
 
-- **Cache write**: 1.25× standard input rate ($18.75/1M for Opus, $1.25/1M for Haiku)
-- **Cache read**: **0.10× standard input rate** ($1.50/1M for Opus, $0.10/1M for Haiku)
+- **Cache write**: 1.25× standard input rate ({{cache-write:claude-opus-4-7}}/1M for Opus, {{cache-write:claude-haiku-4-5}}/1M for Haiku)
+- **Cache read**: **0.10× standard input rate** ({{cached:claude-opus-4-7}}/1M for Opus, {{cached:claude-haiku-4-5}}/1M for Haiku)
 
-That cache read price is the key. **A cached read on Claude Opus 4.7 costs the same as standard input on Claude Haiku 4.5.** Translated: if you reuse cached prompts heavily, Opus becomes priced like a small model.
+That cache read price is the key. **A cached read on Claude Opus 4.7 ({{cached:claude-opus-4-7}}/1M) now costs less than standard input on Claude Haiku 4.5 ({{in:claude-haiku-4-5}}/1M).** Translated: if you reuse cached prompts heavily, the frontier model is priced below the small one.
 
 ### How it works in practice
 
@@ -60,22 +60,31 @@ messages = [
 
 The cache lasts ~5 minutes (refreshed on each hit). First call writes the cache (1.25× cost). Subsequent calls within the window read from cache (0.10× cost).
 
-### When this matters: a real example
+### When this matters: a worked example
 
-Suppose you're building a code review agent that ships a 5,000-token system prompt + tool spec on every call. You make 1,000 calls / day.
+The arithmetic below uses **illustrative round rates** — $5.00 input / $25.00 output per 1M,
+with cache write at 1.25× input and cache read at 0.10× input. Real current rates are in the
+table above (they are pulled live); this example is fixed so the numbers stay checkable.
 
-**Without caching (Opus 4.7)**:
-- Input: 1,000 × 5,000 / 1M × $15 = $75/day
-- Output (avg 1,000 tokens): 1,000 × 1,000 / 1M × $75 = $75/day
-- **Total: $150/day = $4,500/month**
+Suppose you're building a code review agent that ships a 5,000-token system prompt + tool spec
+on every call. You make 1,000 calls / day, averaging 1,000 output tokens.
 
-**With caching** (assume 95% cache hit rate after warmup):
-- 5% cache writes: 1,000 × 5,000 × 0.05 / 1M × $18.75 = $4.69/day
-- 95% cache reads: 1,000 × 5,000 × 0.95 / 1M × $1.50 = $7.13/day
-- Output unchanged: $75/day
-- **Total: $86.82/day = $2,605/month**
+**Without caching**:
+- Input: 1,000 × 5,000 / 1M × $5.00 = $25.00/day
+- Output: 1,000 × 1,000 / 1M × $25.00 = $25.00/day
+- **Total: $50.00/day = $1,500/month**
 
-**Savings: ~$1,895/month, 42%.**
+**With caching** (95% hit rate after warmup, cache write $6.25/1M, cache read $0.50/1M):
+- 5% cache writes: 1,000 × 5,000 × 0.05 / 1M × $6.25 = $1.56/day
+- 95% cache reads: 1,000 × 5,000 × 0.95 / 1M × $0.50 = $2.38/day
+- Output unchanged: $25.00/day
+- **Total: $28.94/day = $868/month**
+
+**Savings: ~$632/month, 42%.**
+
+The 42% is the part worth remembering — it barely moves when prices change, because it is set by
+your input/output ratio and hit rate, not by the absolute rate. Plug your own numbers into the
+[calculator](/) for current pricing.
 
 The savings are dramatic but bounded by output cost, which doesn't get cached. For input-heavy workloads (RAG, document analysis), the savings are even larger.
 
@@ -83,16 +92,16 @@ The savings are dramatic but bounded by output cost, which doesn't get cached. F
 
 Anthropic also offers a Batch API at standard 50% off:
 
-| Model | Batch input | Batch output |
-|---|---|---|
-| Claude Opus 4.7 | $7.50/1M | $37.50/1M |
-| Claude Haiku 4.5 | $0.50/1M | $2.50/1M |
+| Model | Batch input / output per 1M |
+|---|---|
+| Claude Opus 4.7 | {{batch-pair:claude-opus-4-7}} |
+| Claude Haiku 4.5 | {{batch-pair:claude-haiku-4-5}} |
 
 Same model, same quality, half the price — but **24-hour turnaround**. The trade-off is identical to OpenAI's Batch API: only useful for non-realtime workloads.
 
 ## When Claude is worth it
 
-Claude's pricing premium over GPT-5 mini ($0.20/$0.80) or Haiku 4.5 ($1/$5) is real. Here's when it's worth it:
+Claude's pricing premium over GPT-5 mini ({{pair:gpt-5-mini}}) or Haiku 4.5 ({{pair:claude-haiku-4-5}}) is real. Here's when it's worth it:
 
 ### 1. Long context (>500K tokens)
 
@@ -114,8 +123,8 @@ Anthropic has consistently led on coding benchmarks since Claude 3.5. If you're 
 
 For high-volume everyday tasks, Claude Haiku 4.5 is one of the best price/performance models in the market in 2026:
 
-- $1 input / $5 output (cheaper than GPT-5 mini's $0.20/$0.80? No — but stronger reasoning per dollar)
-- **$0.10 cached input** — the cheapest cached rate of any frontier model
+- {{price:claude-haiku-4-5}} (cheaper than GPT-5 mini's {{pair:gpt-5-mini}}? No — but stronger reasoning per dollar)
+- **{{cached:claude-haiku-4-5}} cached input** — among the most aggressive cached rates of any frontier model
 - Same 200K context as the small competition
 - Vision support included
 - Often beats GPT-5 mini on tasks requiring nuance
@@ -126,12 +135,12 @@ For a typical 1,000 input + 500 output token call:
 
 | Model | Single-call cost | Notes |
 |---|---|---|
-| GPT-5 mini | $0.0006 | Cheapest competitive small |
-| Gemini 3.0 Flash | $0.0013 | Good multimodal alternative |
-| **Haiku 4.5** | $0.0035 | **3-5× pricier than alternatives — but caching makes up for it** |
-| GPT-5.5 | $0.0150 | Frontier flagship |
-| Gemini 3.0 Pro | $0.0075 | Cheaper than Opus |
-| **Opus 4.7** | $0.0525 | **Most expensive flagship — but best at hard tasks** |
+| {{name:gpt-5-mini}} | {{call:gpt-5-mini}} | Cheapest competitive small |
+| {{name:gemini-3-flash}} | {{call:gemini-3-flash}} | Good multimodal alternative |
+| **{{name:claude-haiku-4-5}}** | {{call:claude-haiku-4-5}} | **Pricier than the small alternatives — caching is what makes up for it** |
+| {{name:gpt-5-6}} | {{call:gpt-5-6}} | OpenAI flagship |
+| {{name:gemini-3-1-pro}} | {{call:gemini-3-1-pro}} | Long-context option |
+| **{{name:claude-opus-4-7}}** | {{call:claude-opus-4-7}} | **Frontier reasoning tier** |
 
 Use the [calculator](/) to plug in your actual token mix and toggle caching to see how the numbers change.
 

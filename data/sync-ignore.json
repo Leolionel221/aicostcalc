@@ -1,0 +1,21 @@
+{
+  "_comment": "Registry keys scripts/sync-prices.mjs should not report as new. Each entry records why, so a decision made once is not re-litigated every morning. Add here when a reported model is deliberately out of scope; remove to start tracking it again.",
+  "ignore": [
+    { "pattern": "^gpt-4", "reason": "Previous generation; site covers GPT-5.x forward" },
+    { "pattern": "^o3", "reason": "Superseded by o4-mini, which is listed" },
+    { "pattern": "^gpt-5(-chat|-nano|-pro|-search-api)?$", "reason": "GPT-5.0 line, superseded by 5.5/5.6" },
+    { "pattern": "^gpt-5\\.[1-4]", "reason": "Interim 5.x releases between listed 5.5 and 5.6" },
+    { "pattern": "^gemini-2", "reason": "Previous Gemini generation" },
+    { "pattern": "^gemini-exp", "reason": "Experimental builds, not GA pricing" },
+    { "pattern": "(computer-use|native-audio|tts|customtools|codex)", "reason": "Specialised endpoint variants, not general chat models" },
+    { "pattern": "^claude-(opus|sonnet|haiku)-4-[0-6]$", "reason": "Claude 4.0-4.6; site lists 4.7 forward" },
+    { "pattern": "^deepseek/deepseek-(chat|coder|r1|reasoner|v3)$", "reason": "Aliases or previous generation of listed DeepSeek models" },
+    { "pattern": "^xai/grok-[23]", "reason": "Previous Grok generations" },
+    { "pattern": "^xai/grok-4\\.20", "reason": "Dated 0309 snapshot builds, not a distinct release" },
+    { "pattern": "^xai/grok-build", "reason": "Agent-builder product, not a general chat model" },
+    { "pattern": "^xai/grok-4-1-fast", "reason": "Deprecated 2026-05-15 per registry" },
+    { "pattern": "^mistral/(ministral|codestral|open-|labs-|zai-)", "reason": "Small/specialised lines outside the site's frontier-pricing scope" },
+    { "pattern": "^mistral/mistral-(tiny|small|medium|large-2)", "reason": "Legacy Mistral naming; site lists Mistral Large 3" },
+    { "pattern": "-\\d{4}$", "reason": "Dated snapshot builds (e.g. -2512), tracked via their undated key" }
+  ]
+}

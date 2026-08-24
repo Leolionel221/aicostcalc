@@ -4,6 +4,7 @@ import matter from "gray-matter";
 import { remark } from "remark";
 import remarkGfm from "remark-gfm";
 import remarkHtml from "remark-html";
+import { resolveBlogTokens } from "./blog-tokens";
 
 const BLOG_DIR = path.join(process.cwd(), "content", "blog");
 
@@ -59,7 +60,7 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
   const processed = await remark()
     .use(remarkGfm)
     .use(remarkHtml, { sanitize: false })
-    .process(content);
+    .process(resolveBlogTokens(content));
 
   const fm = data as BlogPostFrontmatter;
   return {

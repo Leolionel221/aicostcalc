@@ -9,7 +9,7 @@ featured: true
 lastUpdated: "2026-05-12"
 ---
 
-> **📊 Updated 2026-05-12:** Pricing data refreshed against [LiteLLM's public model registry](https://github.com/BerriAI/litellm). Notable changes since publication: Claude Opus 4.7 dropped from $15/$75 to **$5/$25** (LiteLLM-verified), Mistral Large 3 dropped from $2.50/$7.50 to **$0.50/$1.50**, DeepSeek V4 → V3.2 ($0.28/$0.40). The ranking below reflects current verified prices.
+> **📊 Prices on this page are live.** Every figure below is pulled from [`data/models.json`](https://github.com/Leolionel221/aicostcalc) at build time and verified against [LiteLLM's public registry](https://github.com/BerriAI/litellm) — last verified **{{updated}}**. They cannot drift out of sync with the [calculator](/).
 
 
 "Cheapest AI API" is a misleading question. The model that costs the least per token might be useless for your task — and the one that looks expensive might be 10× cheaper *for what you actually use it for*. So before we hand you the list, two caveats:
@@ -17,7 +17,7 @@ lastUpdated: "2026-05-12"
 1. **Cost is meaningless without capability matching.** A $0.20/1M model that gets 60% of your queries wrong is more expensive than a $5/1M model that nails them on the first try.
 2. **Headline rates lie in 2026.** Caching can cut bills by 90%. Batch API drops them 50%. The "cheapest" model on the price page might be the most expensive in production.
 
-With those out of the way: here's the honest ranking by **single-call cost** (1,000 input + 500 output tokens) across the 10 frontier and small models on this site.
+With those out of the way: here's the honest ranking by **single-call cost** (1,000 input + 500 output tokens) across all {{model-count}} models on this site.
 
 ## Methodology
 
@@ -29,24 +29,22 @@ cost = (1,000 / 1,000,000) × input_price + (500 / 1,000,000) × output_price
 
 Where `input_price` and `output_price` are the official 2026 published rates per 1M tokens. The numbers don't include caching or batch discounts — those are footnoted because they change the order substantially.
 
-All 10 models are pre-loaded into [the calculator on the homepage](/) so you can plug in your own ratios.
+All {{model-count}} models are pre-loaded into [the calculator on the homepage](/) so you can plug in your own ratios.
 
 ## The Ranking
 
-| Rank | Model | Provider | Per-call cost | Best for |
-|---|---|---|---|---|
-| 1 | **DeepSeek V3.2** | DeepSeek | $0.00048 | Cheapest by far — coding, math, reasoning |
-| 2 | **GPT-5 mini** | OpenAI | $0.00125 | Default everyday small |
-| 3 | **Mistral Large 3** | Mistral | $0.00125 | EU hosting, multilingual, big context |
-| 4 | **Gemini 3 Flash** | Google | $0.002 | Multimodal at scale |
-| 5 | **o4-mini** | OpenAI | $0.0033 | STEM reasoning |
-| 6 | **Claude Haiku 4.5** | Anthropic | $0.0035 | Anthropic ecosystem, caching-heavy workloads |
-| 7 | **Gemini 3.1 Pro** | Google | $0.008 | Long context (1M+ tokens) |
-| 8 | **Grok 4** | xAI | $0.0105 | Real-time X integration |
-| 9 | **Claude Opus 4.7** | Anthropic | $0.0175 | Deep reasoning, 1M context |
-| 10 | **GPT-5.5** | OpenAI | $0.020 | Frontier multimodal, biggest context |
+{{cheapest-table:10}}
 
-> **Numbers update monthly.** The figures above reflect rates verified 2026-05-12 against LiteLLM's public registry. The [calculator](/) always shows the current snapshot.
+**How to read this.** The order moves whenever a provider cuts prices, so treat it as a
+snapshot rather than a verdict — it has already reshuffled twice since this article was
+first published. Three things matter more than the rank itself:
+
+- **Cheapest overall** is currently {{name:deepseek-v3-2}} at {{call:deepseek-v3-2}} per call
+  ({{pair:deepseek-v3-2}} per 1M), but its context window caps at {{ctx:deepseek-v3-2}}.
+- **Cheapest with a long window** is {{name:deepseek-v4-flash}} — {{call:deepseek-v4-flash}} per
+  call for {{ctx:deepseek-v4-flash}} of context. You pay roughly double for the room.
+- **Cheapest from a US frontier lab** is {{name:gpt-5-6-luna}} at {{call:gpt-5-6-luna}}, which
+  matters if your compliance team has opinions about where inference runs.
 
 ## #1: GPT-5 mini ($0.0006/call)
 

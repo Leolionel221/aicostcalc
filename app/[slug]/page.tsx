@@ -160,7 +160,7 @@ export default async function ModelPage({
                 <div className="rounded-lg border border-border p-3">
                   <div className="text-xs text-muted-foreground">Released</div>
                   <div className="text-lg font-semibold">
-                    {model.releaseDate.slice(0, 7)}
+                    {model.releaseDate?.slice(0, 7) ?? "—"}
                   </div>
                   <div className="text-[10px] text-muted-foreground">
                     Cutoff {model.limits.knowledgeCutoff ?? "—"}
