@@ -21,8 +21,13 @@ export function modelUrl(modelId: string): string {
  * Build Next.js Metadata for a model landing page.
  */
 export function modelMetadata(model: Model): Metadata {
-  const title = `${model.name} Cost Calculator — 2026 API Pricing`;
-  const description = `Calculate exact API costs for ${model.name} from ${model.provider}. Input $${model.pricing.input.toFixed(2)}, output $${model.pricing.output.toFixed(2)} per 1M tokens. Compare with other LLMs.`;
+  // "API Pricing" leads, "Cost Calculator" follows — deliberate, see GSC data
+  // in HANDOVER §16 (2026-08-24). We ranked ~8 for "<model> cost calculator"
+  // (6 impressions) and ~58 for "<model> api pricing" (52 impressions): the
+  // phrasing we optimised for is not the phrasing people search. Both phrases
+  // stay in the title so the position we already hold is not thrown away.
+  const title = `${model.name} API Pricing — Cost Calculator 2026`;
+  const description = `${model.name} API pricing from ${model.provider}: $${model.pricing.input.toFixed(2)} per 1M input tokens, $${model.pricing.output.toFixed(2)} per 1M output. Calculate your exact cost and compare with other LLMs. Verified ${model.lastVerified}.`;
   const url = modelUrl(model.id);
 
   return {

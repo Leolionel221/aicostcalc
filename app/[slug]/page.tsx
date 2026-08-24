@@ -130,7 +130,7 @@ export default async function ModelPage({
             <div className="space-y-6 lg:pr-4">
               <Eyebrow>{model.provider} pricing</Eyebrow>
               <h1 className="text-4xl md:text-5xl font-bold tracking-tight leading-[1.1]">
-                {model.name} Cost Calculator
+                {model.name} API Pricing & Cost Calculator
               </h1>
               <p className="text-lg text-muted-foreground leading-relaxed">
                 {model.i18n.en.description}
