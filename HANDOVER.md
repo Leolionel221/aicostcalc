@@ -4,8 +4,8 @@
 >
 > 维护规则：每次"收口"（一个改动告一段落）都必须更新本文档相关章节，并在变更日志追加记录。
 
-**最后更新**：2026-08-01
-**当前阶段**：🔧 **月度维护模式稳定运行** — 23 个模型，8 月同步完成（首次抓到真实降价事件）
+**最后更新**：2026-08-24
+**当前阶段**：🔧 **月度维护模式** — 23 个模型；8/24 修复了一个隐蔽的 GA4 断链（衡量 ID 在 Google 侧失效）
 **运营节奏**：每月 1 号 30 分钟（LiteLLM 全量扫描 → diff → 补新模型 → push），其余时间不看数据
 **下次决策点**：2026-09-01 月度维护；AIMLAPI 审核通过后补接第二联盟位（30% vs Novita 10%）
 
@@ -67,7 +67,7 @@
 | 图标 | lucide-react | 1.x | 注意：v1 移除了 brand icons（GitHub icon 自己写 SVG） |
 | Tokenizer | js-tiktoken | 1.x | OpenAI 系精确（dynamic import），其他估算 |
 | Markdown | gray-matter + remark + remark-gfm + remark-html | 各最新 | 博客 .md 文件渲染 |
-| Analytics | @next/third-parties (GA4) | 16.x | 仅在 `NEXT_PUBLIC_GA_ID` 设置时挂载 |
+| Analytics | @next/third-parties (GA4) | 16.x | 衡量 ID 硬编码在 `lib/analytics.ts`（非密钥，不用 env） |
 | 测试 | Vitest + RTL + @vitest/coverage-v8 | 4.x | 48 个用例，calculator 100% 覆盖 |
 | 字体 | Inter + Noto Sans SC | Google Fonts | 中英统一观感 |
 | 构建 | Turbopack | Next.js 内置 | dev 和 build 都启用 |
@@ -172,7 +172,7 @@
 ├── vitest.config.ts                  # 测试配置
 ├── vitest.setup.ts                   # @testing-library/jest-dom 引入
 ├── .npmrc                            # legacy-peer-deps + engine-strict=false
-├── .env.example                      # NEXT_PUBLIC_GA_ID 等
+├── .env.example                      # 站点 URL 等（GA ID 已移入代码）
 ├── .gitignore                        # 注意：package-lock.json 暂被 ignore（详见 §16）
 └── next-env.d.ts
 ```
@@ -415,7 +415,7 @@ Vercel UI 默认行为有时会让 apex `aicostcalc.net` 重定向到 `www.aicos
 **Vercel 配置位置**：Settings → Domains → www.aicostcalc.net → "Redirect to Another Domain" 选 308 + 目标填 `aicostcalc.net`。
 
 **环境变量**（Vercel Settings → Environment Variables）：
-- `NEXT_PUBLIC_GA_ID` — GA4 Measurement ID（已配，格式 `G-XXXXXXXXXX`）
+- ~~`NEXT_PUBLIC_GA_ID`~~ — 2026-08-24 起不再使用，GA 衡量 ID 硬编码在 `lib/analytics.ts`。Vercel 里那条旧变量已无任何代码读取，可删可留。
 
 **重定向缓存陷阱**：改 redirect 方向后，Vercel CDN 可能缓存旧响应 5-10 分钟。强制刷新方法：Deployments → 最新 deployment → Redeploy（取消勾选 "Use existing Build Cache"）。
 
@@ -431,7 +431,7 @@ Vercel UI 默认行为有时会让 apex `aicostcalc.net` 重定向到 `www.aicos
 | 代码托管 | Leolionel221/aicostcalc | GitHub | ✅ Public + MIT + Topics 设好 |
 | **Google Search Console** | 索引/排名监控 | leochen221@proton.me | ✅ 域名级验证 + sitemap 18 URL 收录 |
 | **Bing Webmaster** | Bing 索引 | 同 GSC 账号 | ✅ 从 GSC 导入同步 |
-| **Google Analytics 4** | 用户行为 | leolionel221@gmail.com | ✅ ID 已配进 Vercel env，事件实时上报 |
+| **Google Analytics 4** | 用户行为 | leolionel221@gmail.com | ✅ 详见下方坐标表 |
 | **dev.to** | 内容分发 + 反向链接 | leolionel221 | ✅ 第 1 篇文章 live |
 | Sentry | 错误监控 | — | ⏳ 未上线（V1.1+ 视情况启用） |
 | Plausible | GA4 备份 | — | ⏳ 未上线 |
@@ -440,8 +440,19 @@ Vercel UI 默认行为有时会让 apex `aicostcalc.net` 重定向到 `www.aicos
 
 **密钥管理**：所有 secret 通过 Vercel Dashboard → Settings → Environment Variables 配置，不进 Git。
 
+**GA4 精确坐标**（2026-08-24 修复后，务必对准这一套）：
+
+| 项 | 值 |
+|---|---|
+| 账号 | **AI Cost Calc** (393584169) |
+| 属性 | **aicostcalc.net** (536080749) |
+| 数据流 | 我的网站1 (15491567321) |
+| **衡量 ID** | **`G-2YK8KQ5K2N`** ← 与 `lib/analytics.ts` 中常量一致 |
+
+⚠️ **不要**用 `cubenix-contrl` (380214594p519439150 / `G-V0SB6KHCL0`)——那是 Firebase 默认账号下**另一个项目**的属性，与本站无关。2026-08 曾因此绕过一圈。
+
 **已配置的 env vars**：
-- `NEXT_PUBLIC_GA_ID` — GA4 Measurement ID
+- 无（GA ID 已移入代码；`NEXT_PUBLIC_SITE_URL` 等仅作参考未实际读取）
 
 ---
 
@@ -767,7 +778,15 @@ PRD v1.1 §3.5 F-api 早期承诺已兑现。3 个公开 endpoint + 完整 docs 
 2. 触发交互后看是否有 `collect?` 请求发出
 3. 如果没发：检查 `lib/analytics.ts` 里 `track(name, params)` 是否被调用（`console.log` 一下）
 4. 如果发了：去 GA4 → 报告 → 实时 → DebugView，等 1-2 分钟看是否到达
-5. 检查 `NEXT_PUBLIC_GA_ID` env var 是否在 Vercel 中配置
+5. **先验衡量 ID 是不是活的**（2026-08 踩过的坑，最隐蔽）：
+   ```bash
+   curl -s -o /dev/null -w "%{http_code} %{size_download}\n" \
+     "https://www.googletagmanager.com/gtag/js?id=G-2YK8KQ5K2N"
+   ```
+   期望 `200` + 约 50 万字节。若是 `404` + 约 1.5K，说明该 ID 在 Google 侧已失效——
+   此时页面上 `typeof gtag === "function"` 和 dataLayer 都**看起来正常**（那是内联代码
+   干的），但库从未执行，永远不会发出 `/g/collect`。判据只有两个：上面这个 curl，
+   以及浏览器里 `performance.getEntriesByType('resource')` 中有没有 collect 请求。
 
 ---
 
@@ -796,6 +815,36 @@ PRD v1.1 §3.5 F-api 早期承诺已兑现。3 个公开 endpoint + 完整 docs 
 ## 16. 变更日志
 
 > 每次"收口"在此追加一条记录。最新的在最上方。
+
+### 2026-08-24 — 修复 GA4 断链：衡量 ID 在 Google 侧失效
+**类型**：fix（埋点）
+**摘要**：排查"GA4 没数据"时发现，网站一直在向一个**已失效的衡量 ID** 上报。新建数据流并把 ID 从环境变量搬进代码。
+
+**症状**：GA4 提示"48 小时内未收到数据"，28 天报告 0 用户 0 事件。
+
+**排查过程（几乎所有常规检查都显示正常，这是本次最大的坑）**：
+| 检查项 | 结果 | 是否有误导性 |
+|---|---|---|
+| 线上 HTML 含 gtag 脚本 | ✅ | — |
+| GA4 数据流衡量 ID 与代码一致 | ✅ 都是 `G-MMKJPWQWJD` | — |
+| `typeof window.gtag === "function"` | ✅ | ⚠️ **是内联片段定义的排队函数，与库无关** |
+| dataLayer 有 `js` + `config` 两条 | ✅ | ⚠️ **也是内联片段 push 的，没人消费** |
+| performance 中有 gtag 脚本资源 | ✅ | ⚠️ **404 页面同样计为一次资源加载** |
+| 站点响应头有无 CSP 拦截 | ✅ 无 CSP | — |
+| **`/g/collect` 打点请求** | ❌ 从未发出 | ← **唯一真实信号** |
+
+**根因**：`curl "googletagmanager.com/gtag/js?id=G-MMKJPWQWJD"` 返回 **HTTP 404 + 1,584 字节 HTML 错误页**，不是 JS 库。对照组 `G-V0SB6KHCL0` 返回 200 + 509KB 真实库，排除请求方式问题。ID 在 GA4 后台仍显示存在、回收站里也没有该属性，但 Google 的投放端已不认这个 ID。断链发生在 5 月（那时有真实事件到达）之后的某个时点。
+
+**影响**：埋点自 5 月后某时起一直是瞎的，包括 7 月装的 `affiliate_link_clicked`。因期间访客本就近乎为零，**没有丢失有价值的真实数据**。
+
+**修复**（commit 见下）：
+1. 在同一属性下新建数据流 → 新 ID `G-2YK8KQ5K2N`
+2. **先 curl 验证新 ID 返回 200 + ~500KB 才动代码**（这条已写进 §13 FAQ 作为标准动作）
+3. 衡量 ID 从 Vercel 环境变量搬进 `lib/analytics.ts` 常量：GA ID 本就明文出现在页面 HTML 里，不是密钥；放进代码后可进 git 历史、可在 diff 中看见、不会与部署态静默漂移
+4. `app/layout.tsx` 改为无条件挂载（不再依赖 env 是否存在）
+5. §9 补上完整 GA4 坐标表 —— **本次绕圈的根源就是文档只记了账号邮箱、没记具体是哪个属性**
+
+**教训**：判断 GA 是否真的在工作，只认两个信号 —— gtag/js 的 HTTP 状态与体积、以及有没有 `/g/collect` 请求。脚本标签在、gtag 是函数、dataLayer 有内容，这三样**全都可以在完全失效时正常显示**。
 
 ### 2026-08-01 — 8 月月度维护（首次常规维护，抓到真实降价事件）
 **类型**：data（月度 SOP）
