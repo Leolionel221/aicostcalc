@@ -860,7 +860,13 @@ PRD v1.1 §3.5 F-api 早期承诺已兑现。3 个公开 endpoint + 完整 docs 
 - title：`{Model} Cost Calculator — 2026 API Pricing` ——"pricing" 埋在破折号后
 - H1：`{Model} Cost Calculator` ——**完全没有 "pricing"**
 
-**建议改法（下一步动作）**：
+**改法已实现，待合并** —— 分支 `seo/pricing-first-titles`（已推送，Vercel 有 preview；type-check 通过）。刻意没直接进 main：当天已推过结构化数据那批，两批混在一起 GSC 上无法区分归因。合并命令：
+
+```bash
+git checkout main && git merge --ff-only seo/pricing-first-titles && git push origin main
+```
+
+具体改动：
 - title → `{Model} API Pricing — Cost Calculator 2026`（需求词前置）
 - H1 → `{Model} API Pricing & Cost Calculator`（两种说法都保留）
 - **slug 不动**。`-cost-calculator` 那 8.5 名是真金，且本项目 5 月改过 3 次 slug、留下 3 条 301，教训够了。
