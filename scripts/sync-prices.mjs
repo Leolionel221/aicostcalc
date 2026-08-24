@@ -70,6 +70,7 @@ const REGISTRY_KEYS = {
   "grok-4-6": "xai/grok-4.6",
   "grok-4-3": "xai/grok-4.3",
   "gpt-5-5-pro": "gpt-5.5-pro",
+  "gemini-3-1-flash-lite": "gemini-3.1-flash-lite",
 };
 
 /** Families worth watching for new releases, by registry key prefix. */

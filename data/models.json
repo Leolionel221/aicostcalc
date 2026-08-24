@@ -2697,6 +2697,91 @@
           "description": "GPT-5.5 Pro 定价为输入 $30 / 输出 $180（每 1M token），1M 上下文窗口，128K 最大输出，缓存输入 $3/1M。 一次 1000 输入 / 500 输出的调用约 $0.12000。"
         }
       }
+    },
+    {
+      "id": "gemini-3-1-flash-lite",
+      "name": "Gemini 3.1 Flash Lite",
+      "shortName": "3.1 Flash Lite",
+      "provider": "Google",
+      "providerId": "google",
+      "providerLogo": "/logos/google.svg",
+      "providerWebsite": "https://ai.google.dev",
+      "category": "fast",
+      "useCase": [
+        "fast",
+        "general",
+        "long-context",
+        "vision"
+      ],
+      "releaseDate": null,
+      "status": "active",
+      "deprecatedAt": "2027-05-07",
+      "successorId": "gemini-3-5-flash-lite",
+      "pricing": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.25,
+        "output": 1.5,
+        "cachedInput": 0.025,
+        "cacheWrite": null,
+        "batchInput": 0.125,
+        "batchOutput": 0.75,
+        "imagePerImage": null,
+        "imageTokensFormula": null,
+        "reasoningOutput": null,
+        "fineTunedInput": null,
+        "fineTunedOutput": null
+      },
+      "limits": {
+        "contextWindow": 1048576,
+        "maxOutput": 65536,
+        "maxImagesPerRequest": null,
+        "knowledgeCutoff": null
+      },
+      "tokenization": {
+        "encoder": "approximate",
+        "approximationRatio": {
+          "english": 4,
+          "chinese": 1.5,
+          "code": 3
+        }
+      },
+      "supports": {
+        "vision": true,
+        "audio": true,
+        "tools": true,
+        "streaming": true,
+        "caching": true,
+        "batch": true,
+        "fineTuning": false,
+        "structuredOutput": true
+      },
+      "lastVerified": "2026-08-24",
+      "sources": [
+        {
+          "type": "community",
+          "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
+          "fetchedAt": "2026-08-24"
+        }
+      ],
+      "priceHistory": [
+        {
+          "date": "2026-08-24",
+          "input": 0.25,
+          "output": 1.5,
+          "note": "First listed; verified against LiteLLM registry"
+        }
+      ],
+      "i18n": {
+        "en": {
+          "tagline": "Google's cheapest listed model — 250¢/1M input",
+          "description": "Gemini 3.1 Flash Lite runs at $0.25 input / $1.50 output per 1M tokens with a 1049K context window — cheaper than Gemini 3.5 Flash Lite ($0.30/$2.50) but a generation behind it. A 1,000-in / 500-out call costs $0.00100. Google lists a retirement date of 2027-05-07, so treat it as a cost floor rather than a long-term choice."
+        },
+        "zh": {
+          "tagline": "本站收录的最便宜 Google 模型，输入 $0.25/1M",
+          "description": "Gemini 3.1 Flash Lite 定价为输入 $0.25 / 输出 $1.50（每 1M token），1049K 上下文，比 Gemini 3.5 Flash Lite（$0.30/$2.50）更便宜，但落后一代。一次 1000 输入 / 500 输出的调用约 $0.00100。 Google 已标注退役日期 2027-05-07，适合当作成本下限参考，不宜长期押注。"
+        }
+      }
     }
   ]
 }
