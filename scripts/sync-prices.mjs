@@ -106,13 +106,51 @@ const IGNORE = JSON.parse(
 const per1M = (v) => (v == null ? null : Math.round(v * 1e6 * 1e4) / 1e4);
 const pct = (from, to) => (from === 0 ? Infinity : Math.abs((to - from) / from) * 100);
 
+/**
+ * Fetch the registry, with retries.
+ *
+ * `res.json()` was observed failing intermittently with "Unexpected end of JSON
+ * input" on a ~1.8MB gzipped response while the same URL fetched cleanly a
+ * second later — the body arrives truncated, and `.json()` reports it as a
+ * parse error with nothing to diagnose from. Reading the text first means a
+ * short read is identifiable as a short read, and an unattended daily job gets
+ * a couple of chances before it wakes anyone up.
+ */
 async function fetchRegistry() {
-  const res = await fetch(REGISTRY_URL, { headers: { "user-agent": "aicostcalc-sync" } });
-  if (!res.ok) throw new Error(`registry fetch failed: HTTP ${res.status}`);
-  const json = await res.json();
-  const n = Object.keys(json).length;
-  if (n < 1000) throw new Error(`registry looks truncated: only ${n} entries`);
-  return json;
+  const attempts = 3;
+  let lastError;
+
+  for (let i = 1; i <= attempts; i += 1) {
+    try {
+      const res = await fetch(REGISTRY_URL, {
+        headers: { "user-agent": "aicostcalc-sync", "accept-encoding": "identity" },
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+      const body = await res.text();
+      if (body.length < 500_000) {
+        throw new Error(`short read: ${body.length} bytes (expected ~1.8MB)`);
+      }
+
+      let json;
+      try {
+        json = JSON.parse(body);
+      } catch (err) {
+        throw new Error(`body did not parse as JSON (${body.length} bytes): ${err.message}`);
+      }
+
+      const n = Object.keys(json).length;
+      if (n < 1000) throw new Error(`registry looks truncated: only ${n} entries`);
+      if (i > 1) console.error(`(registry fetch succeeded on attempt ${i})`);
+      return json;
+    } catch (err) {
+      lastError = err;
+      if (i < attempts) {
+        await new Promise((r) => setTimeout(r, 2000 * i));
+      }
+    }
+  }
+  throw new Error(`registry fetch failed after ${attempts} attempts: ${lastError.message}`);
 }
 
 function diffModel(model, entry) {
