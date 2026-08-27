@@ -581,7 +581,7 @@
       ],
       "releaseDate": "2025-04-16",
       "status": "active",
-      "deprecatedAt": null,
+      "deprecatedAt": "2026-10-23",
       "successorId": null,
       "pricing": {
         "currency": "USD",
@@ -671,7 +671,7 @@
       ],
       "releaseDate": "2026-07-25",
       "status": "active",
-      "deprecatedAt": null,
+      "deprecatedAt": "2027-07-24",
       "successorId": null,
       "pricing": {
         "currency": "USD",
@@ -761,7 +761,7 @@
       ],
       "releaseDate": "2026-06-01",
       "status": "active",
-      "deprecatedAt": null,
+      "deprecatedAt": "2027-06-09",
       "successorId": null,
       "pricing": {
         "currency": "USD",
@@ -851,7 +851,7 @@
       ],
       "releaseDate": "2026-06-01",
       "status": "active",
-      "deprecatedAt": null,
+      "deprecatedAt": "2027-05-28",
       "successorId": null,
       "pricing": {
         "currency": "USD",
@@ -940,7 +940,7 @@
       ],
       "releaseDate": "2026-06-01",
       "status": "active",
-      "deprecatedAt": null,
+      "deprecatedAt": "2027-06-30",
       "successorId": null,
       "pricing": {
         "currency": "USD",
@@ -1030,7 +1030,7 @@
       ],
       "releaseDate": "2026-04-16",
       "status": "active",
-      "deprecatedAt": null,
+      "deprecatedAt": "2027-04-16",
       "successorId": null,
       "pricing": {
         "currency": "USD",
@@ -1118,7 +1118,7 @@
       ],
       "releaseDate": "2025-10-01",
       "status": "active",
-      "deprecatedAt": null,
+      "deprecatedAt": "2026-10-15",
       "successorId": null,
       "pricing": {
         "currency": "USD",
@@ -1304,7 +1304,7 @@
       ],
       "releaseDate": "2026-06-25",
       "status": "active",
-      "deprecatedAt": null,
+      "deprecatedAt": "2027-05-19",
       "successorId": null,
       "pricing": {
         "currency": "USD",
@@ -1394,7 +1394,7 @@
       ],
       "releaseDate": "2026-07-10",
       "status": "active",
-      "deprecatedAt": null,
+      "deprecatedAt": "2027-07-21",
       "successorId": null,
       "pricing": {
         "currency": "USD",
@@ -1939,8 +1939,8 @@
         "vision"
       ],
       "releaseDate": "2025-07-09",
-      "status": "active",
-      "deprecatedAt": null,
+      "status": "deprecated",
+      "deprecatedAt": "2026-05-15",
       "successorId": null,
       "pricing": {
         "currency": "USD",

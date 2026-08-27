@@ -7,6 +7,7 @@ import { AffiliateCTA } from "@/components/AffiliateCTA";
 import { Calculator } from "@/components/Calculator";
 import { ModelPricingTable } from "@/components/ModelPricingTable";
 import { ModelFAQ } from "@/components/ModelFAQ";
+import { DeprecationNotice } from "@/components/DeprecationNotice";
 import { Card, CardContent } from "@/components/ui/card";
 import { calculateStandard } from "@/lib/calculator";
 import { formatCost } from "@/lib/currency";
@@ -135,6 +136,7 @@ export default async function ModelPage({
               <p className="text-lg text-muted-foreground leading-relaxed">
                 {model.i18n.en.description}
               </p>
+              <DeprecationNotice model={model} />
               <div className="grid grid-cols-2 gap-3 pt-2">
                 <div className="rounded-lg border border-border p-3">
                   <div className="text-xs text-muted-foreground">Input</div>

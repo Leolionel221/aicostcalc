@@ -12,6 +12,8 @@
  *   Prices/limits of models we already list  -> mechanical, applied automatically.
  *   Models we do not list yet                -> needs a name, tagline, category,
  *                                               use cases. Reported, never invented.
+ *   Listed models upstream has retired       -> reported. Whether to mark, redirect
+ *                                               or remove is a judgement call.
  *
  * Guard rails, because auto-committing upstream data is only safe if a bad feed
  * cannot silently ship: any single price moving more than MAX_DELTA_PCT, or the
@@ -171,6 +173,38 @@ function diffModel(model, entry) {
   return changes;
 }
 
+/**
+ * Models we list that upstream has since marked for retirement.
+ *
+ * The sync checked `deprecation_date` only when deciding whether a *new* model
+ * was worth reporting, which left the obvious gap: a model already on the site
+ * could be retired by its provider and nothing would say so. The site would go
+ * on quoting a price for an API that no longer accepts requests.
+ *
+ * Not auto-applied — deciding between "mark deprecated", "point at a successor"
+ * and "remove the page" is a judgement call, and removing a page that ranks is
+ * not something a cron job should do unattended.
+ */
+function findDeprecations(models, registry, today) {
+  const out = [];
+  for (const model of models) {
+    const key = REGISTRY_KEYS[model.id];
+    const entry = key && registry[key];
+    if (!entry) continue;
+    const date = entry.deprecation_date;
+    if (!date) continue;
+    if (model.deprecatedAt === date) continue; // already recorded
+    out.push({
+      id: model.id,
+      key,
+      date,
+      past: date <= today,
+      status: model.status,
+    });
+  }
+  return out.sort((a, b) => a.date.localeCompare(b.date));
+}
+
 function findNewModels(registry, today) {
   const known = new Set(Object.values(REGISTRY_KEYS));
   const out = [];
@@ -231,6 +265,7 @@ async function main() {
   }
 
   const news = findNewModels(registry, today);
+  const deprecations = findDeprecations(data.models, registry, today);
 
   console.log(`## Price reconciliation — ${today}\n`);
   if (unmapped.length) {
@@ -249,6 +284,20 @@ async function main() {
   } else {
     console.log("### ✅ No drift — every listed model matches the registry\n");
   }
+  if (deprecations.length) {
+    console.log(`### ⚠️ Listed models flagged for retirement (${deprecations.length})\n`);
+    console.log("| Model | Registry key | Retires | Status |");
+    console.log("|---|---|---|---|");
+    for (const d of deprecations) {
+      console.log(
+        `| \`${d.id}\` | \`${d.key}\` | ${d.date} | ${d.past ? "**already past**" : "upcoming"} |`,
+      );
+    }
+    console.log(
+      "\n_Decide per model: record the date in `deprecatedAt`, point `successorId` at the replacement, or retire the page. Not applied automatically — removing a page that ranks is not a cron job's call._\n",
+    );
+  }
+
   if (news.length) {
     console.log(`### New models not on the site (${news.length})\n`);
     console.log("| Provider | Registry key | Input $/1M | Output $/1M | Context |");
@@ -287,7 +336,7 @@ async function main() {
     console.log(`### Applied ${drift.length} correction(s) to data/models.json\n`);
   }
 
-  process.exit(drift.length || news.length ? 1 : 0);
+  process.exit(drift.length || news.length || deprecations.length ? 1 : 0);
 }
 
 main().catch((err) => {
