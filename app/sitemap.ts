@@ -19,7 +19,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const modelPages = data.models.map((m) => ({
     url: `${SITE.url}/${modelSlug(m.id)}`,
     lastModified: new Date(m.lastVerified),
-    changeFrequency: "monthly" as const,
+    changeFrequency: "daily" as const,
     priority: 0.8,
   }));
 

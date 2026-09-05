@@ -32,7 +32,7 @@ export default function Home() {
           <div className="grid lg:grid-cols-[1.1fr_1.3fr] gap-12 items-center">
             {/* Left: copy */}
             <div className="space-y-6 lg:pr-4">
-              <Eyebrow>Free · Open · Updated monthly</Eyebrow>
+              <Eyebrow>Free · Open · Verified daily</Eyebrow>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1]">
                 Calculate AI API costs in&nbsp;seconds.
               </h1>
@@ -135,7 +135,7 @@ export default function Home() {
             </span>
             <span className="inline-flex items-center gap-2">
               <span className="text-[color:var(--accent)] font-bold">✓</span>
-              Updated monthly
+              Verified daily against the LiteLLM registry
             </span>
             <span className="inline-flex items-center gap-2">
               <span className="text-[color:var(--accent)] font-bold">✓</span>

@@ -4,7 +4,7 @@ import { LegalPage } from "@/components/LegalPage";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "AI Cost Calc is a free tool to compare API pricing across major LLM providers. Independently maintained, monthly updated.",
+    "AI Cost Calc is a free tool to compare API pricing across major LLM providers. Independently maintained, prices verified daily against the LiteLLM registry.",
   alternates: { canonical: "/about" },
 };
 

@@ -62,7 +62,7 @@ export default function ApiDocsPage() {
           </h1>
           <p className="mt-6 text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
             A community-friendly JSON API exposing the same pricing data that
-            powers the calculator. LiteLLM-verified, monthly-refreshed, CDN-cached.
+            powers the calculator. LiteLLM-verified, reconciled daily, CDN-cached.
             Build cost estimators, comparison tools, internal dashboards — no
             signup required.
           </p>
@@ -280,7 +280,7 @@ GET /api/v1/pricing?provider=openai`}
             <li className="flex items-start gap-2">
               <span className="text-[color:var(--accent)] mt-0.5">✓</span>
               <span>
-                <strong>Refresh cadence</strong>: Monthly (1st of every month)
+                <strong>Refresh cadence</strong>: Daily — prices are reconciled against the LiteLLM registry every morning (06:15 UTC) and corrections deploy automatically
                 against both sources, with diff review before publication.
               </span>
             </li>

@@ -22,7 +22,7 @@ const data = modelsData as ModelsData;
  *
  * Data source: Verified against LiteLLM's public model registry
  * (github.com/BerriAI/litellm) and each provider's official pricing page.
- * Updated monthly.
+ * Reconciled against the LiteLLM registry daily; see scripts/sync-prices.mjs.
  */
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);

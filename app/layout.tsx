@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     template: "%s | AI Cost Calc",
   },
   description:
-    "Free tool to calculate and compare API costs across OpenAI, Anthropic, Google, DeepSeek and 10+ LLM models. Includes prompt caching and Batch API pricing. Updated monthly.",
+    "Free tool to calculate and compare API costs across OpenAI, Anthropic, Google, DeepSeek and 30+ LLM models. Includes prompt caching and Batch API pricing. Prices verified daily.",
   metadataBase: new URL("https://aicostcalc.net"),
   alternates: {
     canonical: "/",
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     url: "https://aicostcalc.net",
     title: "AI API Cost Calculator — Compare LLM Pricing in 2026",
     description:
-      "Calculate exact API costs for 10+ LLM models including caching and batch discounts. Free, updated monthly.",
+      "Calculate exact API costs for 30+ LLM models including caching and batch discounts. Free, prices verified daily.",
   },
   twitter: {
     card: "summary_large_image",

@@ -89,7 +89,7 @@ export function siteJsonLd() {
     name: SITE_NAME,
     url: SITE_URL,
     description:
-      "Calculate and compare API pricing for OpenAI, Anthropic, Google, DeepSeek and 10+ LLM models. Free tool, updated monthly.",
+      "Calculate and compare API pricing for OpenAI, Anthropic, Google, DeepSeek and 30+ LLM models. Free tool, prices verified daily.",
   };
 }
 

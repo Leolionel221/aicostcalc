@@ -21,8 +21,8 @@ export function Footer() {
           <div className="col-span-2 md:col-span-1">
             <div className="font-semibold">AI Cost Calc</div>
             <p className="mt-2 text-xs text-muted-foreground leading-relaxed max-w-xs">
-              Calculate and compare API pricing for 10+ LLM models. Updated monthly,
-              transparent sources.
+              Calculate and compare API pricing for 30+ LLM models. Prices verified
+              daily, transparent sources.
             </p>
           </div>
 

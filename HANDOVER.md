@@ -4,7 +4,7 @@
 >
 > 维护规则：每次"收口"（一个改动告一段落）都必须更新本文档相关章节，并在变更日志追加记录。
 
-**最后更新**：2026-09-05
+**最后更新**：2026-09-05（下午）
 **当前阶段**：🤖 **每日自动对账模式** — 34 个模型；价格自动同步，人工只负责新模型的收录判断
 **运营节奏**：**不再有固定维护日**。价格每天自动对账；只在收到 `price-sync` Issue 时花几分钟判断新模型收不收
 **下次决策点**：2026-09-01 前后看 GSC（8/24 六批改动的效果，注意无法逐项归因）；AIMLAPI 审核通过后补接第二联盟位（30% vs Novita 10%）
@@ -238,7 +238,8 @@
 | 情况 | 处理方式 |
 |---|---|
 | 已收录模型价格/上下文/缓存价漂移 | **自动修正并提交** → 触发 Vercel 部署 |
-| 出现未收录的新模型 | **开/更新 Issue**（标签 `price-sync`），不自动加 |
+| 出现未收录的新模型，命名规则能推导 | **自动起草并上线**（页面带「自动收录、待审阅」提示），Issue 提醒审阅 |
+| 出现未收录的新模型，命名规则推不出 | **只开 Issue**，交人工添加 |
 | 单项价格变动 > 60% | **中止，不写任何数据**，workflow 报错 |
 | registry 拉取失败或条目数 < 1000 | 中止并报错 |
 
@@ -249,9 +250,11 @@ node scripts/sync-prices.mjs           # 只报告
 node scripts/sync-prices.mjs --write   # 应用机械修正
 ```
 
-**你（人）唯一需要做的事**：收到 `price-sync` Issue 时，判断这个新模型值不值得收录。
+**你（人）唯一需要做的事**：收到 `price-sync` Issue 时——
+- **「已自动上线」的**：读一遍页面文案，看血缘和定位对不对，改完把 `data/models.json` 里该条目的 `draft` 字段删掉，页面提示就消失
+- **「需人工添加」的**：判断值不值得收录
 
-- **值得** → 在 `data/models.json` 加一条（照抄相邻条目的结构），并**务必**把 id → registry key 的映射加进 `scripts/sync-prices.mjs` 的 `REGISTRY_KEYS`，否则它明天还会被当成新模型报一遍
+- **值得** → 在 `data/models.json` 加一条（照抄相邻条目的结构），并**务必**把 id → registry key 的映射加进 `data/registry-keys.json`，否则它明天还会被当成新模型报一遍（自动起草的会自己追加映射）
 - **不值得** → 在 `data/sync-ignore.json` 加一条 pattern **并写清原因**，以后不再打扰
 
 ⚠️ **为什么新模型不自动加**：加一个模型需要 name / shortName / tagline / description / category / useCase —— registry 一个都没有。自动生成就是编造，本项目 2026-05 已经因为编造数据栽过一次。
@@ -843,6 +846,55 @@ PRD v1.1 §3.5 F-api 早期承诺已兑现。3 个公开 endpoint + 完整 docs 
 ## 16. 变更日志
 
 > 每次"收口"在此追加一条记录。最新的在最上方。
+
+### 2026-09-05（下午）— 新模型自动起草上线；Vercel 把我自己挡在门外
+**类型**：feat（自动化）+ fix（文案）+ 事故记录
+
+#### 自动起草：把唯一有效的杠杆做到零延迟
+四个月只验证了一个杠杆：比别人早上线新模型。窗口只有几天（Fable 5 曝光一个月内 52 → 11），而旧流程 registry → Issue → 等人看 → 手写 → 推，在 gpt-6-astra 上耗掉了六天。
+
+回看给最近十个模型手写的文案，**全是公式**——价格、上下文、单次成本、和前代对比。真正需要判断的只有显示名称。所以：
+
+- `scripts/lib/model-draft.mjs`：从 registry 键推导 id / 名称 / 厂商 / 分类 / 用途，生成完整条目。**名称规则不匹配就拒绝**，只开 Issue——这是唯一允许失败关闭的地方
+- `scripts/check-derivation.mjs`：34 个现有模型必须从各自 registry 键精确复现 id + name。全部通过
+- 隔离环境实测：删掉 `gemini-3-8-flash` 再跑 `--write`，自动起草与手写版在 id / name / shortName / category / pricing / limits / supports 上完全一致。唯一差异是 useCase 多了 `reasoning`（registry 说 `supports_reasoning: true`，比手写更准）
+- 起草条目带 `draft` 字段 → `components/DraftNotice.tsx` 渲染「自动收录、待审阅」；**删掉字段即审阅通过**
+- `REGISTRY_KEYS` 移到 `data/registry-keys.json`，起草时自动追加，workflow 一并提交
+- CI 实跑一次：refactor 后的脚本在 runner 上正常（读 JSON、导入 lib、无错误）
+
+**类型系统没挡住的数据错**：我 8/24 给新模型写的 category 用了 `fast` / `mid`，都不在 `ModelCategory` 联合类型里。`as ModelsData` 断言把它挡住了 tsc，但它渲染进了对比表和公开 API。已改为 `small` / `balanced`。⚠️ JSON 数据的类型断言不是校验——想真正校验得在构建时跑一次 schema 检查，待办。
+
+#### 事故：Vercel Security Checkpoint 把我自己挡了
+推送后我用 `until curl … sleep 12` 轮询站点等部署，8 分钟后**全站对我返回 403**，`x-vercel-mitigated: challenge`。一度以为部署坏了。
+
+真相：Vercel 的 DDoS 启发式把我的 curl 指纹判成攻击。真实浏览器 8 秒过验证、正常访问；GitHub Deployments API 显示部署 `success`。**站点没事，是我把自己封了。** 今天第二次被自己的流量误导（上午是自己造的 404）。
+
+⚠️ **规矩**：
+1. **不要轮询生产站点等部署。** 用 `gh api repos/…/deployments?sha=<HEAD>` 读 Vercel 回写的部署状态，零流量
+2. 必须 curl 生产站点时，一次一请求、带真实 UA，不写循环
+3. 看到全站 403 先查 `x-vercel-mitigated` 头，再怀疑部署
+
+#### 文案：站点还在说"每月更新"
+首页 Eyebrow、信任条、meta description、OG、Footer、About、API 文档页（"Refresh cadence: Monthly (1st of every month)"——公开 API 文档上一句已经不成立的硬承诺）、WebSite JSON-LD、sitemap changeFrequency。**9 处**全部改为 daily / 30+ models。和 8/24 是同一类病：把事实复制到文案里，文案不会自己察觉事实变了。
+
+#### 索引提交
+`gpt-6-astra` / `claude-fable-5-1` / `gemini-3-8-flash` / `claude-fable-5`（内容变了，现在显示 5.1 为继任者）。4/4 进优先抓取队列。
+
+#### GSC 28 天快照（截至 9/5）—— 如实记录一条没兑现的预测
+| 指标 | 8/24 | 9/5 |
+|---|---|---|
+| 曝光 | 1320 | **1820** |
+| 点击 | 4 | 3 |
+| 平均排名 | 48.1 | 57.2 |
+| 已索引页 | 27 | **39** |
+
+- **标题改 pricing 优先（8/25）没有兑现我的预测**：`claude fable 5 api pricing` 57.6 → 58.5，`claude sonnet 5 pricing` 76.5 → 78.7。目标查询没改善。可能 Google 尚未重估，也可能假设本身就错。**不把它说成"起效了"**
+- 平均排名变差是**构成效应**：新增十几页初期排名低拉低均值，老页面没崩（Luna 13.2、Terra 24.7、Fable 5 cost calculator 8.4）
+- `claude fable 5 api pricing` 曝光 52 → 11：不是我们变差，是**搜索热度退潮**。新模型流量窗口短且一次性——这正是自动起草存在的理由
+- 唯一 CTR 像样的页面：`/gpt-5-6-luna-cost-calculator` 排 13.2，CTR 1.6%。结论不变：**能进第一页的只有没人竞争的新模型**
+
+#### 接下来：停 30 天
+10 月 5 日前不再改任何东西。到时看三个数：自动起草的新模型页排名、总点击、索引页数。
 
 ### 2026-09-05 — 自动化连修三个自己的 bug；新增 GPT-6 Astra / Fable 5.1 / Gemini 3.8 Flash
 **类型**：fix（自动化）+ data
