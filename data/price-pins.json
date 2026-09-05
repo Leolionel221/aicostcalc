@@ -1,0 +1,12 @@
+{
+  "_comment": "Models whose registry price we have checked and deliberately refuse to follow. A pin is scoped to the exact upstream value it was created against: if the registry later reports something different, the pin stops matching and the model is reported again. That keeps a pin from quietly blinding us to a real change later.",
+  "pins": [
+    {
+      "modelId": "grok-4",
+      "pinnedAt": "2026-09-05",
+      "registryValue": { "input": 1.25, "output": 2.5 },
+      "keepValue": { "input": 3.0, "output": 15.0 },
+      "reason": "Upstream flattened every grok-4.x variant to an identical $1.25/$2.50 on 2026-09-04 — 24 entries spanning 256K, 1M and 2M context windows all carrying the same price, including grok-4-1-fast which was $0.20/$0.50. grok-4.5 and 4.6 kept their distinct $2/$6, so only the 4.x-and-below block was flattened. That pattern is a bulk edit error, not a price cut. Grok 4 was retired 2026-05-15 anyway, so the value we show is a historical reference and should stay at its retirement-day price."
+    }
+  ]
+}

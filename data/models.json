@@ -1,6 +1,6 @@
 {
   "schemaVersion": "2.0",
-  "lastUpdated": "2026-08-24",
+  "lastUpdated": "2026-09-05",
   "_note": "All pricing verified against LiteLLM's public model registry (github.com/BerriAI/litellm) on 2026-08-01. LiteLLM is community-maintained and the de facto industry standard for LLM pricing data. For final billing accuracy, always verify against each provider's official pricing page (links in each model's 'sources' field). See docs/PRD_v1.1_Supplement.md §4.3 for maintenance SOP.",
   "models": [
     {
@@ -762,7 +762,7 @@
       "releaseDate": "2026-06-01",
       "status": "active",
       "deprecatedAt": "2027-06-09",
-      "successorId": null,
+      "successorId": "claude-fable-5-1",
       "pricing": {
         "currency": "USD",
         "unit": "per_1m_tokens",
@@ -2780,6 +2780,188 @@
         "zh": {
           "tagline": "本站收录的最便宜 Google 模型，输入 $0.25/1M",
           "description": "Gemini 3.1 Flash Lite 定价为输入 $0.25 / 输出 $1.50（每 1M token），1049K 上下文，比 Gemini 3.5 Flash Lite（$0.30/$2.50）更便宜，但落后一代。一次 1000 输入 / 500 输出的调用约 $0.00100。 Google 已标注退役日期 2027-05-07，适合当作成本下限参考，不宜长期押注。"
+        }
+      }
+    },
+    {
+      "id": "claude-fable-5-1",
+      "name": "Claude Fable 5.1",
+      "shortName": "Fable 5.1",
+      "provider": "Anthropic",
+      "providerId": "anthropic",
+      "providerLogo": "/logos/anthropic.svg",
+      "providerWebsite": "https://anthropic.com",
+      "category": "flagship",
+      "useCase": [
+        "reasoning",
+        "coding",
+        "general",
+        "long-context",
+        "vision"
+      ],
+      "releaseDate": null,
+      "status": "active",
+      "deprecatedAt": "2027-09-01",
+      "successorId": null,
+      "pricing": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 10,
+        "output": 50,
+        "cachedInput": 0.25,
+        "cacheWrite": 12.5,
+        "batchInput": null,
+        "batchOutput": null,
+        "imagePerImage": null,
+        "imageTokensFormula": null,
+        "reasoningOutput": null,
+        "fineTunedInput": null,
+        "fineTunedOutput": null
+      },
+      "limits": {
+        "contextWindow": 1000000,
+        "maxOutput": 128000,
+        "maxImagesPerRequest": null,
+        "knowledgeCutoff": null
+      },
+      "tokenization": {
+        "encoder": "approximate",
+        "approximationRatio": {
+          "english": 4,
+          "chinese": 1.5,
+          "code": 3
+        }
+      },
+      "supports": {
+        "vision": true,
+        "audio": false,
+        "tools": true,
+        "streaming": true,
+        "caching": true,
+        "batch": false,
+        "fineTuning": false,
+        "structuredOutput": true
+      },
+      "lastVerified": "2026-09-05",
+      "sources": [
+        {
+          "type": "community",
+          "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
+          "fetchedAt": "2026-09-05"
+        },
+        {
+          "type": "official",
+          "url": "https://platform.claude.com/docs/en/models/fable-5-1/overview",
+          "fetchedAt": "2026-09-05"
+        }
+      ],
+      "priceHistory": [
+        {
+          "date": "2026-09-05",
+          "input": 10,
+          "output": 50,
+          "note": "First listed; verified against LiteLLM registry"
+        }
+      ],
+      "i18n": {
+        "en": {
+          "tagline": "Fable 5 pricing with $0.25/1M cached input",
+          "description": "Claude Fable 5.1 runs at $10 input / $50 output per 1M tokens with a 1M context window and 128K max output. Same headline rate as Claude Fable 5, but cached input drops to $0.25/1M — 4x cheaper than Claude Fable 5's $1.00, which is where the real saving is on repeated prompts. A 1,000-in / 500-out call costs $0.03500."
+        },
+        "zh": {
+          "tagline": "与 Fable 5 同价，缓存输入 $0.25/1M",
+          "description": "Claude Fable 5.1 定价为输入 $10 / 输出 $50（每 1M token），1M 上下文，128K 最大输出。表价与 Claude Fable 5 相同，但缓存输入降到 $0.25/1M —— 是 Claude Fable 5（$1.00）的四分之一，重复提示词的实际开销差别在这里。一次 1000 输入 / 500 输出的调用约 $0.03500。"
+        }
+      }
+    },
+    {
+      "id": "gemini-3-8-flash",
+      "name": "Gemini 3.8 Flash",
+      "shortName": "3.8 Flash",
+      "provider": "Google",
+      "providerId": "google",
+      "providerLogo": "/logos/google.svg",
+      "providerWebsite": "https://ai.google.dev",
+      "category": "fast",
+      "useCase": [
+        "fast",
+        "general",
+        "vision",
+        "audio",
+        "long-context"
+      ],
+      "releaseDate": null,
+      "status": "active",
+      "deprecatedAt": null,
+      "successorId": null,
+      "pricing": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.75,
+        "output": 3.75,
+        "cachedInput": 0.075,
+        "cacheWrite": null,
+        "batchInput": 0.375,
+        "batchOutput": 1.875,
+        "imagePerImage": null,
+        "imageTokensFormula": null,
+        "reasoningOutput": null,
+        "fineTunedInput": null,
+        "fineTunedOutput": null
+      },
+      "limits": {
+        "contextWindow": 1048576,
+        "maxOutput": 65536,
+        "maxImagesPerRequest": null,
+        "knowledgeCutoff": null
+      },
+      "tokenization": {
+        "encoder": "approximate",
+        "approximationRatio": {
+          "english": 4,
+          "chinese": 1.5,
+          "code": 3
+        }
+      },
+      "supports": {
+        "vision": true,
+        "audio": true,
+        "tools": true,
+        "streaming": true,
+        "caching": true,
+        "batch": true,
+        "fineTuning": false,
+        "structuredOutput": true
+      },
+      "lastVerified": "2026-09-05",
+      "sources": [
+        {
+          "type": "community",
+          "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
+          "fetchedAt": "2026-09-05"
+        },
+        {
+          "type": "official",
+          "url": "https://ai.google.dev/gemini-api/docs/pricing",
+          "fetchedAt": "2026-09-05"
+        }
+      ],
+      "priceHistory": [
+        {
+          "date": "2026-09-05",
+          "input": 0.75,
+          "output": 3.75,
+          "note": "First listed; verified against LiteLLM registry"
+        }
+      ],
+      "i18n": {
+        "en": {
+          "tagline": "Google's newest Flash — 1M context",
+          "description": "Gemini 3.8 Flash runs at $0.75 input / $3.75 output per 1M tokens with a 1M context window and 66K max output. Priced identically to Gemini 3.7 Flash. A 1,000-in / 500-out call costs $0.00262."
+        },
+        "zh": {
+          "tagline": "Google 最新 Flash，1M 上下文",
+          "description": "Gemini 3.8 Flash 定价为输入 $0.75 / 输出 $3.75（每 1M token），1M 上下文，66K 最大输出。 与 Gemini 3.7 Flash 同价。 一次 1000 输入 / 500 输出的调用约 $0.00262。"
         }
       }
     }

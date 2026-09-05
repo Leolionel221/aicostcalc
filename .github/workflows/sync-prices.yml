@@ -72,7 +72,7 @@ jobs:
                 '</details>',
                 '',
                 `_[Run log](${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})._`,
-              ].join('\n');
+              ].join('\n'),
             });
 
       - name: Fail on guard trip or unreadable registry

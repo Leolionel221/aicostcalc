@@ -81,6 +81,8 @@ const REGISTRY_KEYS = {
   "grok-4-3": "xai/grok-4.3",
   "gpt-5-5-pro": "gpt-5.5-pro",
   "gemini-3-1-flash-lite": "gemini-3.1-flash-lite",
+  "claude-fable-5-1": "claude-fable-5-1",
+  "gemini-3-8-flash": "gemini-3.8-flash",
 };
 
 /** Families worth watching for new releases, by registry key prefix. */
@@ -104,6 +106,30 @@ const NOISE = /-(latest|beta|preview|exp|thinking)$|-\d{4}-\d{2}-\d{2}$|-\d{6,}$
 const IGNORE = JSON.parse(
   fs.readFileSync(path.join(process.cwd(), "data", "sync-ignore.json"), "utf8"),
 ).ignore.map((e) => ({ re: new RegExp(e.pattern, "i"), reason: e.reason }));
+
+/**
+ * Prices we have checked and deliberately refuse to follow.
+ *
+ * Without this, one bad upstream row halts everything: the guard tripped on a
+ * bulk-edit error in the xAI block on 2026-08-30 and every run for the next six
+ * days aborted before applying any correction at all. A pin lets a human say
+ * "checked, upstream is wrong, stop asking" — but only about the exact value it
+ * was created against, so a genuine change later still surfaces.
+ */
+const PRICE_PINS = new Map(
+  JSON.parse(
+    fs.readFileSync(path.join(process.cwd(), "data", "price-pins.json"), "utf8"),
+  ).pins.map((p) => [p.modelId, p]),
+);
+
+function pinApplies(modelId, entry) {
+  const pin = PRICE_PINS.get(modelId);
+  if (!pin) return null;
+  const same =
+    per1M(entry.input_cost_per_token) === pin.registryValue.input &&
+    per1M(entry.output_cost_per_token) === pin.registryValue.output;
+  return same ? pin : null;
+}
 
 const per1M = (v) => (v == null ? null : Math.round(v * 1e6 * 1e4) / 1e4);
 const pct = (from, to) => (from === 0 ? Infinity : Math.abs((to - from) / from) * 100);
@@ -242,25 +268,43 @@ async function main() {
   const data = JSON.parse(fs.readFileSync(DATA_PATH, "utf8"));
 
   const drift = [];
+  const pinned = [];
   const unmapped = [];
   for (const model of data.models) {
     const key = REGISTRY_KEYS[model.id];
     if (!key) { unmapped.push(model.id); continue; }
     const entry = registry[key];
     if (!entry) { unmapped.push(`${model.id} (key "${key}" gone from registry)`); continue; }
+    const pin = pinApplies(model.id, entry);
+    if (pin) {
+      pinned.push({ model, pin });
+      continue;
+    }
     const changes = diffModel(model, entry);
     if (changes.length) drift.push({ model, changes });
   }
 
-  // Abort before touching anything if a move looks implausible.
+  // Quarantine implausible movers, then carry on with the rest.
+  //
+  // This used to abort the entire run. One bad upstream row then blocked every
+  // other correction indefinitely — which is how a bulk-edit error in the xAI
+  // block stalled all price syncing for six days. Skipping just the offending
+  // model keeps the rest of the data moving while still refusing to publish the
+  // number nobody has verified.
   const suspicious = [];
-  for (const { model, changes } of drift) {
-    for (const c of changes) {
-      if (!c.field.startsWith("pricing")) continue;
-      const delta = pct(c.from, c.to);
-      if (delta > MAX_DELTA_PCT) {
-        suspicious.push(`${model.id} ${c.field}: ${c.from} -> ${c.to} (${delta.toFixed(0)}%)`);
+  const safeDrift = [];
+  for (const entry of drift) {
+    const bad = entry.changes.filter(
+      (c) => c.field.startsWith("pricing") && pct(c.from, c.to) > MAX_DELTA_PCT,
+    );
+    if (bad.length) {
+      for (const c of bad) {
+        suspicious.push(
+          `${entry.model.id} ${c.field}: ${c.from} -> ${c.to} (${pct(c.from, c.to).toFixed(0)}%)`,
+        );
       }
+    } else {
+      safeDrift.push(entry);
     }
   }
 
@@ -273,16 +317,26 @@ async function main() {
     unmapped.forEach((u) => console.log(`- ${u}`));
     console.log("");
   }
-  if (drift.length) {
-    console.log(`### Drift detected (${drift.length} models)\n`);
+  if (safeDrift.length) {
+    console.log(`### Drift ${WRITE ? "applied" : "detected"} (${safeDrift.length} models)\n`);
     console.log("| Model | Field | Site | Registry |");
     console.log("|---|---|---|---|");
-    for (const { model, changes } of drift) {
+    for (const { model, changes } of safeDrift) {
       for (const c of changes) console.log(`| ${model.id} | ${c.field} | ${c.from} | ${c.to} |`);
     }
     console.log("");
-  } else {
+  } else if (!suspicious.length) {
     console.log("### ✅ No drift — every listed model matches the registry\n");
+  }
+
+  if (pinned.length) {
+    console.log(`### 📌 Pinned — registry ignored on purpose (${pinned.length})\n`);
+    for (const { model, pin } of pinned) {
+      console.log(`- \`${model.id}\` pinned ${pin.pinnedAt}: ${pin.reason}`);
+    }
+    console.log(
+      "\n_A pin only matches the exact upstream value it was created against. If the registry reports something else, the model is reported again._\n",
+    );
   }
   if (deprecations.length) {
     console.log(`### ⚠️ Listed models flagged for retirement (${deprecations.length})\n`);
@@ -310,14 +364,16 @@ async function main() {
   }
 
   if (suspicious.length) {
-    console.log("### 🛑 Aborted — implausible price movement\n");
+    console.log(`### 🛑 Quarantined — implausible price movement (${suspicious.length})\n`);
     suspicious.forEach((s) => console.log(`- ${s}`));
-    console.log(`\nNothing was written. A move over ${MAX_DELTA_PCT}% is more likely a bad upstream entry than a real price change; confirm against the provider's own pricing page, then apply by hand.\n`);
-    process.exit(3);
+    console.log(
+      `\nThese models were **not** written; everything else in this run was. A move over ${MAX_DELTA_PCT}% is more likely a bad upstream entry than a real price change.\n\n` +
+        "Confirm against the provider's own pricing page, then either edit `data/models.json` by hand, or — if upstream is wrong — add a pin to `data/price-pins.json` so this stops being reported.\n",
+    );
   }
 
-  if (WRITE && drift.length) {
-    for (const { model, changes } of drift) {
+  if (WRITE && safeDrift.length) {
+    for (const { model, changes } of safeDrift) {
       const before = { input: model.pricing.input, output: model.pricing.output };
       for (const c of changes) setPath(model, c.field, c.to);
       model.lastVerified = today;
@@ -333,10 +389,11 @@ async function main() {
     }
     data.lastUpdated = today;
     fs.writeFileSync(DATA_PATH, `${JSON.stringify(data, null, 2)}\n`);
-    console.log(`### Applied ${drift.length} correction(s) to data/models.json\n`);
+    console.log(`### Applied ${safeDrift.length} correction(s) to data/models.json\n`);
   }
 
-  process.exit(drift.length || news.length || deprecations.length ? 1 : 0);
+  if (suspicious.length) process.exit(3);
+  process.exit(safeDrift.length || news.length || deprecations.length ? 1 : 0);
 }
 
 main().catch((err) => {

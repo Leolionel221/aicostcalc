@@ -68,6 +68,10 @@
     {
       "pattern": "^mistral/(zai-)?glm-",
       "reason": "GLM is Zhipu AI's model served on Mistral's platform, not a Mistral model. Listing it under Mistral would misattribute it, and the site has no Zhipu provider entry."
+    },
+    {
+      "pattern": "^mistral/mistral-vibe-cli-",
+      "reason": "CLI product SKUs, not distinct models: the registry's own source field points -fast at the mistral-small-4-0 model card and -with-tools at mistral-medium-3-5. Listing them as models would present one model twice under a product name."
     }
   ]
 }

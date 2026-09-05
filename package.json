@@ -41,7 +41,8 @@
     "test:coverage": "vitest run --coverage",
     "data:sync": "node scripts/sync-prices.mjs",
     "data:sync:write": "node scripts/sync-prices.mjs --write",
-    "data:format": "node scripts/format-data.mjs"
+    "data:format": "node scripts/format-data.mjs",
+    "check:workflows": "node scripts/check-workflows.mjs"
   },
   "dependencies": {
     "@next/third-parties": "^16.2.4",
