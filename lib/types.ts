@@ -97,6 +97,18 @@ export interface Model {
     en: ModelI18n;
     zh: ModelI18n;
   };
+  /**
+   * Present only on entries the daily sync published automatically.
+   *
+   * Prices and limits on a draft are registry values and can be trusted; the
+   * name follows a fixed rule and the copy is formulaic. What is missing is a
+   * human read for lineage and positioning. The page shows a notice while this
+   * field exists; deleting the field is the review sign-off.
+   */
+  draft?: {
+    generatedAt: string;
+    note: string;
+  };
 }
 
 export interface ModelsData {

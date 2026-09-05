@@ -2280,7 +2280,7 @@
       "providerId": "google",
       "providerLogo": "/logos/google.svg",
       "providerWebsite": "https://ai.google.dev",
-      "category": "fast",
+      "category": "small",
       "useCase": [
         "general",
         "fast",
@@ -2536,7 +2536,7 @@
       "providerId": "xai",
       "providerLogo": "/logos/xai.svg",
       "providerWebsite": "https://x.ai",
-      "category": "mid",
+      "category": "balanced",
       "useCase": [
         "general",
         "reasoning",
@@ -2706,7 +2706,7 @@
       "providerId": "google",
       "providerLogo": "/logos/google.svg",
       "providerWebsite": "https://ai.google.dev",
-      "category": "fast",
+      "category": "small",
       "useCase": [
         "fast",
         "general",
@@ -2882,7 +2882,7 @@
       "providerId": "google",
       "providerLogo": "/logos/google.svg",
       "providerWebsite": "https://ai.google.dev",
-      "category": "fast",
+      "category": "small",
       "useCase": [
         "fast",
         "general",

@@ -34,6 +34,7 @@
 
 import fs from "node:fs";
 import path from "node:path";
+import { buildDraft } from "./lib/model-draft.mjs";
 
 const REGISTRY_URL =
   "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json";
@@ -41,50 +42,14 @@ const DATA_PATH = path.join(process.cwd(), "data", "models.json");
 const MAX_DELTA_PCT = 60;
 const WRITE = process.argv.includes("--write");
 
+const KEYS_PATH = path.join(process.cwd(), "data", "registry-keys.json");
+
 /**
  * Our model id -> the registry key that is authoritative for it.
- *
- * Explicit rather than inferred: registry keys are inconsistent across
- * providers ("gpt-5.6" vs "xai/grok-4.5" vs "gemini-3.1-pro-preview"), and a
- * fuzzy match that silently picks the wrong key is worse than no sync at all.
- * A model missing from this map is reported, not guessed at.
+ * Lives in data/registry-keys.json so the auto-draft path can append to it;
+ * see that file's _comment for why the map is explicit rather than inferred.
  */
-const REGISTRY_KEYS = {
-  "gpt-5-6": "gpt-5.6",
-  "gpt-5-6-sol": "gpt-5.6-sol",
-  "gpt-5-6-terra": "gpt-5.6-terra",
-  "gpt-5-6-luna": "gpt-5.6-luna",
-  "gpt-5-5": "gpt-5.5",
-  "gpt-5-mini": "gpt-5-mini",
-  "o4-mini": "o4-mini",
-  "claude-opus-5": "claude-opus-5",
-  "claude-fable-5": "claude-fable-5",
-  "claude-opus-4-8": "claude-opus-4-8",
-  "claude-sonnet-5": "claude-sonnet-5",
-  "claude-opus-4-7": "claude-opus-4-7",
-  "claude-haiku-4-5": "claude-haiku-4-5",
-  "gemini-3-6-flash": "gemini-3.6-flash",
-  "gemini-3-5-flash": "gemini-3.5-flash",
-  "gemini-3-5-flash-lite": "gemini-3.5-flash-lite",
-  "gemini-3-1-pro": "gemini-3.1-pro-preview",
-  "gemini-3-flash": "gemini-3-flash-preview",
-  "deepseek-v4-flash": "deepseek/deepseek-v4-flash",
-  "deepseek-v3-2": "deepseek/deepseek-v3.2",
-  "grok-4-5": "xai/grok-4.5",
-  "grok-4": "xai/grok-4",
-  "mistral-large-3": "mistral/mistral-large-3",
-  "claude-mythos-5": "claude-mythos-5",
-  "gpt-5-6-cyber": "gpt-5.6-cyber",
-  "gemini-3-7-flash": "gemini-3.7-flash",
-  "deepseek-v4-pro": "deepseek/deepseek-v4-pro",
-  "grok-4-6": "xai/grok-4.6",
-  "grok-4-3": "xai/grok-4.3",
-  "gpt-5-5-pro": "gpt-5.5-pro",
-  "gemini-3-1-flash-lite": "gemini-3.1-flash-lite",
-  "claude-fable-5-1": "claude-fable-5-1",
-  "gemini-3-8-flash": "gemini-3.8-flash",
-  "gpt-6-astra": "gpt-6-astra",
-};
+const REGISTRY_KEYS = JSON.parse(fs.readFileSync(KEYS_PATH, "utf8")).keys;
 
 /**
  * Families worth watching for new releases, by registry key prefix.
@@ -370,7 +335,37 @@ async function main() {
       const ctx = n.context ? `${Math.round(n.context / 1000)}K` : "?";
       console.log(`| ${n.provider} | \`${n.key}\` | ${n.input} | ${n.output} | ${ctx} |`);
     }
-    console.log("\n_Adding one needs a name, tagline, category and use cases — a human call, so these are reported rather than written._\n");
+    console.log("");
+  }
+
+  // Auto-draft: publish what the registry can support, report what it cannot.
+  //
+  // The window for a new model is days and the old loop (Issue → human →
+  // hand-written copy → push) lost six of them on gpt-6-astra. Everything in
+  // a hand-written entry turned out to be derivable except the display name,
+  // so the name rule is the one thing allowed to refuse. Drafts carry a
+  // `draft` marker the page renders, and the Issue asks for a human read.
+  const drafted = [];
+  const undraftable = [];
+  for (const n of news) {
+    const res = buildDraft(n.key, registry[n.key], data.models, today);
+    if (res.model) drafted.push({ key: n.key, model: res.model });
+    else undraftable.push({ key: n.key, reason: res.reason });
+  }
+  if (drafted.length) {
+    console.log(`### ${WRITE ? "✍️ Auto-drafted and published" : "✍️ Would auto-draft"} (${drafted.length})\n`);
+    console.log("| Model | Name | Category | Per call |");
+    console.log("|---|---|---|---|");
+    for (const { model } of drafted) {
+      const call = 1000 / 1e6 * model.pricing.input + 500 / 1e6 * model.pricing.output;
+      console.log(`| \`${model.id}\` | ${model.name} | ${model.category} | $${call.toFixed(5)} |`);
+    }
+    console.log("\n_Pages are live with a \"draft\" notice. Prices and limits are registry values; the copy is formulaic. Please read each one for lineage and positioning, then remove the `draft` field to clear the notice._\n");
+  }
+  if (undraftable.length) {
+    console.log(`### ✋ Needs a human to add (${undraftable.length})\n`);
+    for (const u of undraftable) console.log(`- \`${u.key}\` — ${u.reason}`);
+    console.log("\n_No naming rule matched, so nothing was published. Add by hand (and add the id → key mapping to `data/registry-keys.json`), or add an ignore pattern with a reason._\n");
   }
 
   if (suspicious.length) {
@@ -382,7 +377,17 @@ async function main() {
     );
   }
 
-  if (WRITE && safeDrift.length) {
+  if (WRITE && drafted.length) {
+    for (const { key, model } of drafted) {
+      data.models.push(model);
+      REGISTRY_KEYS[model.id] = key;
+    }
+    const keysDoc = JSON.parse(fs.readFileSync(KEYS_PATH, "utf8"));
+    keysDoc.keys = REGISTRY_KEYS;
+    fs.writeFileSync(KEYS_PATH, `${JSON.stringify(keysDoc, null, 2)}\n`);
+  }
+
+  if (WRITE && (safeDrift.length || drafted.length)) {
     for (const { model, changes } of safeDrift) {
       const before = { input: model.pricing.input, output: model.pricing.output };
       for (const c of changes) setPath(model, c.field, c.to);
@@ -399,7 +404,10 @@ async function main() {
     }
     data.lastUpdated = today;
     fs.writeFileSync(DATA_PATH, `${JSON.stringify(data, null, 2)}\n`);
-    console.log(`### Applied ${safeDrift.length} correction(s) to data/models.json\n`);
+    const parts = [];
+    if (safeDrift.length) parts.push(`${safeDrift.length} correction(s)`);
+    if (drafted.length) parts.push(`${drafted.length} new model(s)`);
+    console.log(`### Wrote ${parts.join(" + ")} to data/models.json\n`);
   }
 
   if (suspicious.length) process.exit(3);
