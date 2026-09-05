@@ -497,7 +497,7 @@
         "currency": "USD",
         "unit": "per_1m_tokens",
         "input": 0.25,
-        "output": 2,
+        "output": 0.5,
         "cachedInput": 0.025,
         "cacheWrite": null,
         "batchInput": null,
