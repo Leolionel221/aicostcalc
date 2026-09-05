@@ -83,11 +83,21 @@ const REGISTRY_KEYS = {
   "gemini-3-1-flash-lite": "gemini-3.1-flash-lite",
   "claude-fable-5-1": "claude-fable-5-1",
   "gemini-3-8-flash": "gemini-3.8-flash",
+  "gpt-6-astra": "gpt-6-astra",
 };
 
-/** Families worth watching for new releases, by registry key prefix. */
+/**
+ * Families worth watching for new releases, by registry key prefix.
+ *
+ * Deliberately generation-agnostic. The OpenAI pattern was once
+ * `^(gpt-[45]|o[34])`, which silently skipped `gpt-6-astra` when it shipped —
+ * a new flagship generation is the single most valuable thing this scan can
+ * catch, and the filter was blind to it by construction. Exclusions belong in
+ * `data/sync-ignore.json`, where each one carries a reason; a watch list keyed
+ * to today's version numbers goes blind exactly when something new arrives.
+ */
 const WATCHED = [
-  { label: "OpenAI", re: /^(gpt-[45]|o[34])[a-z0-9.\-]*$/i },
+  { label: "OpenAI", re: /^(gpt-\d|o\d)[a-z0-9.\-]*$/i },
   { label: "Anthropic", re: /^claude-[a-z0-9.\-]+$/i },
   { label: "Google", re: /^gemini-[a-z0-9.\-]+$/i },
   { label: "DeepSeek", re: /^deepseek\/[a-z0-9.\-]+$/i },

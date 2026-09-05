@@ -2964,6 +2964,92 @@
           "description": "Gemini 3.8 Flash 定价为输入 $0.75 / 输出 $3.75（每 1M token），1M 上下文，66K 最大输出。 与 Gemini 3.7 Flash 同价。 一次 1000 输入 / 500 输出的调用约 $0.00262。"
         }
       }
+    },
+    {
+      "id": "gpt-6-astra",
+      "name": "GPT-6 Astra",
+      "shortName": "GPT-6 Astra",
+      "provider": "OpenAI",
+      "providerId": "openai",
+      "providerLogo": "/logos/openai.svg",
+      "providerWebsite": "https://openai.com",
+      "category": "flagship",
+      "useCase": [
+        "reasoning",
+        "coding",
+        "general",
+        "long-context",
+        "vision"
+      ],
+      "releaseDate": null,
+      "status": "active",
+      "deprecatedAt": null,
+      "successorId": null,
+      "pricing": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 10,
+        "output": 50,
+        "cachedInput": 1,
+        "cacheWrite": 12.5,
+        "batchInput": 5,
+        "batchOutput": 25,
+        "imagePerImage": null,
+        "imageTokensFormula": null,
+        "reasoningOutput": null,
+        "fineTunedInput": null,
+        "fineTunedOutput": null
+      },
+      "limits": {
+        "contextWindow": 922000,
+        "maxOutput": 128000,
+        "maxImagesPerRequest": null,
+        "knowledgeCutoff": null
+      },
+      "tokenization": {
+        "encoder": "o200k_base",
+        "approximationRatio": {
+          "english": 4,
+          "chinese": 1.5,
+          "code": 3
+        }
+      },
+      "supports": {
+        "vision": true,
+        "audio": false,
+        "tools": true,
+        "streaming": true,
+        "caching": true,
+        "batch": true,
+        "fineTuning": false,
+        "structuredOutput": true
+      },
+      "lastVerified": "2026-09-05",
+      "sources": [
+        {
+          "type": "community",
+          "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
+          "fetchedAt": "2026-09-05"
+        }
+      ],
+      "priceHistory": [
+        {
+          "date": "2026-09-05",
+          "input": 10,
+          "output": 50,
+          "note": "First listed; verified against LiteLLM registry"
+        }
+      ],
+      "i18n": {
+        "en": {
+          "tagline": "OpenAI's first GPT-6 model — 2.5x the price of GPT-5.6",
+          "description": "GPT-6 Astra opens OpenAI's GPT-6 generation at $10.00 input / $50.00 output per 1M tokens — 2.5x GPT-5.6 on both sides ($4.00/$20.00). 922K context, 128K max output, cached input $1.00/1M, Batch API $5.00/$25.00. A 1,000-in / 500-out call costs $0.03500."
+        },
+        "zh": {
+          "tagline": "OpenAI 首个 GPT-6 模型，价格是 GPT-5.6 的 2.5 倍",
+          "description": "GPT-6 Astra 开启 OpenAI 的 GPT-6 世代，定价输入 $10.00 / 输出 $50.00（每 1M token）—— 输入输出均为 GPT-5.6（$4.00/$20.00）的 2.5 倍。922K 上下文，128K 最大输出，缓存输入 $1.00/1M，批处理 $5.00/$25.00。一次 1000 输入 / 500 输出的调用约 $0.03500。"
+        }
+      }
     }
   ]
 }
