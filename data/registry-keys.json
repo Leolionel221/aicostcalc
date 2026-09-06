@@ -34,6 +34,7 @@
     "gemini-3-1-flash-lite": "gemini-3.1-flash-lite",
     "claude-fable-5-1": "claude-fable-5-1",
     "gemini-3-8-flash": "gemini-3.8-flash",
-    "gpt-6-astra": "gpt-6-astra"
+    "gpt-6-astra": "gpt-6-astra",
+    "claude-mythos-5-1": "claude-mythos-5-1"
   }
 }

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "2.0",
-  "lastUpdated": "2026-09-05",
+  "lastUpdated": "2026-09-06",
   "_note": "All pricing verified against LiteLLM's public model registry (github.com/BerriAI/litellm) on 2026-08-01. LiteLLM is community-maintained and the de facto industry standard for LLM pricing data. For final billing accuracy, always verify against each provider's official pricing page (links in each model's 'sources' field). See docs/PRD_v1.1_Supplement.md §4.3 for maintenance SOP.",
   "models": [
     {
@@ -3049,6 +3049,100 @@
           "tagline": "OpenAI 首个 GPT-6 模型，价格是 GPT-5.6 的 2.5 倍",
           "description": "GPT-6 Astra 开启 OpenAI 的 GPT-6 世代，定价输入 $10.00 / 输出 $50.00（每 1M token）—— 输入输出均为 GPT-5.6（$4.00/$20.00）的 2.5 倍。922K 上下文，128K 最大输出，缓存输入 $1.00/1M，批处理 $5.00/$25.00。一次 1000 输入 / 500 输出的调用约 $0.03500。"
         }
+      }
+    },
+    {
+      "id": "claude-mythos-5-1",
+      "name": "Claude Mythos 5.1",
+      "shortName": "Mythos 5.1",
+      "provider": "Anthropic",
+      "providerId": "anthropic",
+      "providerLogo": "/logos/anthropic.svg",
+      "providerWebsite": "https://anthropic.com",
+      "category": "flagship",
+      "useCase": [
+        "general",
+        "reasoning",
+        "vision",
+        "long-context"
+      ],
+      "releaseDate": null,
+      "status": "active",
+      "deprecatedAt": "2027-09-01",
+      "successorId": null,
+      "pricing": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 10,
+        "output": 50,
+        "cachedInput": 0.25,
+        "cacheWrite": 12.5,
+        "batchInput": null,
+        "batchOutput": null,
+        "imagePerImage": null,
+        "imageTokensFormula": null,
+        "reasoningOutput": null,
+        "fineTunedInput": null,
+        "fineTunedOutput": null
+      },
+      "limits": {
+        "contextWindow": 1000000,
+        "maxOutput": 128000,
+        "maxImagesPerRequest": null,
+        "knowledgeCutoff": null
+      },
+      "tokenization": {
+        "encoder": "approximate",
+        "approximationRatio": {
+          "english": 4,
+          "chinese": 1.5,
+          "code": 3
+        }
+      },
+      "supports": {
+        "vision": true,
+        "audio": false,
+        "tools": true,
+        "streaming": true,
+        "caching": true,
+        "batch": false,
+        "fineTuning": false,
+        "structuredOutput": true
+      },
+      "lastVerified": "2026-09-06",
+      "sources": [
+        {
+          "type": "community",
+          "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
+          "fetchedAt": "2026-09-06"
+        },
+        {
+          "type": "official",
+          "url": "https://platform.claude.com/docs/en/models/mythos-5-1/overview",
+          "fetchedAt": "2026-09-06"
+        }
+      ],
+      "priceHistory": [
+        {
+          "date": "2026-09-06",
+          "input": 10,
+          "output": 50,
+          "note": "First listed; auto-drafted from LiteLLM registry"
+        }
+      ],
+      "i18n": {
+        "en": {
+          "tagline": "Claude Mythos 5.1 — $10.00/$50.00 per 1M tokens, 1M context",
+          "description": "Claude Mythos 5.1 is priced at $10.00 input / $50.00 output per 1M tokens, with a 1M context window and 128K max output. Cached input $0.25/1M. Same per-call cost as Claude Fable 5. A 1,000-in / 500-out call costs $0.03500."
+        },
+        "zh": {
+          "tagline": "Claude Mythos 5.1 —— 输入 $10.00 / 输出 $50.00（每 1M token），1M 上下文",
+          "description": "Claude Mythos 5.1 定价为输入 $10.00 / 输出 $50.00（每 1M token），1M 上下文，128K 最大输出。缓存输入 $0.25/1M。单次成本与 Claude Fable 5 相同。一次 1000 输入 / 500 输出的调用约 $0.03500。"
+        }
+      },
+      "draft": {
+        "generatedAt": "2026-09-06",
+        "note": "Auto-drafted from the LiteLLM registry the day it appeared. Prices and limits are registry values; the name follows a fixed rule; tagline and description are formulaic. Needs a human read for lineage, positioning and anything the registry cannot know."
       }
     }
   ]
