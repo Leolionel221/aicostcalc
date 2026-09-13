@@ -1,6 +1,6 @@
 {
   "schemaVersion": "2.0",
-  "lastUpdated": "2026-09-06",
+  "lastUpdated": "2026-09-13",
   "_note": "All pricing verified against LiteLLM's public model registry (github.com/BerriAI/litellm) on 2026-08-01. LiteLLM is community-maintained and the de facto industry standard for LLM pricing data. For final billing accuracy, always verify against each provider's official pricing page (links in each model's 'sources' field). See docs/PRD_v1.1_Supplement.md §4.3 for maintenance SOP.",
   "models": [
     {
@@ -1669,8 +1669,8 @@
       "pricing": {
         "currency": "USD",
         "unit": "per_1m_tokens",
-        "input": 0.44,
-        "output": 1.32,
+        "input": 0.3,
+        "output": 1.2,
         "cachedInput": null,
         "cacheWrite": null,
         "batchInput": null,
@@ -1705,12 +1705,12 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-08-24",
+      "lastVerified": "2026-09-13",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-08-24"
+          "fetchedAt": "2026-09-13"
         },
         {
           "type": "official",
@@ -1730,6 +1730,12 @@
           "input": 0.44,
           "output": 1.32,
           "note": "Corrected to match LiteLLM registry (site previously listed $0.14/$0.28)"
+        },
+        {
+          "date": "2026-09-13",
+          "input": 0.3,
+          "output": 1.2,
+          "note": "Automated sync with LiteLLM registry (was $0.44/$1.32)"
         }
       ],
       "i18n": {
