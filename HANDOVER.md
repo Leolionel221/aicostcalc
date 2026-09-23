@@ -349,9 +349,13 @@ CSS 类 `.prose-content` 用于长文章排版（法律页 + 博客文章），�
 
 ## 6. 本地开发
 
+**项目位置：`~/code/aicostcalc`**（2026-09-23 从 `~/Desktop/AI API Cost Calculator` 搬出）。
+
+⚠️ **绝不要放在 `~/Desktop` 或 `~/Documents` 下** —— 这台 Mac 开了"桌面与文稿"iCloud 同步 +"优化 Mac 存储"。放在那里时 iCloud 把 97% 的 node_modules 卸载到云端，每读一个文件都要现下载：type-check 20 分钟跑不完、vitest 超时、build 8 分钟以上；iCloud 还往 `.git` 里写了冲突副本（`refs/heads/main 2`）。搬出后：type-check 4 秒、vitest 5 秒（48/48）、build 17 秒。
+
 ```bash
-# 首次
-npm install
+# 首次（有本地 lockfile 时用 ci，精确复现版本）
+npm ci          # 或 npm install
 
 # 日常开发
 npm run dev              # 启动 dev server (http://localhost:3000)
@@ -370,7 +374,7 @@ npm run build            # 验证 build 通过（含 SSG 预渲染所有页面�
 
 **Node 版本**：`engines.node >= 20`，开发用 Node 24.12 验证过。
 
-**注意 lockfile**：`package-lock.json` 当前在 `.gitignore` 中（详见 §16 changelog 2026-05-04 调试经过）。每次 `npm install` 会重新生成本地 lockfile。Vercel 部署时也是新生成。
+**注意 lockfile**：`package-lock.json` 在 `.gitignore` 中（详见 §16 changelog 2026-05-04 调试经过），只存在于本地。Vercel 每次部署都按 `package.json` 全新解析。换机器或重新 clone 时，本地没有 lockfile，`npm install` 会生成新的。
 
 ---
 
@@ -910,7 +914,16 @@ Google 发邮件说 28 天 10 次点击。GSC 页面级拆解：
 #### 本机为什么这么慢 —— 找到根因
 `fileproviderd` 占 105% CPU，`QuickLookThumbnailsAgent` 55%。**项目在桌面上，桌面开了 iCloud 同步**，每次写文件都触发同步；node_modules 几万个文件。这解释了项目以来所有"8 分钟构建""tsc 20 分钟跑不完""命令卡住"。
 
-建议用户把项目移出 iCloud 同步目录（例如 `~/code/`）。这是用户的系统决定，没有替用户动。在此之前，**依赖 Vercel 构建做类型检查**（它 7 秒完成），用 GitHub Deployments API 读部署结果。
+**已解决（同日，用户授权后执行）**：项目搬到 `~/code/aicostcalc`。实测比根因还严重 —— 不只是同步开销，而是 iCloud"优化存储"已把 node_modules 的 51,670 / 53,142 个文件（942MB 中的 922MB）卸载到云端，本地只剩占位符；源码 382 个、`.git` 358 个文件同样被卸载。另发现 iCloud 在 `.git` 里写了冲突副本 `refs/heads/main 2`、`ORIG_HEAD 2` —— 已是仓库损坏前兆。
+
+搬迁方式与验证：
+- 先试从本地 `git clone --no-local`：10 分钟只从 iCloud 取回 64 个文件，放弃
+- 改从 GitHub clone：**3 秒**。前提是本地工作区干净、无未推送提交/stash/其他分支/tag —— 均已确认
+- `git ls-files -s` 哈希比对：新旧两处跟踪文件逐字节一致；HEAD 同为 `68acbc3`
+- 被忽略但需要的 `next-env.d.ts`、`package-lock.json` 单独复制；`npm ci` 36 秒
+- 结果：type-check **4 秒**（原 20+ 分钟）、vitest **5 秒 48/48**（原本机超时跑不起来）、build **17 秒**（原 8+ 分钟）
+
+Claude Code 的记忆按项目路径存储，已复制到新路径并更新过时内容。旧目录 `~/Desktop/AI API Cost Calculator` 保留未删，是过期副本，**不要再在里面改东西**。
 
 另：`git pull` 在本机会无限挂起（网络慢时）。用 `git -c http.lowSpeedLimit=1000 -c http.lowSpeedTime=20 fetch origin main` 再 `merge --ff-only`。本次就因 pull 静默没拉成功，一度误以为机器人没干活。
 
