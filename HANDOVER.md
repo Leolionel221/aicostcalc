@@ -944,7 +944,7 @@ Google 发邮件说 28 天 10 次点击。GSC 页面级拆解：
 
 Claude Code 的记忆按项目路径存储，已复制到新路径并更新过时内容。
 
-**旧目录处理**：用户要求删除，但无法由我完成 —— 访达"移到废纸篓"报错 -8013「需要下载该项目」，iCloud 要求先把被卸载的 942MB 全部下回来才允许进本地废纸篓；`rm -rf` 虽不需下载，但属于不可恢复的永久删除，不做。退而求其次**原地改名为 `AI API Cost Calculator（已搬到 code-aicostcalc，可删除）`**（改名只动元数据），使旧路径失效、Claude Code 不会再从那里打开。**待用户在 iCloud.com → 云盘 → 桌面 里删除**（进"最近删除"，30 天内可恢复，不需要下载）。
+**旧目录处理**：用户要求删除，但无法由我完成 —— 访达"移到废纸篓"报错 -8013「需要下载该项目」，iCloud 要求先把被卸载的 942MB 全部下回来才允许进本地废纸篓；`rm -rf` 虽不需下载，但属于不可恢复的永久删除，不做。退而求其次**原地改名为 `AI API Cost Calculator（已搬到 code-aicostcalc，可删除）`**（改名只动元数据），使旧路径失效、Claude Code 不会再从那里打开。**已删除（同日）**：用户在 iCloud.com → 云盘 → 桌面 里删掉（进"最近删除"，30 天内可恢复，不需要下载），约 5 分钟后同步到本机桌面消失。**项目现在只存在于 `~/code/aicostcalc` 和 GitHub。**
 
 另：`git pull` 在本机会无限挂起（网络慢时）。用 `git -c http.lowSpeedLimit=1000 -c http.lowSpeedTime=20 fetch origin main` 再 `merge --ff-only`。本次就因 pull 静默没拉成功，一度误以为机器人没干活。
 
