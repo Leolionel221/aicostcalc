@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import { Search } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -8,6 +9,12 @@ import { calculateStandard, estimateMonthlyCost } from "@/lib/calculator";
 import { formatCost, type CurrencyCode } from "@/lib/currency";
 import { cn } from "@/lib/utils";
 import type { Model } from "@/lib/types";
+import {
+  groupForPicker,
+  isNew,
+  latestListing,
+  searchModels,
+} from "@/lib/model-order";
 
 const MAX_SELECTED = 5;
 
@@ -30,6 +37,18 @@ export function MonthlyEstimator({
   const [outputTokens, setOutputTokens] = useState("300");
   const [selectedIds, setSelectedIds] = useState<string[]>(initialIds);
   const [currency] = useState<CurrencyCode>("USD");
+  const [filter, setFilter] = useState("");
+
+  // Grouped by provider, newest first. With a filter, keep only matches but
+  // stay grouped — chips are scanned visually, and provider headers are what
+  // make a 40-chip wall readable.
+  const today = useMemo(() => latestListing(models), [models]);
+  const chipGroups = useMemo(() => {
+    const allowed = new Set(searchModels(models, filter).map((m) => m.id));
+    return groupForPicker(models)
+      .map((g) => ({ ...g, models: g.models.filter((m) => allowed.has(m.id)) }))
+      .filter((g) => g.models.length > 0);
+  }, [models, filter]);
 
   const callsNum = Number(callsPerDay) || 0;
   const inputNum = Number(inputTokens) || 0;
@@ -113,28 +132,61 @@ export function MonthlyEstimator({
               {selectedIds.length}/{MAX_SELECTED} selected
             </span>
           </div>
-          <div className="flex flex-wrap gap-2">
-            {models.map((m) => {
-              const selected = selectedIds.includes(m.id);
-              const disabled = !selected && selectedIds.length >= MAX_SELECTED;
-              return (
-                <button
-                  key={m.id}
-                  type="button"
-                  onClick={() => toggleModel(m.id)}
-                  disabled={disabled}
-                  className={cn(
-                    "px-3 py-1 rounded-full border text-xs transition-colors",
-                    selected
-                      ? "border-primary bg-primary/10 text-foreground"
-                      : "border-border text-muted-foreground hover:text-foreground",
-                    disabled && "opacity-40 cursor-not-allowed",
-                  )}
-                >
-                  {m.shortName}
-                </button>
-              );
-            })}
+          <div className="relative">
+            <Search
+              className="pointer-events-none absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground"
+              aria-hidden
+            />
+            <Input
+              value={filter}
+              onChange={(e) => setFilter(e.target.value)}
+              placeholder="Filter models — e.g. gpt 6, claude, flash…"
+              aria-label="Filter models"
+              className="h-8 pl-8 text-xs"
+            />
+          </div>
+          <div className="max-h-72 space-y-3 overflow-y-auto pr-1">
+            {chipGroups.length === 0 && (
+              <p className="py-4 text-center text-xs text-muted-foreground">
+                No model matches “{filter}”
+              </p>
+            )}
+            {chipGroups.map((g) => (
+              <div key={g.providerId} className="space-y-1.5">
+                <div className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+                  {g.provider}
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {g.models.map((m) => {
+                    const selected = selectedIds.includes(m.id);
+                    const disabled = !selected && selectedIds.length >= MAX_SELECTED;
+                    return (
+                      <button
+                        key={m.id}
+                        type="button"
+                        onClick={() => toggleModel(m.id)}
+                        disabled={disabled}
+                        aria-pressed={selected}
+                        className={cn(
+                          "inline-flex items-center gap-1.5 px-3 py-1 rounded-full border text-xs transition-colors",
+                          selected
+                            ? "border-primary bg-primary/10 text-foreground"
+                            : "border-border text-muted-foreground hover:text-foreground",
+                          disabled && "opacity-40 cursor-not-allowed",
+                        )}
+                      >
+                        {m.name}
+                        {isNew(m, today) && (
+                          <span className="text-[9px] font-semibold uppercase tracking-wide text-primary">
+                            New
+                          </span>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 

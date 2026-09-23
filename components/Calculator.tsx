@@ -2,19 +2,13 @@
 
 import { useState, useMemo } from "react";
 import { ChevronDown } from "lucide-react";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Switch } from "@/components/ui/switch";
 import { Card, CardContent } from "@/components/ui/card";
 import { AffiliateCTA } from "./AffiliateCTA";
+import { ModelPicker } from "./ModelPicker";
 import { CostComparisonStrip } from "./CostComparison";
 import { ScenarioTemplates, type Scenario } from "./ScenarioTemplates";
 import { calculateCost, calculateComparison } from "@/lib/calculator";
@@ -121,18 +115,12 @@ export function Calculator({ models, defaultModelId }: CalculatorProps) {
         {/* Model selector */}
         <div className="space-y-2">
           <Label htmlFor="model-select">Model</Label>
-          <Select value={modelId} onValueChange={handleModelChange}>
-            <SelectTrigger id="model-select" className="w-full">
-              <SelectValue placeholder="Select a model" />
-            </SelectTrigger>
-            <SelectContent>
-              {models.map((m) => (
-                <SelectItem key={m.id} value={m.id}>
-                  {m.name} <span className="text-muted-foreground">· {m.provider}</span>
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <ModelPicker
+            id="model-select"
+            models={models}
+            value={modelId}
+            onChange={handleModelChange}
+          />
           <div className="flex items-center gap-2 text-xs text-muted-foreground">
             {isExactTokenizer ? (
               <span className="inline-flex items-center gap-1 text-[color:var(--accent)]">
