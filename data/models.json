@@ -3138,17 +3138,13 @@
       ],
       "i18n": {
         "en": {
-          "tagline": "Claude Mythos 5.1 — $10.00/$50.00 per 1M tokens, 1M context",
-          "description": "Claude Mythos 5.1 is priced at $10.00 input / $50.00 output per 1M tokens, with a 1M context window and 128K max output. Cached input $0.25/1M. Same per-call cost as Claude Fable 5. A 1,000-in / 500-out call costs $0.03500."
+          "tagline": "Same rates as Mythos 5, with cached input cut to a quarter",
+          "description": "Claude Mythos 5.1 keeps Mythos 5's $10.00 input / $50.00 output per 1M tokens and 1M context, but cached input falls from $1.00 to $0.25/1M — a quarter of the previous rate. That is the same change Anthropic made from Fable 5 to Fable 5.1, and the two 5.1 models now carry identical pricing. Anthropic lists a retirement date of 2027-09-01."
         },
         "zh": {
-          "tagline": "Claude Mythos 5.1 —— 输入 $10.00 / 输出 $50.00（每 1M token），1M 上下文",
-          "description": "Claude Mythos 5.1 定价为输入 $10.00 / 输出 $50.00（每 1M token），1M 上下文，128K 最大输出。缓存输入 $0.25/1M。单次成本与 Claude Fable 5 相同。一次 1000 输入 / 500 输出的调用约 $0.03500。"
+          "tagline": "表价与 Mythos 5 相同，缓存输入降到四分之一",
+          "description": "Claude Mythos 5.1 沿用 Mythos 5 的定价（输入 $10.00 / 输出 $50.00（每 1M token））和 1M 上下文，但缓存输入从 $1.00 降到 $0.25/1M，只有原来的四分之一。这和 Anthropic 从 Fable 5 到 Fable 5.1 做的调整一样，两个 5.1 模型现在定价完全相同。Anthropic 标注的退役日期为 2027-09-01。"
         }
-      },
-      "draft": {
-        "generatedAt": "2026-09-06",
-        "note": "Auto-drafted from the LiteLLM registry the day it appeared. Prices and limits are registry values; the name follows a fixed rule; tagline and description are formulaic. Needs a human read for lineage, positioning and anything the registry cannot know."
       }
     },
     {
@@ -3232,17 +3228,13 @@
       ],
       "i18n": {
         "en": {
-          "tagline": "Grok 4.7 — $2.00/$6.00 per 1M tokens, 500K context",
-          "description": "Grok 4.7 is priced at $2.00 input / $6.00 output per 1M tokens, with a 500K context window and 500K max output. Cached input $0.50/1M. Same per-call cost as Grok 4.5. A 1,000-in / 500-out call costs $0.00500."
+          "tagline": "xAI's newest Grok — same price as 4.6, but not xAI's best value",
+          "description": "Grok 4.7 holds the $2.00 input / $6.00 output per 1M tokens that Grok 4.6 and 4.5 carried, with a 500K context window and 500K max output. It is xAI's newest general model, but not its cheapest: Grok 4.3 ($1.25/$2.50) costs less per call and offers a 1M context window — worth checking before defaulting to the latest release. Cached input $0.50/1M."
         },
         "zh": {
-          "tagline": "Grok 4.7 —— 输入 $2.00 / 输出 $6.00（每 1M token），500K 上下文",
-          "description": "Grok 4.7 定价为输入 $2.00 / 输出 $6.00（每 1M token），500K 上下文，500K 最大输出。缓存输入 $0.50/1M。单次成本与 Grok 4.5 相同。一次 1000 输入 / 500 输出的调用约 $0.00500。"
+          "tagline": "xAI 最新的 Grok，与 4.6 同价，但不是 xAI 最划算的选择",
+          "description": "Grok 4.7 沿用 Grok 4.6 和 4.5 的定价（输入 $2.00 / 输出 $6.00（每 1M token）），上下文 500K、最大输出 500K。它是 xAI 最新的通用模型，但不是最便宜的：Grok 4.3（$1.25/$2.50）单次更便宜，上下文还是 1M —— 默认选最新版之前值得先比一下。缓存输入 $0.50/1M。"
         }
-      },
-      "draft": {
-        "generatedAt": "2026-09-22",
-        "note": "Auto-drafted from the LiteLLM registry the day it appeared. Prices and limits are registry values; the name follows a fixed rule; tagline and description are formulaic. Needs a human read for lineage, positioning and anything the registry cannot know."
       }
     },
     {
@@ -3255,10 +3247,11 @@
       "providerWebsite": "https://anthropic.com",
       "category": "flagship",
       "useCase": [
-        "general",
         "reasoning",
-        "vision",
-        "long-context"
+        "coding",
+        "general",
+        "long-context",
+        "vision"
       ],
       "releaseDate": null,
       "status": "active",
@@ -3326,17 +3319,13 @@
       ],
       "i18n": {
         "en": {
-          "tagline": "Claude Opus 5.5 — $4.00/$20.00 per 1M tokens, 1M context",
-          "description": "Claude Opus 5.5 is priced at $4.00 input / $20.00 output per 1M tokens, with a 1M context window and 128K max output. Cached input $0.20/1M. That is 20% cheaper per call than Claude Opus 5 ($5.00/$25.00). A 1,000-in / 500-out call costs $0.01400."
+          "tagline": "The Opus line gets cheaper — 20% under Opus 5 on both input and output",
+          "description": "Claude Opus 5.5 is priced at $4.00 input / $20.00 output per 1M tokens — 20% below Claude Opus 5 and Opus 4.8 ($5.00/$25.00) on both sides, with the same 1M context window and 128K max output. Cached input drops to $0.20/1M from Opus 5's $0.50. It still sits above Claude Sonnet 5 ($2.00/$10.00), so the Opus-versus-Sonnet price gap narrows rather than closes."
         },
         "zh": {
-          "tagline": "Claude Opus 5.5 —— 输入 $4.00 / 输出 $20.00（每 1M token），1M 上下文",
-          "description": "Claude Opus 5.5 定价为输入 $4.00 / 输出 $20.00（每 1M token），1M 上下文，128K 最大输出。缓存输入 $0.20/1M。单次成本比 Claude Opus 5（$5.00/$25.00） 便宜 20%。一次 1000 输入 / 500 输出的调用约 $0.01400。"
+          "tagline": "Opus 线降价 —— 输入输出都比 Opus 5 便宜 20%",
+          "description": "Claude Opus 5.5 定价为输入 $4.00 / 输出 $20.00（每 1M token），输入输出都比 Claude Opus 5 和 Opus 4.8（$5.00/$25.00）低 20%，上下文同为 1M、最大输出 128K。缓存输入从 Opus 5 的 $0.50/1M 降到 $0.20/1M。它仍高于 Claude Sonnet 5（$2.00/$10.00），所以 Opus 与 Sonnet 的价差是缩小了，而不是消失了。"
         }
-      },
-      "draft": {
-        "generatedAt": "2026-09-23",
-        "note": "Auto-drafted from the LiteLLM registry the day it appeared. Prices and limits are registry values; the name follows a fixed rule; tagline and description are formulaic. Needs a human read for lineage, positioning and anything the registry cannot know."
       }
     },
     {
@@ -3421,17 +3410,13 @@
       ],
       "i18n": {
         "en": {
-          "tagline": "GPT-6 Luna — $0.10/$0.50 per 1M tokens, 922K context",
-          "description": "GPT-6 Luna is priced at $0.10 input / $0.50 output per 1M tokens, with a 922K context window and 128K max output. Cached input $0.01/1M. That is 56% cheaper per call than GPT-5.6 Luna ($0.20/$1.20). A 1,000-in / 500-out call costs $0.00035."
+          "tagline": "The cheapest model on this site — with a 922K context window",
+          "description": "GPT-6 Luna runs at $0.10 input / $0.50 output per 1M tokens: $0.00035 for a 1,000-in / 500-out call, the lowest per-call cost of any model we track. It undercuts DeepSeek V3.2 ($0.28/$0.40) while offering 922K of context against V3.2's 164K, and it halves GPT-5.6 Luna's input price ($0.20/$1.20). Cached input $0.01/1M, Batch API $0.05/$0.25."
         },
         "zh": {
-          "tagline": "GPT-6 Luna —— 输入 $0.10 / 输出 $0.50（每 1M token），922K 上下文",
-          "description": "GPT-6 Luna 定价为输入 $0.10 / 输出 $0.50（每 1M token），922K 上下文，128K 最大输出。缓存输入 $0.01/1M。单次成本比 GPT-5.6 Luna（$0.20/$1.20） 便宜 56%。一次 1000 输入 / 500 输出的调用约 $0.00035。"
+          "tagline": "本站收录中最便宜的模型，同时有 922K 上下文",
+          "description": "GPT-6 Luna 定价输入 $0.10 / 输出 $0.50（每 1M token），一次 1000 输入 / 500 输出的调用约 $0.00035，是本站收录模型中单次成本最低的。它比 DeepSeek V3.2（$0.28/$0.40）更便宜，上下文却是 922K 对 V3.2 的 164K，输入价也只有 GPT-5.6 Luna（$0.20/$1.20）的一半。缓存输入 $0.01/1M，批处理 $0.05/$0.25。"
         }
-      },
-      "draft": {
-        "generatedAt": "2026-09-23",
-        "note": "Auto-drafted from the LiteLLM registry the day it appeared. Prices and limits are registry values; the name follows a fixed rule; tagline and description are formulaic. Needs a human read for lineage, positioning and anything the registry cannot know."
       }
     },
     {
@@ -3442,7 +3427,7 @@
       "providerId": "openai",
       "providerLogo": "/logos/openai.svg",
       "providerWebsite": "https://openai.com",
-      "category": "flagship",
+      "category": "balanced",
       "useCase": [
         "general",
         "reasoning",
@@ -3515,17 +3500,13 @@
       ],
       "i18n": {
         "en": {
-          "tagline": "GPT-6 Sol — $2.00/$10.00 per 1M tokens, 922K context",
-          "description": "GPT-6 Sol is priced at $2.00 input / $10.00 output per 1M tokens, with a 922K context window and 128K max output. Cached input $0.20/1M. That is 13% cheaper per call than GPT-5.6 Terra ($2.00/$12.00). A 1,000-in / 500-out call costs $0.00700."
+          "tagline": "Half the price of GPT-5.6 Sol — the middle tier of GPT-6",
+          "description": "GPT-6 Sol costs $2.00 input / $10.00 output per 1M tokens, exactly half of GPT-5.6 Sol ($4.00/$20.00), with the same 922K context and 128K max output. In the GPT-6 lineup it sits between Astra ($10.00/$50.00) and Luna ($0.10/$0.50) — so despite sharing a name with 5.6's flagship-tier Sol, it is the middle option here. It is priced identically to Claude Sonnet 5 ($2.00/$10.00). Batch API $1.00/$5.00, cached input $0.20/1M."
         },
         "zh": {
-          "tagline": "GPT-6 Sol —— 输入 $2.00 / 输出 $10.00（每 1M token），922K 上下文",
-          "description": "GPT-6 Sol 定价为输入 $2.00 / 输出 $10.00（每 1M token），922K 上下文，128K 最大输出。缓存输入 $0.20/1M。单次成本比 GPT-5.6 Terra（$2.00/$12.00） 便宜 13%。一次 1000 输入 / 500 输出的调用约 $0.00700。"
+          "tagline": "价格是 GPT-5.6 Sol 的一半，GPT-6 家族的中档",
+          "description": "GPT-6 Sol 定价输入 $2.00 / 输出 $10.00（每 1M token），正好是 GPT-5.6 Sol（$4.00/$20.00）的一半，上下文同为 922K、最大输出 128K。在 GPT-6 家族里它介于 Astra（$10.00/$50.00）和 Luna（$0.10/$0.50）之间 —— 名字虽然和 5.6 的旗舰档 Sol 相同，在这里却是中档。它与 Claude Sonnet 5（$2.00/$10.00）完全同价。批处理 $1.00/$5.00，缓存输入 $0.20/1M。"
         }
-      },
-      "draft": {
-        "generatedAt": "2026-09-23",
-        "note": "Auto-drafted from the LiteLLM registry the day it appeared. Prices and limits are registry values; the name follows a fixed rule; tagline and description are formulaic. Needs a human read for lineage, positioning and anything the registry cannot know."
       }
     },
     {
@@ -3538,10 +3519,10 @@
       "providerWebsite": "https://x.ai",
       "category": "small",
       "useCase": [
+        "coding",
+        "fast",
         "general",
-        "reasoning",
-        "vision",
-        "fast"
+        "vision"
       ],
       "releaseDate": null,
       "status": "active",
@@ -3609,17 +3590,13 @@
       ],
       "i18n": {
         "en": {
-          "tagline": "Grok Code Fast — $1.00/$2.00 per 1M tokens, 256K context",
-          "description": "Grok Code Fast is priced at $1.00 input / $2.00 output per 1M tokens, with a 256K context window and 256K max output. Cached input $0.20/1M. That is 20% cheaper per call than Grok 4.3 ($1.25/$2.50). A 1,000-in / 500-out call costs $0.00200."
+          "tagline": "xAI's coding-focused model — its cheapest per call",
+          "description": "Grok Code Fast is priced at $1.00 input / $2.00 output per 1M tokens with a 256K context window and 256K max output, making it the lowest per-call cost in xAI's current lineup. The trade-off against Grok 4.3 ($1.25/$2.50) is context: 256K here versus 1M there, for a 20% saving per call. Cached input $0.20/1M."
         },
         "zh": {
-          "tagline": "Grok Code Fast —— 输入 $1.00 / 输出 $2.00（每 1M token），256K 上下文",
-          "description": "Grok Code Fast 定价为输入 $1.00 / 输出 $2.00（每 1M token），256K 上下文，256K 最大输出。缓存输入 $0.20/1M。单次成本比 Grok 4.3（$1.25/$2.50） 便宜 20%。一次 1000 输入 / 500 输出的调用约 $0.00200。"
+          "tagline": "xAI 面向编码的模型，也是 xAI 单次最便宜的",
+          "description": "Grok Code Fast 定价输入 $1.00 / 输出 $2.00（每 1M token），上下文 256K、最大输出 256K，是 xAI 现有模型里单次成本最低的。和 Grok 4.3（$1.25/$2.50）比，代价是上下文：256K 对 1M，换来单次便宜 20%。缓存输入 $0.20/1M。"
         }
-      },
-      "draft": {
-        "generatedAt": "2026-09-23",
-        "note": "Auto-drafted from the LiteLLM registry the day it appeared. Prices and limits are registry values; the name follows a fixed rule; tagline and description are formulaic. Needs a human read for lineage, positioning and anything the registry cannot know."
       }
     }
   ]

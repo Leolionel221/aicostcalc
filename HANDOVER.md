@@ -851,6 +851,25 @@ PRD v1.1 §3.5 F-api 早期承诺已兑现。3 个公开 endpoint + 完整 docs 
 
 > 每次"收口"在此追加一条记录。最新的在最上方。
 
+### 2026-09-23（晚）— 6 个自动起草页写正式文案，去掉「待审阅」
+**类型**：content
+
+`claude-opus-5-5`、`claude-mythos-5-1`、`gpt-6-sol`、`gpt-6-luna`、`grok-4-7`、`grok-code-fast` 由用户授权代为审阅。
+
+**原则：只写数据能证明的内容**。不写"推理更强""更适合 X 场景"这类无法从 registry 核实的能力描述，只写价格、上下文、缓存，以及和同家族/同价位模型的相对位置。每一条对比说法写入前都用数据断言校验（脚本里 `assert`），任一不成立就整体中止。横向比较后写进文案的几个事实：
+
+- **GPT-6 Sol 正好是 GPT-5.6 Sol 的一半价**，与 Claude Sonnet 5 同价；在 GPT-6 家族（Astra > Sol > Luna）里是**中档**，不是 5.6 那样的旗舰档
+- **GPT-6 Luna 比 DeepSeek V3.2 单次更便宜，上下文却是 922K 对 164K** —— 全站最便宜
+- **Grok 4.7 是 xAI 最新但不是最划算**：Grok 4.3 更便宜且上下文是 1M
+- **Mythos 5.1 与 Fable 5.1 做了同样的调整**：表价不变，缓存降到四分之一，两者现在定价完全相同
+- Opus 5.5 比 Opus 5 / 4.8 两边都低 20%，但仍高于 Sonnet 5
+
+**修正自动起草的分类**：`gpt-6-sol` 被按单次成本（$0.007 ≥ $0.005）归为 flagship，但同价的 Sonnet 5、GPT-5.6 Terra 都是 balanced。**单次成本阈值区分不了 balanced 与 flagship**（Gemini 3.1 Pro $0.008 是 flagship、Sonnet 5 $0.007 是 balanced），自动起草的 category 需要人工看一眼。useCase：Opus 5.5 补 `coding`（与整个 Opus 线一致），Grok Code Fast 改为 `coding, fast, general, vision`。
+
+文案里自己的价格写成"$X input / $Y output"、引用别的模型写成"$a/$b"，都是 `copy-rewrite.mjs` 能自动更新的格式；"便宜 20%""一半"这类推导说法会在价格变动时进入 Issue 的「需复读」。
+
+**本机验证**（搬出 iCloud 后）：type-check 14s、vitest 48/48 13s、build 30s，构建产物中 6 页的 draft 提示均已消失。
+
 ### 2026-09-23 — 策略被数据验证；选择器重做；文案随价格自动更新
 **类型**：data + feat（UI）+ feat（自动化）+ 验证
 
@@ -923,7 +942,9 @@ Google 发邮件说 28 天 10 次点击。GSC 页面级拆解：
 - 被忽略但需要的 `next-env.d.ts`、`package-lock.json` 单独复制；`npm ci` 36 秒
 - 结果：type-check **4 秒**（原 20+ 分钟）、vitest **5 秒 48/48**（原本机超时跑不起来）、build **17 秒**（原 8+ 分钟）
 
-Claude Code 的记忆按项目路径存储，已复制到新路径并更新过时内容。旧目录 `~/Desktop/AI API Cost Calculator` 保留未删，是过期副本，**不要再在里面改东西**。
+Claude Code 的记忆按项目路径存储，已复制到新路径并更新过时内容。
+
+**旧目录处理**：用户要求删除，但无法由我完成 —— 访达"移到废纸篓"报错 -8013「需要下载该项目」，iCloud 要求先把被卸载的 942MB 全部下回来才允许进本地废纸篓；`rm -rf` 虽不需下载，但属于不可恢复的永久删除，不做。退而求其次**原地改名为 `AI API Cost Calculator（已搬到 code-aicostcalc，可删除）`**（改名只动元数据），使旧路径失效、Claude Code 不会再从那里打开。**待用户在 iCloud.com → 云盘 → 桌面 里删除**（进"最近删除"，30 天内可恢复，不需要下载）。
 
 另：`git pull` 在本机会无限挂起（网络慢时）。用 `git -c http.lowSpeedLimit=1000 -c http.lowSpeedTime=20 fetch origin main` 再 `merge --ff-only`。本次就因 pull 静默没拉成功，一度误以为机器人没干活。
 
