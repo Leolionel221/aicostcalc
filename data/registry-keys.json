@@ -36,6 +36,10 @@
     "gemini-3-8-flash": "gemini-3.8-flash",
     "gpt-6-astra": "gpt-6-astra",
     "claude-mythos-5-1": "claude-mythos-5-1",
-    "grok-4-7": "xai/grok-4.7"
+    "grok-4-7": "xai/grok-4.7",
+    "claude-opus-5-5": "claude-opus-5-5",
+    "gpt-6-luna": "gpt-6-luna",
+    "gpt-6-sol": "gpt-6-sol",
+    "grok-code-fast": "xai/grok-code-fast"
   }
 }

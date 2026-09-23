@@ -245,11 +245,19 @@ async function main() {
   const drift = [];
   const pinned = [];
   const unmapped = [];
+  const retiredUpstream = [];
   for (const model of data.models) {
     const key = REGISTRY_KEYS[model.id];
     if (!key) { unmapped.push(model.id); continue; }
     const entry = registry[key];
-    if (!entry) { unmapped.push(`${model.id} (key "${key}" gone from registry)`); continue; }
+    if (!entry) {
+      // Upstream drops keys for retired models. For a model we already show as
+      // deprecated that is the expected end of its lifecycle, not a mapping
+      // error — its last-known price stays as a historical reference.
+      if (model.status === "deprecated") { retiredUpstream.push(model.id); continue; }
+      unmapped.push(`${model.id} (key "${key}" gone from registry)`);
+      continue;
+    }
     const pin = pinApplies(model.id, entry);
     if (pin) {
       pinned.push({ model, pin });
@@ -287,6 +295,9 @@ async function main() {
   const deprecations = findDeprecations(data.models, registry, today);
 
   console.log(`## Price reconciliation — ${today}\n`);
+  if (retiredUpstream.length) {
+    console.log(`_Retired and dropped upstream (kept as historical reference): ${retiredUpstream.join(", ")}_\n`);
+  }
   if (unmapped.length) {
     console.log(`### ⚠️ Unmapped models (${unmapped.length})\n`);
     unmapped.forEach((u) => console.log(`- ${u}`));

@@ -77,6 +77,10 @@ export function deriveName(key) {
   if ((m = k.match(/^grok-(\d+)(?:-(\d+))?$/))) {
     return `Grok ${m[2] ? `${m[1]}.${m[2]}` : m[1]}`;
   }
+  // grok-code-fast -> Grok Code Fast (named product lines, no version number)
+  if ((m = k.match(/^grok-([a-z]+)-([a-z]+)$/))) {
+    return `Grok ${cap(m[1])} ${cap(m[2])}`;
+  }
 
   // mistral-large-3 -> Mistral Large 3
   if ((m = k.match(/^mistral-([a-z]+)-(\d+)(?:-(\d+))?$/))) {
@@ -164,9 +168,17 @@ export function buildDraft(key, entry, models, today) {
       cmpEn = ` Same per-call cost as ${sibling.name}.`;
       cmpZh = `单次成本与 ${sibling.name} 相同。`;
     } else {
-      const x = (call / sc).toFixed(2).replace(/\.?0+$/, "");
-      cmpEn = ` That is ${x}x the per-call cost of ${sibling.name} (${money(sibling.pricing.input)}/${money(sibling.pricing.output)}).`;
-      cmpZh = `单次成本是 ${sibling.name}（${money(sibling.pricing.input)}/${money(sibling.pricing.output)}）的 ${x} 倍。`;
+      const ref = `${sibling.name} (${money(sibling.pricing.input)}/${money(sibling.pricing.output)})`;
+      const refZh = `${sibling.name}（${money(sibling.pricing.input)}/${money(sibling.pricing.output)}）`;
+      if (call < sc) {
+        const pctCheaper = Math.round((1 - call / sc) * 100);
+        cmpEn = ` That is ${pctCheaper}% cheaper per call than ${ref}.`;
+        cmpZh = `单次成本比 ${refZh} 便宜 ${pctCheaper}%。`;
+      } else {
+        const x = (call / sc).toFixed(1).replace(/\.0$/, "");
+        cmpEn = ` That is ${x}x the per-call cost of ${ref}.`;
+        cmpZh = `单次成本是 ${refZh} 的 ${x} 倍。`;
+      }
     }
   }
   const cacheEn = cached != null ? ` Cached input ${money(cached)}/1M.` : "";
