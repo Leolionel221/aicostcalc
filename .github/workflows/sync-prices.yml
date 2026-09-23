@@ -115,7 +115,8 @@ jobs:
             const report = fs.readFileSync('report.md', 'utf8');
             const hasDraft = report.includes('Auto-drafted and published');
             const hasManual = report.includes('Needs a human to add');
-            if (!hasDraft && !hasManual) {
+            const hasReread = report.includes('Copy to re-read');
+            if (!hasDraft && !hasManual && !hasReread) {
               core.info('No new models reported.');
               return;
             }
@@ -126,7 +127,7 @@ jobs:
               const j = rest.indexOf('\n### ', 4);
               return j < 0 ? rest : rest.slice(0, j);
             };
-            const section = [cut('### ✍️ Auto-drafted and published'), cut('### ✋ Needs a human to add')].filter(Boolean).join('\n\n');
+            const section = [cut('### ✍️ Auto-drafted and published'), cut('### ✋ Needs a human to add'), cut('### 👀 Copy to re-read')].filter(Boolean).join('\n\n');
             const title = 'New models detected in the LiteLLM registry';
             const { data: open } = await github.rest.issues.listForRepo({
               owner: context.repo.owner,

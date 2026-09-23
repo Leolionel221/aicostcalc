@@ -35,6 +35,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { buildDraft } from "./lib/model-draft.mjs";
+import { rewriteCopy } from "./lib/copy-rewrite.mjs";
 
 const REGISTRY_URL =
   "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json";
@@ -399,9 +400,15 @@ async function main() {
   }
 
   if (WRITE && (safeDrift.length || drafted.length)) {
+    const priceMoves = [];
     for (const { model, changes } of safeDrift) {
       const before = { input: model.pricing.input, output: model.pricing.output };
+      const snap = { input: model.pricing.input, output: model.pricing.output, cachedInput: model.pricing.cachedInput };
       for (const c of changes) setPath(model, c.field, c.to);
+      const after = { input: model.pricing.input, output: model.pricing.output, cachedInput: model.pricing.cachedInput };
+      if (snap.input !== after.input || snap.output !== after.output || snap.cachedInput !== after.cachedInput) {
+        priceMoves.push({ model, before: snap, after });
+      }
       model.lastVerified = today;
       for (const s of model.sources) if (s.type === "community") s.fetchedAt = today;
       if (before.input !== model.pricing.input || before.output !== model.pricing.output) {
@@ -411,6 +418,17 @@ async function main() {
           output: model.pricing.output,
           note: `Automated sync with LiteLLM registry (was $${before.input}/$${before.output})`,
         });
+      }
+    }
+    // Copy quotes prices too — see scripts/lib/copy-rewrite.mjs for why and how narrowly.
+    if (priceMoves.length) {
+      const { rewritten, review } = rewriteCopy(priceMoves, data.models);
+      if (rewritten.length) {
+        console.log(`### ✏️ Copy updated to new prices (${rewritten.length}): ${rewritten.map((id) => `\`${id}\``).join(", ")}\n`);
+      }
+      if (review.length) {
+        console.log(`### 👀 Copy to re-read (${review.length})\n`);
+        console.log(`These cite a moved price in a derived claim ("N% cheaper", "Nx"), which cannot be rewritten mechanically: ${review.map((id) => `\`${id}\``).join(", ")}\n`);
       }
     }
     data.lastUpdated = today;
