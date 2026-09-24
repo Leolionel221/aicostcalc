@@ -40,6 +40,7 @@
     "claude-opus-5-5": "claude-opus-5-5",
     "gpt-6-luna": "gpt-6-luna",
     "gpt-6-sol": "gpt-6-sol",
-    "grok-code-fast": "xai/grok-code-fast"
+    "grok-code-fast": "xai/grok-code-fast",
+    "gemini-3-8-flash-cyber": "gemini-3.8-flash-cyber"
   }
 }
