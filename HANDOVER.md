@@ -851,6 +851,27 @@ PRD v1.1 §3.5 F-api 早期承诺已兑现。3 个公开 endpoint + 完整 docs 
 
 > 每次"收口"在此追加一条记录。最新的在最上方。
 
+### 2026-09-30 — 联盟点击设为 GA4 关键事件；GA4 数据体检
+**类型**：analytics + fix
+
+**`affiliate_link_clicked` 已标为关键事件**（GA4 → 管理 → 事件）。关键事件不回溯，从今天起才计数。过去 90 天（实际约 5 周，埋点 8/24 才修好）：**6 次联盟点击，5 个用户**。无法区分其中是否有用户本人的测试点击。
+
+#### ⚠️ GA4 的用户数一半以上是爬虫
+90 天 588 用户里：**Singapore 310（互动率 5%、平均 1 秒）**、The Dalles 29（Google 数据中心）、Ashburn 14（AWS）—— 执行 JS 的爬虫。来源里 `(direct)` 481 个会话、平均 2 秒、互动率 7.9%，是同一批。**真实受众约等于 121 个互动会话。** 看 GA 数据时按「互动会话」或排除这几个城市，别看总用户数。GA4 无法事后过滤机器人，暂不处理。
+
+#### 🔑 真实自然流量的主力是 Bing，不是 Google
+| 来源 | 会话 | 互动率 | 平均时长 |
+|---|---|---|---|
+| bing / organic | **72** | 64% | 45 秒 |
+| duckduckgo / organic | 21 | 57% | 30 秒 |
+| google / organic | 19 | 74% | 1 分 06 秒 |
+| yahoo / organic | 7 | 43% | 15 秒 |
+
+DuckDuckGo 和 Yahoo 用的是 Bing 的索引 —— **Bing 系合计约 100 个会话，是 Google 的 5 倍**。而项目至今只盯着 Google Search Console。**待办建议：接入 IndexNow**（Bing / Yandex 等支持的官方即时收录协议，合规、免费），让自动对账上线新模型时自动推送 URL。这正好补上"自动上线页面无人提交索引"的缺口，而且覆盖的是最大的流量来源。
+
+#### Bug：自家事件参数污染了流量来源
+计算器切换模型时发的 `model_selected` 带了参数 `source: "calculator_dropdown"`。**`source` 是 GA4 的保留归因参数**，结果流量来源报告里凭空多出一个叫 `calculator_dropdown` 的渠道（12 个会话）。改名为 `ui_location`，并在 `lib/analytics.ts` 用类型禁止 `source / medium / campaign / term / content` 作为事件参数（已用故意违规的临时文件验证 tsc 会报错）。
+
 ### 2026-09-29 — 新增「价格动态」页 `/changes` + RSS
 **类型**：feat（SEO / 内容）
 

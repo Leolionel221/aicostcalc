@@ -57,7 +57,10 @@ export function Calculator({ models, defaultModelId }: CalculatorProps) {
 
   function handleModelChange(newId: string) {
     setModelId(newId);
-    track("model_selected", { model_id: newId, source: "calculator_dropdown" });
+    // Not `source`: GA4 reads that parameter as the session's traffic source, so every
+    // model change was showing up in acquisition reports as a visit from
+    // "calculator_dropdown" (12 sessions by 2026-09-30).
+    track("model_selected", { model_id: newId, ui_location: "calculator_picker" });
   }
 
   // If user manually changes inputs, clear active scenario + fire debounced event

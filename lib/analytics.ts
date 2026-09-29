@@ -41,7 +41,16 @@ type EventName =
   | "language_switched"
   | "theme_toggled";
 
-type EventParams = Record<string, string | number | boolean | null | undefined>;
+/**
+ * Never use GA4's reserved attribution names as event parameters — `source`,
+ * `medium`, `campaign`, `term`, `content`. GA treats them as the session's
+ * traffic source: a `source: "calculator_dropdown"` param once created a fake
+ * acquisition channel of that name. The type below rejects them at compile time.
+ */
+type ReservedParam = "source" | "medium" | "campaign" | "term" | "content";
+type EventParams = Record<string, string | number | boolean | null | undefined> & {
+  [K in ReservedParam]?: never;
+};
 
 declare global {
   interface Window {
