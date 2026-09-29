@@ -33,7 +33,7 @@ export default function AboutPage() {
       <h2>How it's different</h2>
       <ul>
         <li>
-          <strong>10+ models from 6 providers</strong>, with comparable per-call cost
+          <strong>40+ models from 6 providers</strong>, with comparable per-call cost
           calculations side-by-side.
         </li>
         <li>

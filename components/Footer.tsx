@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { reportFeedbackUrl } from "@/lib/seo";
 
 function GithubIcon({ className }: { className?: string }) {
@@ -45,6 +46,11 @@ export function Footer() {
                 <a href="/#forecast" className="hover:text-foreground transition-colors">
                   Monthly forecast
                 </a>
+              </li>
+              <li>
+                <Link href="/changes" className="hover:text-foreground transition-colors">
+                  Price changes
+                </Link>
               </li>
               <li>
                 <a href="/api" className="hover:text-foreground transition-colors">

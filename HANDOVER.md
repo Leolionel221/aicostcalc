@@ -851,6 +851,31 @@ PRD v1.1 §3.5 F-api 早期承诺已兑现。3 个公开 endpoint + 完整 docs 
 
 > 每次"收口"在此追加一条记录。最新的在最上方。
 
+### 2026-09-29 — 新增「价格动态」页 `/changes` + RSS
+**类型**：feat（SEO / 内容）
+
+**为什么做**：流量是瓶颈（28 天 9 次点击），而进来的人 CTR 已有 5–9%，所以只做能带来流量的功能。这是唯一验证过的打法（抢新模型）的放大器：
+- 每天在变的数据是静态比价站没有的；接住"XX 降价 / 新模型价格"类查询
+- 链接到所有新模型页、sitemap 标 `daily` 且 lastmod 取最新事件日期 → 给 Google 频繁回访的理由，**缓解自动上线页面无人提交索引的问题**（Indexing API 不能合规用于普通页面）
+- 零成本、零维护：完全由 `priceHistory` 派生，每次自动对账提交触发部署即更新
+
+**实现**：
+- `lib/changes.ts` 从 `priceHistory` 生成事件（released / added / price-cut / price-rise / price-change），含单次成本变化百分比
+- `app/changes/page.tsx` 按月分组；`app/changes/rss.xml/route.ts` 最近 50 条，`force-static` 构建时生成（Next 16：`route.ts` 不能与 `page.tsx` 同路径，故放子路径）
+- 导航、页脚、sitemap（priority 0.9, daily）加入口；页面 `<head>` 声明 RSS alternate
+
+**两条诚实性规则**（写进代码注释和单测）：
+- 4 条 `Corrected to match LiteLLM registry`（8/24）是**修我们自己的错，不是厂商调价**，不作为事件；之后的真实变动从修正值起算
+- 首条为 `First listed…` 的日期是**我们收录的日期**，页面写 "Added" 而非 "Released"，并在页面上说明原因
+
+`lib/changes.test.ts` 6 个用例（含"真实数据中 8/24 不出现价格事件"）。
+
+**一个编译器坑**：跨多行的 JSX 文本，紧跟在 `</strong>` 后的首个空格在构建产物里被吞掉（渲染成 "Addedis"），单行文本不受影响。用 `{" "}` 显式补上；扫过其他页面产物，无同类问题。
+
+**顺带**：About 页 "10+ models" → "40+"。Lint：页脚里我加的链接用 `<Link>`；页脚/About/Privacy/Terms 原有 22 个 lint 错误（`<a>` 站内链接、未转义引号）不在本次范围，未动。
+
+**当前事件**：45 条，其中真实价格变动 3 条（GPT-5.6 Terra / Luna 8/1 降价、DeepSeek V4-Flash 9/13 降价）。机器人 9/24、9/29 又自动上线了 Gemini 3.8 Flash Cyber、Claude Sonnet 5.5，已自动出现在页面上。
+
 ### 2026-09-23（晚）— 6 个自动起草页写正式文案，去掉「待审阅」
 **类型**：content
 

@@ -3,6 +3,7 @@ import modelsData from "@/data/models.json";
 import type { ModelsData } from "@/lib/types";
 import { SITE, modelSlug } from "@/lib/seo";
 import { getAllPostsMeta } from "@/lib/blog";
+import { buildChangeLog } from "@/lib/changes";
 
 const data = modelsData as ModelsData;
 
@@ -44,6 +45,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.3,
   }));
 
+  // Changes as often as the data does; lastModified is the newest event, so
+  // Google sees a fresh date exactly when there is something new to crawl.
+  const latestChange = buildChangeLog(data.models)[0]?.date ?? data.lastUpdated;
+  const changesPage = {
+    url: `${SITE.url}/changes`,
+    lastModified: new Date(latestChange),
+    changeFrequency: "daily" as const,
+    priority: 0.9,
+  };
+
   const apiDocs = {
     url: `${SITE.url}/api`,
     lastModified,
@@ -51,5 +62,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   };
 
-  return [homepage, ...modelPages, apiDocs, blogIndex, ...blogPosts, ...staticPages];
+  return [homepage, changesPage, ...modelPages, apiDocs, blogIndex, ...blogPosts, ...staticPages];
 }
