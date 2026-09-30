@@ -1,0 +1,66 @@
+name: IndexNow on deploy
+
+# Tell Bing & co. about changed pages the moment they are live.
+#
+# Triggered by Vercel's deployment status rather than by the price sync: a URL
+# submitted before the deploy finishes would be fetched while it still 404s or
+# shows old prices. Listening for a successful Production deployment also
+# covers hand edits to the data, not just the bot's commits.
+#
+# Why Bing specifically: Bing-powered search (Bing + DuckDuckGo + Yahoo) sends
+# ~5x the organic traffic Google does (GA4, 90 days to 2026-09-30).
+
+on:
+  deployment_status:
+
+permissions:
+  contents: read
+  deployments: read
+
+concurrency:
+  group: indexnow
+  cancel-in-progress: false
+
+jobs:
+  submit:
+    if: >-
+      github.event.deployment_status.state == 'success' &&
+      github.event.deployment.environment == 'Production'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Find the previous successful Production deploy
+        id: base
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          HEAD_SHA: ${{ github.event.deployment.sha }}
+        run: |
+          base=""
+          for row in $(gh api "repos/${{ github.repository }}/deployments?environment=Production&per_page=20" \
+                         --jq '.[] | "\(.id):\(.sha)"'); do
+            id="${row%%:*}"; sha="${row##*:}"
+            [ "$sha" = "$HEAD_SHA" ] && continue
+            state=$(gh api "repos/${{ github.repository }}/deployments/$id/statuses" --jq '.[0].state')
+            if [ "$state" = "success" ]; then base="$sha"; break; fi
+          done
+          # Fall back to the parent commit if history is unavailable.
+          [ -z "$base" ] && base="$(git rev-parse "$HEAD_SHA~1")"
+          echo "base=$base" >> "$GITHUB_OUTPUT"
+          echo "Diffing $base..$HEAD_SHA"
+
+      # shell: bash is explicit so the step runs with -o pipefail — otherwise
+      # `| tee` would report success even when IndexNow rejects the request.
+      - name: Submit changed URLs
+        shell: bash
+        run: >-
+          node scripts/indexnow.mjs --diff
+          ${{ steps.base.outputs.base }} ${{ github.event.deployment.sha }}
+          | tee -a "$GITHUB_STEP_SUMMARY"
