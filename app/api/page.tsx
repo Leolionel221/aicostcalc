@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import modelsData from "@/data/models.json";
+import type { ModelsData } from "@/lib/types";
+
+const data = modelsData as ModelsData;
 
 export const metadata: Metadata = {
   title: "Free Public API — AI Model Pricing Data",
@@ -121,14 +125,14 @@ curl https://aicostcalc.net/api/v1/pricing?provider=anthropic`}</code>
           <div className="text-center mb-10">
             <Eyebrow>Endpoints</Eyebrow>
             <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
-              Three endpoints. Zero ceremony.
+              Four endpoints. Zero ceremony.
             </h2>
           </div>
 
           <Endpoint
             method="GET"
             path="/api/v1/models"
-            description="List all 10 supported AI models with full data (pricing, limits, capabilities, lifecycle). Supports filter query params."
+            description={`All ${data.models.length} models with full data (pricing, limits, capabilities, lifecycle). New models appear the day they reach the LiteLLM registry.`}
             example={`GET /api/v1/models
 GET /api/v1/models?provider=anthropic
 GET /api/v1/models?category=flagship
@@ -146,19 +150,40 @@ GET /api/v1/models?status=active`}
           <Endpoint
             method="GET"
             path="/api/v1/models/{id}"
-            description="Full data for a single model. Returns 404 with availableIds list if id is unknown."
-            example={`GET /api/v1/models/gpt-5-5
-GET /api/v1/models/claude-opus-4-7
-GET /api/v1/models/deepseek-v3-2`}
+            description="Full data for a single model. Accepts the dashed id or the dotted form of the model name; when a non-canonical form is used, _meta.resolvedFrom records what you asked for. Returns 404 with availableIds if nothing matches."
+            example={`GET /api/v1/models/gpt-6-luna
+GET /api/v1/models/gpt-6.luna      # same model
+GET /api/v1/models/claude-opus-4-7`}
           />
 
           <Endpoint
             method="GET"
             path="/api/v1/pricing"
-            description="Lightweight pricing-only response. Skip the metadata, keep just the prices. Same filter support as /models."
+            description="Prices and limits only, plus lifecycle (status, deprecatedAt, successorId) so you never route to a retired model. Same filters as /models."
             example={`GET /api/v1/pricing
-GET /api/v1/pricing?provider=openai`}
+GET /api/v1/pricing?provider=openai
+GET /api/v1/pricing?status=active     # exclude retired models`}
           />
+
+          <Endpoint
+            method="GET"
+            path="/api/v1/changes"
+            description="New models and price changes, newest first — the JSON form of the changelog. Each event carries before/after prices and the change in per-call cost. Our own data corrections are excluded."
+            example={`GET /api/v1/changes
+GET /api/v1/changes?since=2026-09-01
+GET /api/v1/changes?kind=price-cut,price-rise
+GET /api/v1/changes?provider=anthropic&limit=20`}
+          >
+            <div className="mt-3 text-xs text-muted-foreground">
+              <strong>kind</strong>: <code className="font-mono">released</code> (provider release date) /{" "}
+              <code className="font-mono">added</code> (day we started listing it) /{" "}
+              <code className="font-mono">price-cut</code> /{" "}
+              <code className="font-mono">price-rise</code> /{" "}
+              <code className="font-mono">price-change</code>. Also available as{" "}
+              <a href="/changes/rss.xml" className="text-primary underline hover:no-underline">RSS</a>{" "}
+              and a <Link href="/changes" className="text-primary underline hover:no-underline">web page</Link>.
+            </div>
+          </Endpoint>
         </div>
       </section>
 
@@ -190,7 +215,7 @@ GET /api/v1/pricing?provider=openai`}
   "providerId": "openai",
   "category": "flagship",          // flagship | small | reasoning | balanced
   "useCase": ["general", "vision", "reasoning", "coding"],
-  "releaseDate": "2026-04-23",
+  "releaseDate": "2026-04-23",      // null when unknown (v2.1) — see below
   "status": "active",              // active | deprecated | preview | legacy
   "deprecatedAt": null,
   "successorId": null,
@@ -238,9 +263,38 @@ GET /api/v1/pricing?provider=openai`}
   "i18n": {
     "en": { "tagline": "...", "description": "..." },
     "zh": { "tagline": "...", "description": "..." }
+  },
+
+  "draft": {                       // present only on auto-listed models (v2.1)
+    "generatedAt": "2026-09-29",
+    "note": "..."
   }
 }`}</code>
           </pre>
+          <div className="mt-6 rounded-lg border border-border p-4 text-sm">
+            <div className="font-semibold">Schema {data.schemaVersion} — changes from 2.0</div>
+            <ul className="mt-2 space-y-1.5 text-muted-foreground list-disc pl-5">
+              <li>
+                <code className="font-mono">releaseDate</code> can be <code className="font-mono">null</code>.
+                Models listed automatically from the registry have no known release date, and we
+                don&apos;t invent one. Type it as <code className="font-mono">string | null</code>.
+              </li>
+              <li>
+                <code className="font-mono">draft</code> is an optional object on models published
+                automatically the day they appeared. Prices and limits on a draft are as reliable as
+                any other entry; only the prose description is awaiting review.
+              </li>
+              <li>
+                <code className="font-mono">/api/v1/pricing</code> now includes{" "}
+                <code className="font-mono">status</code>, <code className="font-mono">deprecatedAt</code>{" "}
+                and <code className="font-mono">successorId</code>, and supports all four filters.
+              </li>
+            </ul>
+            <p className="mt-2 text-xs text-muted-foreground">
+              No field was renamed or removed. The one change that can break a strictly typed
+              client is <code className="font-mono">releaseDate</code> becoming nullable.
+            </p>
+          </div>
         </div>
       </section>
 

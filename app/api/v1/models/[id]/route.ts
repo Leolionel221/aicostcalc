@@ -1,71 +1,45 @@
-import { NextResponse } from "next/server";
 import modelsData from "@/data/models.json";
 import type { ModelsData } from "@/lib/types";
+import { API_HEADERS, API_META, preflight, resolveModel } from "@/lib/api";
 
 const data = modelsData as ModelsData;
 
 /**
  * GET /api/v1/models/{id}
  *
- * Returns the complete data record for a single model by its ID.
+ * Full record for one model. Accepts the canonical dashed id ("gpt-6-luna")
+ * and the dotted form people type from the model name ("gpt-6.luna",
+ * "GPT-5.6"); see resolveModel in lib/api.ts. When a non-canonical form was
+ * used, `_meta.resolvedFrom` says what was asked for — use `id` from then on.
  *
- * Valid IDs (as of 2026-05-12):
- *   gpt-5-5, gpt-5-mini, o4-mini,
- *   claude-opus-4-7, claude-haiku-4-5,
- *   gemini-3-1-pro, gemini-3-flash,
- *   deepseek-v3-2, grok-4, mistral-large-3
- *
- * Returns 404 with error JSON if model not found.
+ * Unknown ids return 404 with the full list of valid ids.
  */
-export async function GET(
-  _request: Request,
-  context: { params: Promise<{ id: string }> },
-) {
-  const { id } = await context.params;
-  const model = data.models.find((m) => m.id === id);
+export async function GET(_request: Request, context: { params: Promise<{ id: string }> }) {
+  const { id: raw } = await context.params;
+  const model = resolveModel(data.models, raw);
 
   if (!model) {
-    return NextResponse.json(
+    return Response.json(
       {
         error: "Model not found",
-        message: `No model with id "${id}". See /api/v1/models for the full list.`,
+        message: `No model with id "${raw}". See /api/v1/models for the full list.`,
         availableIds: data.models.map((m) => m.id),
       },
-      {
-        status: 404,
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-        },
-      },
+      { status: 404, headers: { "Access-Control-Allow-Origin": "*" } },
     );
   }
 
-  return NextResponse.json(
+  return Response.json(
     {
       ...model,
       _meta: {
-        dataSource:
-          "LiteLLM public registry + provider official pricing pages",
-        license: "MIT",
-        documentation: "https://aicostcalc.net/api",
+        ...API_META,
+        schemaVersion: data.schemaVersion,
+        ...(model.id !== raw ? { resolvedFrom: raw } : {}),
       },
     },
-    {
-      headers: {
-        "Cache-Control": "public, max-age=3600, s-maxage=86400",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET, OPTIONS",
-      },
-    },
+    { headers: API_HEADERS },
   );
 }
 
-export async function OPTIONS() {
-  return new NextResponse(null, {
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET, OPTIONS",
-      "Access-Control-Max-Age": "86400",
-    },
-  });
-}
+export const OPTIONS = preflight;

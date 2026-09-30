@@ -1,41 +1,40 @@
-import { NextResponse } from "next/server";
 import modelsData from "@/data/models.json";
 import type { ModelsData } from "@/lib/types";
+import { API_HEADERS, API_META, filterModels, preflight, readFilters } from "@/lib/api";
 
 const data = modelsData as ModelsData;
 
 /**
  * GET /api/v1/pricing
  *
- * Lightweight pricing-only endpoint. Returns just the essential pricing
- * fields per model — useful for clients that only need cost data and
- * want a smaller payload than /api/v1/models.
+ * Prices and limits only — a smaller payload than /api/v1/models. USD per 1M
+ * tokens. Same filters as /models (provider, category, capability, status).
  *
- * All prices are USD per 1M tokens.
- *
- * Optional query parameters:
- *   ?provider=openai  - filter by provider id
+ * Lifecycle fields are included on purpose. The docs suggest routing requests
+ * to the cheapest capable model, and this endpoint used to return prices with
+ * no way to tell that a model (e.g. Grok 4, retired 2026-05-15) no longer
+ * accepts requests. Use `?status=active` to exclude retired models entirely.
  */
 export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const provider = searchParams.get("provider")?.toLowerCase();
+  const filters = readFilters(new URL(request.url).searchParams);
+  const models = filterModels(data.models, filters);
 
-  let models = data.models;
-  if (provider) {
-    models = models.filter((m) => m.providerId.toLowerCase() === provider);
-  }
-
-  return NextResponse.json(
+  return Response.json(
     {
+      schemaVersion: data.schemaVersion,
       lastUpdated: data.lastUpdated,
       currency: "USD",
       unit: "per_1m_tokens",
       count: models.length,
+      filters,
       models: models.map((m) => ({
         id: m.id,
         name: m.name,
         provider: m.provider,
         providerId: m.providerId,
+        status: m.status,
+        deprecatedAt: m.deprecatedAt,
+        successorId: m.successorId,
         input: m.pricing.input,
         output: m.pricing.output,
         cachedInput: m.pricing.cachedInput,
@@ -45,30 +44,10 @@ export async function GET(request: Request) {
         contextWindow: m.limits.contextWindow,
         maxOutput: m.limits.maxOutput,
       })),
-      _meta: {
-        dataSource:
-          "LiteLLM public registry + provider official pricing pages",
-        license: "MIT",
-        fullData: "https://aicostcalc.net/api/v1/models",
-        documentation: "https://aicostcalc.net/api",
-      },
+      _meta: { ...API_META, fullData: "https://aicostcalc.net/api/v1/models" },
     },
-    {
-      headers: {
-        "Cache-Control": "public, max-age=3600, s-maxage=86400",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET, OPTIONS",
-      },
-    },
+    { headers: API_HEADERS },
   );
 }
 
-export async function OPTIONS() {
-  return new NextResponse(null, {
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET, OPTIONS",
-      "Access-Control-Max-Age": "86400",
-    },
-  });
-}
+export const OPTIONS = preflight;

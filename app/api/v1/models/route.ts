@@ -1,94 +1,40 @@
-import { NextResponse } from "next/server";
 import modelsData from "@/data/models.json";
-import type { ModelsData, Model } from "@/lib/types";
+import type { ModelsData } from "@/lib/types";
+import { API_HEADERS, API_META, filterModels, preflight, readFilters } from "@/lib/api";
 
 const data = modelsData as ModelsData;
 
 /**
  * GET /api/v1/models
  *
- * Returns the full list of all supported AI models with their pricing,
- * capabilities, and metadata.
+ * Every model with full data: pricing, limits, capabilities, lifecycle.
  *
- * Optional query filters:
- *   ?provider=openai        - filter by provider id (case-insensitive)
- *   ?category=flagship      - filter by category (flagship / small / reasoning / balanced)
- *   ?capability=vision      - filter by supported capability (vision / tools / caching / batch / etc.)
- *   ?status=active          - filter by lifecycle status
+ * Optional filters (AND-composed, case-insensitive):
+ *   ?provider=openai   ?category=flagship   ?capability=vision   ?status=active
  *
- * Filters compose with AND logic.
- *
- * Free to use. No authentication required. Rate-limited by Vercel CDN.
- *
- * Data source: Verified against LiteLLM's public model registry
- * (github.com/BerriAI/litellm) and each provider's official pricing page.
- * Reconciled against the LiteLLM registry daily; see scripts/sync-prices.mjs.
+ * Free, no auth. Reconciled against the LiteLLM registry daily
+ * (scripts/sync-prices.mjs); new models are published the day they appear.
  */
 export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const provider = searchParams.get("provider")?.toLowerCase();
-  const category = searchParams.get("category")?.toLowerCase();
-  const capability = searchParams.get("capability")?.toLowerCase();
-  const status = searchParams.get("status")?.toLowerCase();
+  const filters = readFilters(new URL(request.url).searchParams);
+  const models = filterModels(data.models, filters);
 
-  let filtered: Model[] = data.models;
-
-  if (provider) {
-    filtered = filtered.filter(
-      (m) => m.providerId.toLowerCase() === provider,
-    );
-  }
-  if (category) {
-    filtered = filtered.filter((m) => m.category.toLowerCase() === category);
-  }
-  if (capability) {
-    filtered = filtered.filter(
-      (m) =>
-        (m.supports as unknown as Record<string, unknown>)[capability] === true ||
-        m.useCase.map((u) => u.toLowerCase()).includes(capability),
-    );
-  }
-  if (status) {
-    filtered = filtered.filter((m) => m.status.toLowerCase() === status);
-  }
-
-  return NextResponse.json(
+  return Response.json(
     {
       schemaVersion: data.schemaVersion,
       lastUpdated: data.lastUpdated,
-      count: filtered.length,
-      filters: {
-        provider: provider ?? null,
-        category: category ?? null,
-        capability: capability ?? null,
-        status: status ?? null,
-      },
-      models: filtered,
+      count: models.length,
+      filters,
+      models,
       _meta: {
-        dataSource:
-          "LiteLLM public registry + provider official pricing pages",
-        license: "MIT",
-        documentation: "https://aicostcalc.net/api",
+        ...API_META,
+        changes: "https://aicostcalc.net/api/v1/changes",
         reportError:
           "https://github.com/Leolionel221/aicostcalc/issues/new?labels=pricing-correction",
       },
     },
-    {
-      headers: {
-        "Cache-Control": "public, max-age=3600, s-maxage=86400",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET, OPTIONS",
-      },
-    },
+    { headers: API_HEADERS },
   );
 }
 
-export async function OPTIONS() {
-  return new NextResponse(null, {
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET, OPTIONS",
-      "Access-Control-Max-Age": "86400",
-    },
-  });
-}
+export const OPTIONS = preflight;
