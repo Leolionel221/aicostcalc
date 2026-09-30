@@ -851,6 +851,28 @@ PRD v1.1 §3.5 F-api 早期承诺已兑现。3 个公开 endpoint + 完整 docs 
 
 > 每次"收口"在此追加一条记录。最新的在最上方。
 
+### 2026-09-30 — 接入 IndexNow（Bing 系即时收录）
+**类型**：feat（SEO 自动化）
+
+**为什么**：GA4 显示 Bing 系（Bing + DuckDuckGo + Yahoo）90 天约 100 个自然会话，是 Google（19）的 5 倍。自动上线的新模型页此前没有任何机制通知搜索引擎（Google Indexing API 不允许用于普通页面）。IndexNow 是 Bing、Yandex、Seznam、Naver 等的官方即时收录协议，免费、合规，**不需要登录任何控制台**。
+
+**组成**：
+- `public/079ac10255c5f11e550db04f7236915b.txt` —— 归属验证文件，内容即文件名。**密钥按协议就是公开的**，不是机密，放仓库里没问题。**不要删、不要改名**，否则所有提交会 403
+- `scripts/indexnow.mjs` —— `--diff <base> <head>`（两次提交间页面相关字段有变化的模型页 + 首页、/changes、Top 10 三个派生页）/ `--all` / `--urls` / `--dry-run`。只比较影响页面显示的字段，`lastVerified` 单独变化不算
+- `.github/workflows/indexnow.yml` —— 监听 **Vercel 生产部署成功**事件（`deployment_status`），与上一次成功的生产部署做 diff 后提交
+
+**设计要点**：
+- 挂在部署事件上，而不是挂在每日对账脚本后面：保证 Bing 来抓时页面已上线（否则抓到 404 或旧价格），也覆盖手工改数据的部署
+- 两个 step 显式 `shell: bash` 以启用 `-o pipefail` —— 否则 `| tee` 会吞掉 IndexNow 拒绝时的失败码，workflow 仍显示绿色（与 9/5 护栏报警失效同类问题，这次写的时候就拦住了）
+
+**验证**：
+- 真实历史回放：纯代码提交 → 0 条；9/23 上线 4 个新模型 → 8 条；9/13 DeepSeek 降价 → 4 条
+- 4 个单测（含密钥文件一致性）
+- 上线后首次自动运行：正确识别上一次部署 `74df1d1`，无数据变化 → 不提交，结论 success
+- 首次全站提交 46 个 URL → **HTTP 202**（已接受、密钥验证中，新密钥的正常状态）
+
+**看效果**：Bing Webmaster Tools（此前已从 GSC 导入站点）→ IndexNow 页面可看到提交记录；GA4 流量获取里看 bing / duckduckgo / yahoo organic 的变化。
+
 ### 2026-09-30 — 公开 API 跟上数据变化：schema 2.1、`/changes` 接口
 **类型**：feat（API）+ fix
 
