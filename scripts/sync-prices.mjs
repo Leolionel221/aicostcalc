@@ -165,7 +165,11 @@ function diffModel(model, entry) {
   };
   push("pricing.input", model.pricing.input, per1M(entry.input_cost_per_token));
   push("pricing.output", model.pricing.output, per1M(entry.output_cost_per_token));
-  if (model.pricing.cachedInput != null) {
+  // Also fills a missing cached price, not just updates one. Only checking models
+  // that already had a value left DeepSeek V3.2 and V4-Flash at "no cache price"
+  // for months while the registry carried one — so every cached-cost comparison
+  // on the site ranked them as if caching saved nothing (found 2026-10-04).
+  if (model.pricing.cachedInput != null || model.supports.caching) {
     push("pricing.cachedInput", model.pricing.cachedInput, per1M(entry.cache_read_input_token_cost));
   }
   const ctx = entry.max_input_tokens ? Math.round(entry.max_input_tokens) : null;
@@ -279,7 +283,8 @@ async function main() {
   const safeDrift = [];
   for (const entry of drift) {
     const bad = entry.changes.filter(
-      (c) => c.field.startsWith("pricing") && pct(c.from, c.to) > MAX_DELTA_PCT,
+      // Filling a missing value is not a price move; pct() would call it infinite.
+      (c) => c.field.startsWith("pricing") && c.from != null && pct(c.from, c.to) > MAX_DELTA_PCT,
     );
     if (bad.length) {
       for (const c of bad) {

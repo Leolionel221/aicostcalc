@@ -1,6 +1,6 @@
 {
   "schemaVersion": "2.1",
-  "lastUpdated": "2026-09-30",
+  "lastUpdated": "2026-10-04",
   "_note": "All pricing verified against LiteLLM's public model registry (github.com/BerriAI/litellm) on 2026-08-01. LiteLLM is community-maintained and the de facto industry standard for LLM pricing data. For final billing accuracy, always verify against each provider's official pricing page (links in each model's 'sources' field). See docs/PRD_v1.1_Supplement.md §4.3 for maintenance SOP.",
   "models": [
     {
@@ -1671,7 +1671,7 @@
         "unit": "per_1m_tokens",
         "input": 0.3,
         "output": 1.2,
-        "cachedInput": null,
+        "cachedInput": 0.006,
         "cacheWrite": null,
         "batchInput": null,
         "batchOutput": null,
@@ -1705,12 +1705,12 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-09-13",
+      "lastVerified": "2026-10-04",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-09-13"
+          "fetchedAt": "2026-10-04"
         },
         {
           "type": "official",
@@ -1773,7 +1773,7 @@
         "unit": "per_1m_tokens",
         "input": 0.28,
         "output": 0.4,
-        "cachedInput": null,
+        "cachedInput": 0.028,
         "cacheWrite": null,
         "batchInput": null,
         "batchOutput": null,
@@ -1807,12 +1807,12 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-08-01",
+      "lastVerified": "2026-10-04",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-08-01"
+          "fetchedAt": "2026-10-04"
         },
         {
           "type": "official",
