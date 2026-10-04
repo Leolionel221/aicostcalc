@@ -2,7 +2,7 @@
 
 # AI API Cost Calculator
 
-**Calculate and compare API pricing across 10+ LLMs — including caching and Batch API discounts.**
+**Calculate and compare API pricing across 40+ LLMs — including caching and Batch API discounts. Prices reconciled daily.**
 
 [![Live: aicostcalc.net](https://img.shields.io/badge/live-aicostcalc.net-2563eb?style=flat-square)](https://aicostcalc.net)
 [![Next.js 16](https://img.shields.io/badge/Next.js-16-black?style=flat-square&logo=next.js)](https://nextjs.org)
@@ -10,7 +10,7 @@
 [![Tailwind v4](https://img.shields.io/badge/Tailwind-v4-38bdf8?style=flat-square&logo=tailwindcss)](https://tailwindcss.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
 
-[**🌐 Live demo →**](https://aicostcalc.net) &nbsp;·&nbsp; [**📝 Blog**](https://aicostcalc.net/blog) &nbsp;·&nbsp; [**📊 Compare models**](https://aicostcalc.net/#compare)
+[**🌐 Live demo →**](https://aicostcalc.net) &nbsp;·&nbsp; [**📝 Blog**](https://aicostcalc.net/blog) &nbsp;·&nbsp; [**📊 Compare models**](https://aicostcalc.net/#compare) &nbsp;·&nbsp; [**📈 Price changes**](https://aicostcalc.net/changes) &nbsp;·&nbsp; [**🔌 Free API**](https://aicostcalc.net/api)
 
 ![AI API Cost Calculator](https://aicostcalc.net/opengraph-image)
 
@@ -38,26 +38,21 @@ This tool surfaces all of those dimensions in one place — so you see what you'
 - 🔬 **Caching slider** — model what % of your prompt is cached, see real impact
 - ⚡ **Batch API toggle** — instant 50% discount preview
 - 📊 **Three-column comparison** — Standard / With Caching / With Batch side-by-side, with savings highlighted
-- 🏆 **Multi-model table** — all 10 models ranked by cost, sortable by 5 dimensions, filter by provider
+- 🔎 **Fuzzy model search** — type "opus" or "g6 luna"; models grouped by provider, newest first
+- 🏆 **Multi-model table** — every model ranked by cost, sortable by 5 dimensions, filter by provider
 - 📅 **Monthly forecast** — multi-model bar chart with savings callout
 - 🎯 **Scenario templates** — 6 use cases (chatbot / code assistant / RAG / etc.) with one-click setup
+- 📈 **Price change log** — every new model and price move at [`/changes`](https://aicostcalc.net/changes), with an [RSS feed](https://aicostcalc.net/changes/rss.xml)
 - 🌙 **Dark mode** — system / light / dark
 - 🔍 **Exact tokenization** for OpenAI models via `js-tiktoken`; transparent estimates for others (clearly labeled)
 
 ## Models supported
 
-10 models from 6 providers, refreshed monthly:
+40+ models from OpenAI, Anthropic, Google, DeepSeek, xAI and Mistral — the current GPT-6, Claude 5.x, Gemini 3.x, DeepSeek V4 and Grok 4.x lines plus the older models people still run in production. New models are added automatically the day they appear in the [LiteLLM registry](https://github.com/BerriAI/litellm).
 
-| Provider | Models |
-|---|---|
-| **OpenAI** | GPT-5.5, GPT-5 mini, o4-mini |
-| **Anthropic** | Claude Opus 4.7, Claude Haiku 4.5 |
-| **Google** | Gemini 3.0 Pro, Gemini 3.0 Flash |
-| **DeepSeek** | DeepSeek V4 |
-| **xAI** | Grok 4 |
-| **Mistral** | Mistral Large 3 |
+The live list is always at [`/api/v1/models`](https://aicostcalc.net/api/v1/models) rather than in this README, so it can't go stale.
 
-Each model also has a dedicated landing page — e.g. [`/gpt-5-5-cost-calculator`](https://aicostcalc.net/gpt-5-5-cost-calculator), [`/claude-opus-4-7-cost-calculator`](https://aicostcalc.net/claude-opus-4-7-cost-calculator).
+Each model has a dedicated landing page — e.g. [`/gpt-6-sol-cost-calculator`](https://aicostcalc.net/gpt-6-sol-cost-calculator), [`/claude-opus-5-5-cost-calculator`](https://aicostcalc.net/claude-opus-5-5-cost-calculator).
 
 ## Reading list
 
@@ -68,6 +63,7 @@ In-depth content on AI API pricing:
 - [Top 10 Cheapest AI APIs in 2026 (Ranked by Real Cost)](https://aicostcalc.net/blog/top-10-cheapest-ai-apis-2026)
 - [How to Calculate Token Cost: A Beginner's Guide](https://aicostcalc.net/blog/how-to-calculate-token-cost-beginner-guide)
 - [GPT-5.5 vs Claude Opus 4.7: Cost & Performance Comparison](https://aicostcalc.net/blog/gpt-5-5-vs-claude-opus-4-7-comparison)
+- [OpenAI Prompt Caching: When Is It Worth It?](https://aicostcalc.net/blog/openai-prompt-caching-when-worth-it)
 
 ## Public API (free, no auth)
 
@@ -78,11 +74,16 @@ This project exposes a free JSON API for the same model pricing data. No authent
 curl https://aicostcalc.net/api/v1/models
 
 # Single model
-curl https://aicostcalc.net/api/v1/models/gpt-5-5
+curl https://aicostcalc.net/api/v1/models/gpt-6-sol
 
-# Lightweight pricing only
-curl https://aicostcalc.net/api/v1/pricing?provider=anthropic
+# Lightweight pricing only, with lifecycle status
+curl "https://aicostcalc.net/api/v1/pricing?provider=anthropic"
+
+# Price changes and new models since a date
+curl "https://aicostcalc.net/api/v1/changes?since=2026-09-01"
 ```
+
+Schema 2.1, versioned: list responses carry `schemaVersion` and `lastUpdated` (the date the pricing data last changed).
 
 Full documentation: [aicostcalc.net/api](https://aicostcalc.net/api)
 
@@ -134,6 +135,8 @@ npm run test:coverage # coverage report
 ├── app/
 │   ├── [slug]/                   # Per-model landing pages (SSG)
 │   ├── blog/[slug]/              # Markdown blog posts
+│   ├── api/v1/                   # Public JSON API (models, pricing, changes)
+│   ├── changes/                  # Price change log + RSS feed
 │   ├── about | privacy | terms | contact
 │   ├── icon.tsx                  # Generated favicon
 │   ├── apple-icon.tsx            # Generated Apple touch icon
@@ -153,7 +156,7 @@ npm run test:coverage # coverage report
 │   └── ui/                       # Radix-backed primitives
 ├── content/blog/                 # Markdown articles with frontmatter
 ├── data/
-│   ├── models.json               # Single source of truth for pricing (Schema v2)
+│   ├── models.json               # Single source of truth for pricing (schema 2.1)
 │   ├── currencies.json           # Static exchange rates
 │   └── scenarios.json            # Use-case template definitions
 ├── lib/
@@ -163,24 +166,27 @@ npm run test:coverage # coverage report
 │   ├── analytics.ts              # Typed GA4 event helper
 │   ├── seo.ts                    # Metadata + JSON-LD generators
 │   ├── blog.ts                   # Markdown rendering pipeline
-│   └── types.ts                  # Schema v2 TypeScript types
+│   └── types.ts                  # Schema TypeScript types
 ├── messages/                     # i18n strings (en, zh)
 └── docs/                         # Original PRD + supplement
 ```
 
 ## How accuracy is maintained
 
-- **Pricing data** (`data/models.json`) is verified against each provider's official pricing page on the 1st of each month. Each model entry includes a `lastVerified` date.
+- **Daily reconciliation.** A [GitHub Actions workflow](.github/workflows/sync-prices.yml) checks every price in `data/models.json` against the LiteLLM registry each day at 06:15 UTC and commits any change, which redeploys the site. Every change is recorded in the model's `priceHistory` and shows up on [`/changes`](https://aicostcalc.net/changes).
+- **Safety rails.** A price that moves more than 60% in one day is quarantined for a human to look at instead of being published; the rest of the run still goes through.
+- **New models** are drafted automatically from the registry and marked as drafts on their page until reviewed.
+- **Search engines are told immediately** — successful production deploys push the changed pages to [IndexNow](https://www.indexnow.org).
 - **Tokenization** uses official `tiktoken` encoders for OpenAI models (exact). Other providers use character-ratio approximation, clearly labeled "≈ Estimated" in the UI.
-- **All prices are USD** at source — non-USD currencies use static rates also updated monthly. Display includes `~` prefix and disclaimer for non-USD.
-- **Disclaimer**: AI providers update pricing without notice. There may be a lag between such changes and updates here. For business decisions, always verify against the provider's official pricing page.
+- **All prices are USD** at source — non-USD currencies use static rates. Display includes `~` prefix and disclaimer for non-USD.
+- **Disclaimer**: providers can change prices without notice, and the registry can lag the provider by a day or two. For business decisions, always verify against the provider's official pricing page.
 
 ## Contributing
 
 Pricing corrections, new models, and feature ideas are welcome:
 
 - **Stale or wrong pricing** → open an issue with the model, the wrong figure, and a link to the official page. Fix typically deploys within 24h.
-- **New models** → submit a PR adding an entry to `data/models.json` following the Schema v2 structure (see `lib/types.ts`).
+- **New models** → usually added automatically within a day of appearing in LiteLLM. If one is missing, open an issue.
 - **Code improvements / new features** → open an issue first to discuss scope.
 - **Translations** → `messages/zh.json` is partial; full Chinese routing is V1.1.
 
@@ -188,11 +194,9 @@ For substantial changes, please discuss in an issue before opening a PR.
 
 ## Roadmap
 
-See [HANDOVER.md §10](./HANDOVER.md#10-当前开发进度) for the detailed development progress and roadmap. High-level next steps:
-
-- **Q2 2026**: Vision pricing, F-share (URL-encoded deep links + image export), public JSON API endpoint
-- **Q3 2026**: Reasoning tokens, multi-language routing, scenario templates V2
-- **Q4 2026**: Live exchange rates, A/B testing infrastructure
+- Shareable calculator links (inputs encoded in the URL)
+- Vision and reasoning-token pricing
+- Multi-language routing
 
 ## Documentation
 
