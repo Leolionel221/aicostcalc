@@ -2780,7 +2780,7 @@
       ],
       "i18n": {
         "en": {
-          "tagline": "Google's cheapest listed model — 250¢/1M input",
+          "tagline": "Google's cheapest listed model — $0.25/1M input",
           "description": "Gemini 3.1 Flash Lite runs at $0.25 input / $1.50 output per 1M tokens with a 1049K context window — cheaper than Gemini 3.5 Flash Lite ($0.30/$2.50) but a generation behind it. A 1,000-in / 500-out call costs $0.00100. Google lists a retirement date of 2027-05-07, so treat it as a cost floor rather than a long-term choice."
         },
         "zh": {
