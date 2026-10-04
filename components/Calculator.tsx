@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import { ChevronDown } from "lucide-react";
+import { useState, useMemo, useEffect, useRef } from "react";
+import { Check, ChevronDown, Link2 } from "lucide-react";
 // Still used by the currency selector — five fixed options don't need search.
 import {
   Select,
@@ -15,6 +15,7 @@ import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Switch } from "@/components/ui/switch";
 import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { AffiliateCTA } from "./AffiliateCTA";
 import { ModelPicker } from "./ModelPicker";
 import { CostComparisonStrip } from "./CostComparison";
@@ -23,6 +24,7 @@ import { calculateCost, calculateComparison } from "@/lib/calculator";
 import { ALL_CURRENCIES, formatCost, type CurrencyCode } from "@/lib/currency";
 import { track, trackDebounced } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
+import { parseShareState, serializeShareState } from "@/lib/share-state";
 import type { Model } from "@/lib/types";
 
 interface CalculatorProps {
@@ -40,6 +42,55 @@ export function Calculator({ models, defaultModelId }: CalculatorProps) {
   const [batchEnabled, setBatchEnabled] = useState(false);
   const [currency, setCurrency] = useState<CurrencyCode>("USD");
   const [activeScenarioId, setActiveScenarioId] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
+
+  // Shared links: apply the query string once, after hydration. The server HTML
+  // is always the default calculator, so the static page stays identical for
+  // search engines; see lib/share-state.ts for why this isn't useSearchParams.
+  const restored = useRef(false);
+  useEffect(() => {
+    const s = parseShareState(window.location.search, models.map((m) => m.id));
+    /* eslint-disable react-hooks/set-state-in-effect -- one-time sync from the URL, an external source */
+    if (s.modelId) setModelId(s.modelId);
+    if (s.inputTokens) setInputTokens(s.inputTokens);
+    if (s.outputTokens) setOutputTokens(s.outputTokens);
+    if (s.cachingEnabled) setCachingEnabled(true);
+    if (s.cachedPortion !== undefined) setCachedPortion(s.cachedPortion);
+    if (s.batchEnabled) setBatchEnabled(true);
+    if (s.currency) setCurrency(s.currency);
+    // Show the options the link turned on, or the recipient can't see why the number differs.
+    if (s.cachingEnabled || s.batchEnabled || s.currency) setAdvancedOpen(true);
+    /* eslint-enable react-hooks/set-state-in-effect */
+    if (Object.keys(s).length) track("shared_link_opened", { model_id: s.modelId ?? modelId });
+    restored.current = true;
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- run once on mount
+  }, []);
+
+  const shareQuery = serializeShareState(
+    { modelId, inputTokens, outputTokens, cachingEnabled, cachedPortion, batchEnabled, currency },
+    defaultModelId ?? models[0]?.id,
+  );
+
+  // Keep the address bar in step, so copying the URL by hand works too.
+  // replaceState, not pushState: every keystroke would otherwise become a Back step.
+  useEffect(() => {
+    if (!restored.current) return;
+    const { pathname, hash } = window.location;
+    window.history.replaceState(null, "", pathname + shareQuery + hash);
+  }, [shareQuery]);
+
+  async function handleCopyLink() {
+    const url = window.location.origin + window.location.pathname + shareQuery;
+    try {
+      await navigator.clipboard.writeText(url);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+      track("share_link_copied", { model_id: modelId });
+    } catch {
+      // Clipboard can be blocked (insecure context, permissions); the address bar is already up to date.
+      window.prompt("Copy this link:", url);
+    }
+  }
 
   function handleScenarioSelect(scenario: Scenario) {
     setInputTokens(String(scenario.inputTokens));
@@ -284,6 +335,23 @@ export function Calculator({ models, defaultModelId }: CalculatorProps) {
             <span className="text-3xl font-semibold font-mono tabular-nums">
               {formatCost(cost.totalCost, currency)}
             </span>
+          </div>
+          <div className="flex justify-end">
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              onClick={handleCopyLink}
+              aria-live="polite"
+              className="text-muted-foreground"
+            >
+              {copied ? (
+                <Check className="h-3.5 w-3.5 mr-1.5 text-[color:var(--accent)]" aria-hidden />
+              ) : (
+                <Link2 className="h-3.5 w-3.5 mr-1.5" aria-hidden />
+              )}
+              {copied ? "Link copied" : "Copy link to this calculation"}
+            </Button>
           </div>
           <div className="grid grid-cols-2 gap-2 text-xs text-muted-foreground">
             <div className="flex justify-between rounded-md bg-muted px-3 py-2">

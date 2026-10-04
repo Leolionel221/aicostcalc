@@ -39,7 +39,9 @@ type EventName =
   | "external_source_clicked"
   | "faq_expanded"
   | "language_switched"
-  | "theme_toggled";
+  | "theme_toggled"
+  | "share_link_copied"
+  | "shared_link_opened";
 
 /**
  * Never use GA4's reserved attribution names as event parameters — `source`,
