@@ -13,11 +13,15 @@ GSC 2026-10-04：外部链接 **0**。这份文件既是投稿草稿，也是跟
 | 1 | pleasedodisturb/awesome-llm-token-optimization · Pricing Comparison → Live Pricing Tools | PR | 已提交 2026-10-04，等审核（首次贡献者，lint CI 需维护者批准才跑） | [PR #58](https://github.com/pleasedodisturb/awesome-llm-token-optimization/pull/58) |
 | 2 | foss42/awesome-generative-ai-apis · Other AI Tools | 先 Issue，后 PR | Issue 已开 2026-10-04，有回应后提 PR | [Issue #472](https://github.com/foss42/awesome-generative-ai-apis/issues/472) |
 | 3 | taishi-i/awesome-ChatGPT-repositories · Others | PR | 已提交 2026-10-04，等审核 | [PR #255](https://github.com/taishi-i/awesome-ChatGPT-repositories/pull/255) |
+| 4 | ghimiresunil/Top-AI-Tools · Developer | PR | 已提交 2026-10-04，等审核 | [PR #657](https://github.com/ghimiresunil/Top-AI-Tools/pull/657) |
+| 5 | WangRongsheng/awesome-LLM-resources · 推理 Inference | PR | 已提交 2026-10-04，等审核 | [PR #251](https://github.com/WangRongsheng/awesome-LLM-resources/pull/251) |
 
 **排除：**
 - InftyAI/Awesome-LLMOps：条目强制带 Stars/Contributors 徽章，我们 2 星 1 贡献者，摆上去反而难看，维护者大概率拒。等星数上来再说。
 - ai-collection：收录 **$19**，且只收 AI 应用，不对口。
 - webfuse-com/awesome-claude：0 合并，100 个积压 PR。
+- promptslab/Awesome-Prompt-Engineering：收录了 Price Per Token，但 2026-03-18 之后没再合并过，30 个积压 PR。
+- ikaijua/Awesome-AITools：收录了 Price Per Token，但要求中英两份 README 同步、标准偏严，留作第二批。
 
 ---
 
@@ -112,6 +116,74 @@ Disclosure: I maintain it. If this fits, I'll open a PR with the row below.
 Adds [aicostcalc](https://github.com/Leolionel221/aicostcalc) to **Others**: an MIT-licensed calculator and free JSON API for OpenAI, Anthropic, Google, DeepSeek, xAI and Mistral API prices, kept current by a daily GitHub Actions sync against the LiteLLM registry. Live at https://aicostcalc.net.
 
 Disclosure: I'm the author.
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+```
+
+---
+
+## 第二批的找法
+
+不去翻泛泛的"AI 目录"，而是用 GitHub 代码搜索找**链接了竞品**（pricepertoken.com、llmpricecheck、
+simonwillison llm-prices、helicone llm-cost、costgoat…）的 README——收了竞品的列表，就是会收我们的列表。
+原始结果：scratchpad 里的 comp-repos.txt；大部分命中是模型仓库引用 Artificial Analysis 跑分，无关。
+
+---
+
+## 4. ghimiresunil/Top-AI-Tools
+
+**为什么投它：** 竞品 Price Per Token 就在 `## Developer` 表里；几乎每天合并外部 PR（10-04、10-03、10-01…）。
+
+**放置：** `## Developer` 表格末尾（该表不排序，新条目都追加在最后）。
+
+**条目：**
+
+```markdown
+| AI API Cost Calculator | Compare API prices for 40+ LLMs (OpenAI, Anthropic, Google, DeepSeek, xAI, Mistral) with cache and Batch discounts; reconciled daily, with a free JSON API. | [🔗](https://aicostcalc.net/) |
+```
+
+**PR 标题：** `Add AI API Cost Calculator to Developer`
+
+**PR 描述：**
+
+```markdown
+Adds [AI API Cost Calculator](https://aicostcalc.net/) to **Developer**, next to Price Per Token.
+
+It prices the cached-input and Batch API rates as well as the headline input/output rates, for 40+ models. Prices are reconciled daily against the LiteLLM registry by a [public workflow](https://github.com/Leolionel221/aicostcalc/actions/workflows/sync-prices.yml), every change is logged at https://aicostcalc.net/changes, and the same data is available as a free, no-auth JSON API (https://aicostcalc.net/api). MIT licensed.
+
+Disclosure: I'm the author.
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+```
+
+---
+
+## 5. WangRongsheng/awesome-LLM-resources
+
+**为什么投它：** 9k 星的中文 LLM 资源总表，`## 推理 Inference` 第 14 条就是竞品 LLM Pricing（llmpricecheck）。外部 PR 每月都有合并（最近 09-02、08-14）。
+
+**放置：** `## 推理 Inference` 编号列表末尾，作为第 57 条（当前最后一条是 56. FreeToken）。条目描述沿用该节的英文写法。
+
+**条目：**
+
+```markdown
+57. [AI API Cost Calculator](https://aicostcalc.net/): Calculate and compare API costs for 40+ LLMs, including cache and Batch discounts. Prices reconciled daily against LiteLLM, with a free JSON API.
+```
+
+**PR 标题：** `推理 Inference 新增：AI API Cost Calculator`
+
+**PR 描述：**
+
+```markdown
+在 **推理 Inference** 新增 [AI API Cost Calculator](https://aicostcalc.net/)，与已收录的 LLM Pricing 同类。
+
+- 覆盖 OpenAI、Anthropic、Google、DeepSeek、xAI、Mistral 的 40+ 个模型，除输入/输出价外还计算缓存输入价和 Batch API 折扣
+- 每天由[公开的 GitHub Actions](https://github.com/Leolionel221/aicostcalc/actions/workflows/sync-prices.yml) 与 LiteLLM 对账，价格变动记录见 https://aicostcalc.net/changes
+- 同一份数据提供免费、无需鉴权的 JSON API：https://aicostcalc.net/api（MIT）
+
+Adds a daily-reconciled LLM API price calculator with a free JSON API, alongside the existing LLM Pricing entry.
+
+声明：我是作者。 / Disclosure: I'm the author.
 
 🤖 Generated with [Claude Code](https://claude.com/claude-code)
 ```
