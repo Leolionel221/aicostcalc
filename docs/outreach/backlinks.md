@@ -14,7 +14,7 @@ GSC 2026-10-04：外部链接 **0**。这份文件既是投稿草稿，也是跟
 | 2 | foss42/awesome-generative-ai-apis · Other AI Tools | 先 Issue，后 PR | Issue 已开 2026-10-04，有回应后提 PR | [Issue #472](https://github.com/foss42/awesome-generative-ai-apis/issues/472) |
 | 3 | taishi-i/awesome-ChatGPT-repositories · Others | PR | 已提交 2026-10-04，等审核 | [PR #255](https://github.com/taishi-i/awesome-ChatGPT-repositories/pull/255) |
 | 4 | ghimiresunil/Top-AI-Tools · Developer | PR | 已提交 2026-10-04，等审核 | [PR #657](https://github.com/ghimiresunil/Top-AI-Tools/pull/657) |
-| 5 | WangRongsheng/awesome-LLM-resources · 推理 Inference | PR | 已提交 2026-10-04，等审核 | [PR #251](https://github.com/WangRongsheng/awesome-LLM-resources/pull/251) |
+| 5 | WangRongsheng/awesome-LLM-resources · 推理 Inference | PR | ❌ 2026-10-05 维护者无评论关闭。他不合并外部 PR，自己挑条目手动加（同一天把第 57 条给了推理框架 NInfer）。不再跟进 | [PR #251](https://github.com/WangRongsheng/awesome-LLM-resources/pull/251) |
 
 **排除：**
 - InftyAI/Awesome-LLMOps：条目强制带 Stars/Contributors 徽章，我们 2 星 1 贡献者，摆上去反而难看，维护者大概率拒。等星数上来再说。
