@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { Model } from "./types";
 import { buildFAQs } from "./faq";
+import { formatContext } from "./utils";
 
 const SITE_URL = "https://aicostcalc.net";
 const SITE_NAME = "AI API Cost Calculator";
@@ -167,7 +168,7 @@ export function reportPriceUrl(model: Model): string {
     );
   }
   lines.push(
-    `- Context window: ${(model.limits.contextWindow / 1000).toFixed(0)}K tokens`,
+    `- Context window: ${formatContext(model.limits.contextWindow)} tokens`,
   );
   lines.push(``);
   lines.push(`---`);

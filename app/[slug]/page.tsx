@@ -20,6 +20,7 @@ import {
   faqJsonLd,
   reportPriceUrl,
 } from "@/lib/seo";
+import { formatContext } from "@/lib/utils";
 
 const data = modelsData as ModelsData;
 
@@ -157,18 +158,24 @@ export default async function ModelPage({
                 <div className="rounded-lg border border-border p-3">
                   <div className="text-xs text-muted-foreground">Context window</div>
                   <div className="text-lg font-semibold font-mono tabular-nums">
-                    {(model.limits.contextWindow / 1000).toFixed(0)}K
+                    {formatContext(model.limits.contextWindow)}
                   </div>
                   <div className="text-[10px] text-muted-foreground">tokens</div>
                 </div>
+                {/* The registry carries no release dates, so for about half the models
+                    we only know when we started listing them — say that, rather than "—". */}
                 <div className="rounded-lg border border-border p-3">
-                  <div className="text-xs text-muted-foreground">Released</div>
-                  <div className="text-lg font-semibold">
-                    {model.releaseDate?.slice(0, 7) ?? "—"}
+                  <div className="text-xs text-muted-foreground">
+                    {model.releaseDate ? "Released" : "Listed here"}
                   </div>
-                  <div className="text-[10px] text-muted-foreground">
-                    Cutoff {model.limits.knowledgeCutoff ?? "—"}
+                  <div className="text-lg font-semibold font-mono tabular-nums">
+                    {(model.releaseDate ?? model.priceHistory[0]?.date ?? "").slice(0, 7) || "—"}
                   </div>
+                  {model.limits.knowledgeCutoff && (
+                    <div className="text-[10px] text-muted-foreground">
+                      Cutoff {model.limits.knowledgeCutoff}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -324,7 +331,7 @@ export default async function ModelPage({
                 <div className="flex items-start gap-2">
                   <span className="text-[color:var(--accent)] mt-0.5">✓</span>
                   <span>
-                    Context window of <strong>{(model.limits.contextWindow / 1000).toFixed(0)}K tokens</strong>{" "}
+                    Context window of <strong>{formatContext(model.limits.contextWindow)} tokens</strong>{" "}
                     handles {model.limits.contextWindow >= 1_000_000 ? "entire codebases or book-length documents" : model.limits.contextWindow >= 200000 ? "long conversations and large documents" : "typical chat and document tasks"}.
                   </span>
                 </div>

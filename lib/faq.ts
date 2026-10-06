@@ -1,4 +1,5 @@
 import type { Model } from "./types";
+import { formatContext } from "./utils";
 
 export interface FAQItem {
   q: string;
@@ -16,7 +17,7 @@ export interface FAQItem {
 export function buildFAQs(model: Model): FAQItem[] {
   const inputPrice = `$${model.pricing.input.toFixed(2)}`;
   const outputPrice = `$${model.pricing.output.toFixed(2)}`;
-  const ctx = `${(model.limits.contextWindow / 1000).toFixed(0)}K`;
+  const ctx = `${formatContext(model.limits.contextWindow)}`;
 
   const faqs: FAQItem[] = [
     {

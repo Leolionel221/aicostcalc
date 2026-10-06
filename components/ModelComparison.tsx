@@ -10,7 +10,7 @@ import { calculateStandard } from "@/lib/calculator";
 import { formatCost, type CurrencyCode } from "@/lib/currency";
 import { modelSlug } from "@/lib/seo";
 import { track } from "@/lib/analytics";
-import { cn } from "@/lib/utils";
+import { cn, formatContext } from "@/lib/utils";
 import type { Model } from "@/lib/types";
 
 type SortKey = "name" | "input" | "output" | "totalCost" | "context";
@@ -252,7 +252,7 @@ export function ModelComparison({
                     {formatCost(totalCost, currency)}
                   </td>
                   <td className="py-3 px-3 text-right text-xs text-muted-foreground hidden md:table-cell">
-                    {(model.limits.contextWindow / 1000).toFixed(0)}K
+                    {formatContext(model.limits.contextWindow)}
                   </td>
                   <td className="py-3 pl-3 w-8">
                     <button

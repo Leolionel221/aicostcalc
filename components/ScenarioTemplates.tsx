@@ -65,7 +65,7 @@ export function ScenarioTemplates({
             >
               <div className="flex items-center gap-2 w-full">
                 <Icon className="h-4 w-4 text-muted-foreground shrink-0" />
-                <span className="text-sm font-medium truncate">{s.i18n.en.name}</span>
+                <span className="text-[13px] sm:text-sm font-medium leading-tight">{s.i18n.en.name}</span>
               </div>
               <div className="text-[10px] text-muted-foreground font-mono">
                 {s.inputTokens} in · {s.outputTokens} out · {s.callsPerDay}/day

@@ -112,8 +112,10 @@ export default function ChangesPage() {
 
       <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
         <span className="text-muted-foreground">
-          {data.models.length} models · {priceMoves} price change{priceMoves === 1 ? "" : "s"} · last
-          checked <time dateTime={data.lastUpdated}>{data.lastUpdated}</time>
+          {data.models.length} models · {priceMoves} price change{priceMoves === 1 ? "" : "s"} · data
+          last changed <time dateTime={data.lastUpdated}>{data.lastUpdated}</time>
+          {/* Not "last checked": the daily sync only commits when something changed, so
+              on quiet days this date stays put while the check itself still ran. */}
         </span>
         <a
           href="/changes/rss.xml"

@@ -37,7 +37,7 @@ export default function Home() {
                 Calculate AI API costs in&nbsp;seconds.
               </h1>
               <p className="text-lg text-muted-foreground leading-relaxed">
-                Compare pricing across {data.models.length}+ models from OpenAI,
+                Compare pricing across {data.models.length} models from OpenAI,
                 Anthropic, Google, DeepSeek, xAI and Mistral — including cached input
                 and Batch API discounts.
               </p>
