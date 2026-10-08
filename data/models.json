@@ -1,6 +1,6 @@
 {
   "schemaVersion": "2.1",
-  "lastUpdated": "2026-10-04",
+  "lastUpdated": "2026-10-08",
   "_note": "All pricing verified against LiteLLM's public model registry (github.com/BerriAI/litellm) on 2026-08-01. LiteLLM is community-maintained and the de facto industry standard for LLM pricing data. For final billing accuracy, always verify against each provider's official pricing page (links in each model's 'sources' field). See docs/PRD_v1.1_Supplement.md §4.3 for maintenance SOP.",
   "models": [
     {
@@ -3718,7 +3718,7 @@
         "unit": "per_1m_tokens",
         "input": 2,
         "output": 10,
-        "cachedInput": 0.2,
+        "cachedInput": 0.1,
         "cacheWrite": 2.5,
         "batchInput": 1,
         "batchOutput": 5,
@@ -3752,12 +3752,12 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-09-29",
+      "lastVerified": "2026-10-08",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-09-29"
+          "fetchedAt": "2026-10-08"
         },
         {
           "type": "official",
@@ -3776,11 +3776,11 @@
       "i18n": {
         "en": {
           "tagline": "Claude Sonnet 5.5 — $2.00/$10.00 per 1M tokens, 1M context",
-          "description": "Claude Sonnet 5.5 is priced at $2.00 input / $10.00 output per 1M tokens, with a 1M context window and 128K max output. Cached input $0.20/1M. Same per-call cost as Claude Sonnet 5. A 1,000-in / 500-out call costs $0.00700."
+          "description": "Claude Sonnet 5.5 is priced at $2.00 input / $10.00 output per 1M tokens, with a 1M context window and 128K max output. Cached input $0.10/1M. Same per-call cost as Claude Sonnet 5. A 1,000-in / 500-out call costs $0.00700."
         },
         "zh": {
           "tagline": "Claude Sonnet 5.5 —— 输入 $2.00 / 输出 $10.00（每 1M token），1M 上下文",
-          "description": "Claude Sonnet 5.5 定价为输入 $2.00 / 输出 $10.00（每 1M token），1M 上下文，128K 最大输出。缓存输入 $0.20/1M。单次成本与 Claude Sonnet 5 相同。一次 1000 输入 / 500 输出的调用约 $0.00700。"
+          "description": "Claude Sonnet 5.5 定价为输入 $2.00 / 输出 $10.00（每 1M token），1M 上下文，128K 最大输出。缓存输入 $0.10/1M。单次成本与 Claude Sonnet 5 相同。一次 1000 输入 / 500 输出的调用约 $0.00700。"
         }
       },
       "draft": {
@@ -3879,6 +3879,101 @@
       },
       "draft": {
         "generatedAt": "2026-09-30",
+        "note": "Auto-drafted from the LiteLLM registry the day it appeared. Prices and limits are registry values; the name follows a fixed rule; tagline and description are formulaic. Needs a human read for lineage, positioning and anything the registry cannot know."
+      }
+    },
+    {
+      "id": "claude-haiku-5-5",
+      "name": "Claude Haiku 5.5",
+      "shortName": "Haiku 5.5",
+      "provider": "Anthropic",
+      "providerId": "anthropic",
+      "providerLogo": "/logos/anthropic.svg",
+      "providerWebsite": "https://anthropic.com",
+      "category": "small",
+      "useCase": [
+        "general",
+        "reasoning",
+        "vision",
+        "long-context",
+        "fast"
+      ],
+      "releaseDate": null,
+      "status": "active",
+      "deprecatedAt": null,
+      "successorId": null,
+      "pricing": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.1,
+        "output": 0.5,
+        "cachedInput": 0.01,
+        "cacheWrite": 0.125,
+        "batchInput": 0.05,
+        "batchOutput": 0.25,
+        "imagePerImage": null,
+        "imageTokensFormula": null,
+        "reasoningOutput": null,
+        "fineTunedInput": null,
+        "fineTunedOutput": null
+      },
+      "limits": {
+        "contextWindow": 1000000,
+        "maxOutput": 128000,
+        "maxImagesPerRequest": null,
+        "knowledgeCutoff": null
+      },
+      "tokenization": {
+        "encoder": "approximate",
+        "approximationRatio": {
+          "english": 4,
+          "chinese": 1.5,
+          "code": 3
+        }
+      },
+      "supports": {
+        "vision": true,
+        "audio": false,
+        "tools": true,
+        "streaming": true,
+        "caching": true,
+        "batch": true,
+        "fineTuning": false,
+        "structuredOutput": true
+      },
+      "lastVerified": "2026-10-08",
+      "sources": [
+        {
+          "type": "community",
+          "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
+          "fetchedAt": "2026-10-08"
+        },
+        {
+          "type": "official",
+          "url": "https://platform.claude.com/docs/en/models/haiku-5-5/overview",
+          "fetchedAt": "2026-10-08"
+        }
+      ],
+      "priceHistory": [
+        {
+          "date": "2026-10-08",
+          "input": 0.1,
+          "output": 0.5,
+          "note": "First listed; auto-drafted from LiteLLM registry"
+        }
+      ],
+      "i18n": {
+        "en": {
+          "tagline": "Claude Haiku 5.5 — $0.10/$0.50 per 1M tokens, 1M context",
+          "description": "Claude Haiku 5.5 is priced at $0.10 input / $0.50 output per 1M tokens, with a 1M context window and 128K max output. Cached input $0.01/1M. That is 90% cheaper per call than Claude Haiku 4.5 ($1.00/$5.00). A 1,000-in / 500-out call costs $0.00035."
+        },
+        "zh": {
+          "tagline": "Claude Haiku 5.5 —— 输入 $0.10 / 输出 $0.50（每 1M token），1M 上下文",
+          "description": "Claude Haiku 5.5 定价为输入 $0.10 / 输出 $0.50（每 1M token），1M 上下文，128K 最大输出。缓存输入 $0.01/1M。单次成本比 Claude Haiku 4.5（$1.00/$5.00） 便宜 90%。一次 1000 输入 / 500 输出的调用约 $0.00035。"
+        }
+      },
+      "draft": {
+        "generatedAt": "2026-10-08",
         "note": "Auto-drafted from the LiteLLM registry the day it appeared. Prices and limits are registry values; the name follows a fixed rule; tagline and description are formulaic. Needs a human read for lineage, positioning and anything the registry cannot know."
       }
     }
