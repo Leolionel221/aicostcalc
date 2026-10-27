@@ -1,6 +1,6 @@
 {
   "schemaVersion": "2.1",
-  "lastUpdated": "2026-10-08",
+  "lastUpdated": "2026-10-27",
   "_note": "All pricing verified against LiteLLM's public model registry (github.com/BerriAI/litellm) on 2026-08-01. LiteLLM is community-maintained and the de facto industry standard for LLM pricing data. For final billing accuracy, always verify against each provider's official pricing page (links in each model's 'sources' field). See docs/PRD_v1.1_Supplement.md §4.3 for maintenance SOP.",
   "models": [
     {
@@ -3974,6 +3974,291 @@
       },
       "draft": {
         "generatedAt": "2026-10-08",
+        "note": "Auto-drafted from the LiteLLM registry the day it appeared. Prices and limits are registry values; the name follows a fixed rule; tagline and description are formulaic. Needs a human read for lineage, positioning and anything the registry cannot know."
+      }
+    },
+    {
+      "id": "mistral-large-4",
+      "name": "Mistral Large 4",
+      "shortName": "Large 4",
+      "provider": "Mistral",
+      "providerId": "mistral",
+      "providerLogo": "/logos/mistral.svg",
+      "providerWebsite": "https://mistral.ai",
+      "category": "small",
+      "useCase": [
+        "general",
+        "reasoning",
+        "vision",
+        "long-context",
+        "fast"
+      ],
+      "releaseDate": null,
+      "status": "active",
+      "deprecatedAt": null,
+      "successorId": null,
+      "pricing": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.68,
+        "output": 2.09,
+        "cachedInput": 0.068,
+        "cacheWrite": null,
+        "batchInput": null,
+        "batchOutput": null,
+        "imagePerImage": null,
+        "imageTokensFormula": null,
+        "reasoningOutput": null,
+        "fineTunedInput": null,
+        "fineTunedOutput": null
+      },
+      "limits": {
+        "contextWindow": 1048576,
+        "maxOutput": 1048576,
+        "maxImagesPerRequest": null,
+        "knowledgeCutoff": null
+      },
+      "tokenization": {
+        "encoder": "approximate",
+        "approximationRatio": {
+          "english": 4,
+          "chinese": 1.5,
+          "code": 3
+        }
+      },
+      "supports": {
+        "vision": true,
+        "audio": false,
+        "tools": true,
+        "streaming": true,
+        "caching": true,
+        "batch": false,
+        "fineTuning": false,
+        "structuredOutput": true
+      },
+      "lastVerified": "2026-10-27",
+      "sources": [
+        {
+          "type": "community",
+          "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
+          "fetchedAt": "2026-10-27"
+        },
+        {
+          "type": "official",
+          "url": "https://docs.mistral.ai/models/mistral-large-4",
+          "fetchedAt": "2026-10-27"
+        }
+      ],
+      "priceHistory": [
+        {
+          "date": "2026-10-27",
+          "input": 0.68,
+          "output": 2.09,
+          "note": "First listed; auto-drafted from LiteLLM registry"
+        }
+      ],
+      "i18n": {
+        "en": {
+          "tagline": "Mistral Large 4 — $0.68/$2.09 per 1M tokens, 1M context",
+          "description": "Mistral Large 4 is priced at $0.68 input / $2.09 output per 1M tokens, with a 1M context window and 1M max output. Cached input $0.07/1M. That is 1.4x the per-call cost of Mistral Large 3 ($0.50/$1.50). A 1,000-in / 500-out call costs $0.00172."
+        },
+        "zh": {
+          "tagline": "Mistral Large 4 —— 输入 $0.68 / 输出 $2.09（每 1M token），1M 上下文",
+          "description": "Mistral Large 4 定价为输入 $0.68 / 输出 $2.09（每 1M token），1M 上下文，1M 最大输出。缓存输入 $0.07/1M。单次成本是 Mistral Large 3（$0.50/$1.50） 的 1.4 倍。一次 1000 输入 / 500 输出的调用约 $0.00172。"
+        }
+      },
+      "draft": {
+        "generatedAt": "2026-10-27",
+        "note": "Auto-drafted from the LiteLLM registry the day it appeared. Prices and limits are registry values; the name follows a fixed rule; tagline and description are formulaic. Needs a human read for lineage, positioning and anything the registry cannot know."
+      }
+    },
+    {
+      "id": "mistral-large-4-0",
+      "name": "Mistral Large 4.0",
+      "shortName": "Large 4.0",
+      "provider": "Mistral",
+      "providerId": "mistral",
+      "providerLogo": "/logos/mistral.svg",
+      "providerWebsite": "https://mistral.ai",
+      "category": "small",
+      "useCase": [
+        "general",
+        "reasoning",
+        "vision",
+        "long-context",
+        "fast"
+      ],
+      "releaseDate": null,
+      "status": "active",
+      "deprecatedAt": null,
+      "successorId": null,
+      "pricing": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.68,
+        "output": 2.09,
+        "cachedInput": 0.068,
+        "cacheWrite": null,
+        "batchInput": null,
+        "batchOutput": null,
+        "imagePerImage": null,
+        "imageTokensFormula": null,
+        "reasoningOutput": null,
+        "fineTunedInput": null,
+        "fineTunedOutput": null
+      },
+      "limits": {
+        "contextWindow": 1048576,
+        "maxOutput": 1048576,
+        "maxImagesPerRequest": null,
+        "knowledgeCutoff": null
+      },
+      "tokenization": {
+        "encoder": "approximate",
+        "approximationRatio": {
+          "english": 4,
+          "chinese": 1.5,
+          "code": 3
+        }
+      },
+      "supports": {
+        "vision": true,
+        "audio": false,
+        "tools": true,
+        "streaming": true,
+        "caching": true,
+        "batch": false,
+        "fineTuning": false,
+        "structuredOutput": true
+      },
+      "lastVerified": "2026-10-27",
+      "sources": [
+        {
+          "type": "community",
+          "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
+          "fetchedAt": "2026-10-27"
+        },
+        {
+          "type": "official",
+          "url": "https://docs.mistral.ai/models/mistral-large-4",
+          "fetchedAt": "2026-10-27"
+        }
+      ],
+      "priceHistory": [
+        {
+          "date": "2026-10-27",
+          "input": 0.68,
+          "output": 2.09,
+          "note": "First listed; auto-drafted from LiteLLM registry"
+        }
+      ],
+      "i18n": {
+        "en": {
+          "tagline": "Mistral Large 4.0 — $0.68/$2.09 per 1M tokens, 1M context",
+          "description": "Mistral Large 4.0 is priced at $0.68 input / $2.09 output per 1M tokens, with a 1M context window and 1M max output. Cached input $0.07/1M. That is 1.4x the per-call cost of Mistral Large 3 ($0.50/$1.50). A 1,000-in / 500-out call costs $0.00172."
+        },
+        "zh": {
+          "tagline": "Mistral Large 4.0 —— 输入 $0.68 / 输出 $2.09（每 1M token），1M 上下文",
+          "description": "Mistral Large 4.0 定价为输入 $0.68 / 输出 $2.09（每 1M token），1M 上下文，1M 最大输出。缓存输入 $0.07/1M。单次成本是 Mistral Large 3（$0.50/$1.50） 的 1.4 倍。一次 1000 输入 / 500 输出的调用约 $0.00172。"
+        }
+      },
+      "draft": {
+        "generatedAt": "2026-10-27",
+        "note": "Auto-drafted from the LiteLLM registry the day it appeared. Prices and limits are registry values; the name follows a fixed rule; tagline and description are formulaic. Needs a human read for lineage, positioning and anything the registry cannot know."
+      }
+    },
+    {
+      "id": "gpt-6-1-terra",
+      "name": "GPT-6.1 Terra",
+      "shortName": "6.1 Terra",
+      "provider": "OpenAI",
+      "providerId": "openai",
+      "providerLogo": "/logos/openai.svg",
+      "providerWebsite": "https://openai.com",
+      "category": "small",
+      "useCase": [
+        "general",
+        "reasoning",
+        "vision",
+        "long-context",
+        "fast"
+      ],
+      "releaseDate": null,
+      "status": "active",
+      "deprecatedAt": null,
+      "successorId": null,
+      "pricing": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 1,
+        "output": 5,
+        "cachedInput": 0.05,
+        "cacheWrite": 1.25,
+        "batchInput": 0.5,
+        "batchOutput": 2.5,
+        "imagePerImage": null,
+        "imageTokensFormula": null,
+        "reasoningOutput": null,
+        "fineTunedInput": null,
+        "fineTunedOutput": null
+      },
+      "limits": {
+        "contextWindow": 922000,
+        "maxOutput": 128000,
+        "maxImagesPerRequest": null,
+        "knowledgeCutoff": null
+      },
+      "tokenization": {
+        "encoder": "o200k_base",
+        "approximationRatio": {
+          "english": 4,
+          "chinese": 1.5,
+          "code": 3
+        }
+      },
+      "supports": {
+        "vision": true,
+        "audio": false,
+        "tools": true,
+        "streaming": true,
+        "caching": true,
+        "batch": true,
+        "fineTuning": false,
+        "structuredOutput": true
+      },
+      "lastVerified": "2026-10-27",
+      "sources": [
+        {
+          "type": "community",
+          "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
+          "fetchedAt": "2026-10-27"
+        },
+        {
+          "type": "official",
+          "url": "https://developers.openai.com/api/docs/pricing",
+          "fetchedAt": "2026-10-27"
+        }
+      ],
+      "priceHistory": [
+        {
+          "date": "2026-10-27",
+          "input": 1,
+          "output": 5,
+          "note": "First listed; auto-drafted from LiteLLM registry"
+        }
+      ],
+      "i18n": {
+        "en": {
+          "tagline": "GPT-6.1 Terra — $1.00/$5.00 per 1M tokens, 922K context",
+          "description": "GPT-6.1 Terra is priced at $1.00 input / $5.00 output per 1M tokens, with a 922K context window and 128K max output. Cached input $0.05/1M. That is 1.1x the per-call cost of o4-mini ($1.10/$4.40). A 1,000-in / 500-out call costs $0.00350."
+        },
+        "zh": {
+          "tagline": "GPT-6.1 Terra —— 输入 $1.00 / 输出 $5.00（每 1M token），922K 上下文",
+          "description": "GPT-6.1 Terra 定价为输入 $1.00 / 输出 $5.00（每 1M token），922K 上下文，128K 最大输出。缓存输入 $0.05/1M。单次成本是 o4-mini（$1.10/$4.40） 的 1.1 倍。一次 1000 输入 / 500 输出的调用约 $0.00350。"
+        }
+      },
+      "draft": {
+        "generatedAt": "2026-10-27",
         "note": "Auto-drafted from the LiteLLM registry the day it appeared. Prices and limits are registry values; the name follows a fixed rule; tagline and description are formulaic. Needs a human read for lineage, positioning and anything the registry cannot know."
       }
     }
