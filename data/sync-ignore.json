@@ -88,6 +88,10 @@
     {
       "pattern": "^xai/grok-code-fast-\\d+$",
       "reason": "Versioned alias of xai/grok-code-fast (identical price, limits and source); the undated key is the one tracked."
+    },
+    {
+      "pattern": "^gpt-5\\.5-cyber$",
+      "reason": "Older Cyber variant — GPT-5.6 Cyber is listed. Registry entry has no limits, so it was reported as 'needs a human' every day for a month (2026-09-30 → 2026-10-29) without being worth adding"
     }
   ]
 }

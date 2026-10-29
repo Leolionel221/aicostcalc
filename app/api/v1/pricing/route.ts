@@ -23,6 +23,7 @@ export async function GET(request: Request) {
     {
       schemaVersion: data.schemaVersion,
       lastUpdated: data.lastUpdated,
+      lastChecked: data.lastChecked ?? data.lastUpdated,
       currency: "USD",
       unit: "per_1m_tokens",
       count: models.length,

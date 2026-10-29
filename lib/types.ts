@@ -113,7 +113,10 @@ export interface Model {
 
 export interface ModelsData {
   schemaVersion: string;
+  /** Last day the pricing data actually changed. */
   lastUpdated: string;
+  /** Last day the daily sync compared every model against the registry. */
+  lastChecked?: string;
   models: Model[];
 }
 

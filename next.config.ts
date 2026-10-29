@@ -68,6 +68,14 @@ const nextConfig: NextConfig = {
         destination: "/deepseek-v3-2-cost-calculator",
         permanent: true,
       },
+      // 2026-10-29: the sync drafted the registry alias "mistral-large-4-0" as a
+      // second page for the same model. Merged into the canonical one.
+      {
+        source: "/mistral-large-4-0-cost-calculator",
+        destination: "/mistral-large-4-cost-calculator",
+        permanent: true,
+      },
+      { source: "/mistral-large-4-0", destination: "/mistral-large-4-cost-calculator", permanent: true },
 
       // Section-style paths people try before finding the real navigation.
       { source: "/models", destination: "/#compare", permanent: true },

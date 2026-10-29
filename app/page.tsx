@@ -56,7 +56,7 @@ export default function Home() {
                 </li>
               </ul>
               <div className="flex flex-wrap gap-3 pt-2 text-xs text-muted-foreground">
-                <span>Updated {data.lastUpdated}</span>
+                <span>Prices checked {data.lastChecked ?? data.lastUpdated}</span>
                 <span>·</span>
                 <span>USD / CNY / EUR / GBP / INR</span>
               </div>
@@ -127,7 +127,7 @@ export default function Home() {
           <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm text-muted-foreground">
             <span className="inline-flex items-center gap-2">
               <span className="text-[color:var(--accent)] font-bold">✓</span>
-              Last verified <strong className="text-foreground">{data.lastUpdated}</strong>
+              Last verified <strong className="text-foreground">{data.lastChecked ?? data.lastUpdated}</strong>
             </span>
             <span className="inline-flex items-center gap-2">
               <span className="text-[color:var(--accent)] font-bold">✓</span>

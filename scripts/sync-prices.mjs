@@ -217,6 +217,11 @@ function findNewModels(registry, today) {
   for (const [key, entry] of Object.entries(registry)) {
     if (known.has(key) || NOISE.test(key)) continue;
     if (IGNORE.some((i) => i.re.test(key))) continue;
+    // "mistral-large-4-0" is the registry's alias of "mistral-large-4" (same model,
+    // same prices). Both appeared on 2026-10-27 and became two pages. A trailing
+    // -0 / .0 whose base key also exists is an alias, never a new model.
+    const base = key.replace(/[-.]0$/, "");
+    if (base !== key && registry[base]) continue;
     if (!["chat", "responses"].includes(entry.mode)) continue;
     if (entry.input_cost_per_token == null || entry.output_cost_per_token == null) continue;
     if (entry.deprecation_date && entry.deprecation_date <= today) continue;
@@ -251,6 +256,7 @@ async function main() {
   const pinned = [];
   const unmapped = [];
   const retiredUpstream = [];
+  const confirmed = [];
   for (const model of data.models) {
     const key = REGISTRY_KEYS[model.id];
     if (!key) { unmapped.push(model.id); continue; }
@@ -270,6 +276,7 @@ async function main() {
     }
     const changes = diffModel(model, entry);
     if (changes.length) drift.push({ model, changes });
+    else confirmed.push(model);
   }
 
   // Quarantine implausible movers, then carry on with the rest.
@@ -442,6 +449,21 @@ async function main() {
     if (safeDrift.length) parts.push(`${safeDrift.length} correction(s)`);
     if (drafted.length) parts.push(`${drafted.length} new model(s)`);
     console.log(`### Wrote ${parts.join(" + ")} to data/models.json\n`);
+  }
+
+  // A model whose every field matched the registry today *was* verified today.
+  // lastVerified used to move only when a price changed, so a model with a
+  // stable price kept a months-old date ("2026-08-01") next to a "reconciled
+  // daily" claim — a reviewer read it as evidence the sync wasn't running
+  // (2026-10-25). Pinned and quarantined models are deliberately not touched:
+  // for those we did not accept the registry value.
+  if (WRITE) {
+    for (const model of confirmed) {
+      model.lastVerified = today;
+      for (const s of model.sources) if (s.type === "community") s.fetchedAt = today;
+    }
+    data.lastChecked = today;
+    fs.writeFileSync(DATA_PATH, `${JSON.stringify(data, null, 2)}\n`);
   }
 
   if (suspicious.length) process.exit(3);

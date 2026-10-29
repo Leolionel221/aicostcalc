@@ -46,7 +46,6 @@
     "gpt-6-1-sol": "gpt-6.1-sol",
     "claude-haiku-5-5": "claude-haiku-5-5",
     "mistral-large-4": "mistral/mistral-large-4",
-    "mistral-large-4-0": "mistral/mistral-large-4-0",
     "gpt-6-1-terra": "gpt-6.1-terra"
   }
 }

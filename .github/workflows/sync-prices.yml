@@ -56,7 +56,7 @@ jobs:
               title: '🛑 Price sync halted — implausible price movement',
               labels: ['price-sync', 'needs-human'],
               body: [
-                'The daily reconciliation found a price moving further than the safety threshold and **wrote nothing**.',
+                'The daily reconciliation found a price moving further than the safety threshold. **That model was not updated**; every other correction in the run was committed.',
                 '',
                 'Until this is resolved by hand, the site keeps serving the current value — which may be the wrong one.',
                 '',
@@ -74,13 +74,6 @@ jobs:
                 `_[Run log](${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})._`,
               ].join('\n'),
             });
-
-      - name: Fail on guard trip or unreadable registry
-        if: steps.sync.outputs.exit_code == '2' || steps.sync.outputs.exit_code == '3'
-        run: |
-          cat report.md
-          echo "::error::Price sync did not complete cleanly (exit ${{ steps.sync.outputs.exit_code }}) — see report above."
-          exit 1
 
       - name: Commit corrections
         id: commit
@@ -162,3 +155,14 @@ jobs:
                 title, body, labels: ['price-sync'],
               });
             }
+
+      # Last, not right after the escalation: a failed step skips everything after
+      # it, so failing first meant a quarantine day also dropped every *safe*
+      # correction and new model in the same run — while the issue it filed said
+      # "everything else in this run was written". Commit first, then go red.
+      - name: Fail on guard trip or unreadable registry
+        if: steps.sync.outputs.exit_code == '2' || steps.sync.outputs.exit_code == '3'
+        run: |
+          cat report.md
+          echo "::error::Price sync did not complete cleanly (exit ${{ steps.sync.outputs.exit_code }}) — see report above."
+          exit 1
