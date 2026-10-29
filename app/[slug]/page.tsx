@@ -92,6 +92,11 @@ export default async function ModelPage({
     "real-time": "tasks needing real-time information",
     multilingual: "multilingual content",
     audio: "audio understanding and generation",
+    agents: "multi-step agents and tool use",
+    "computer-use": "operating apps and screens",
+    classification: "classification and routing",
+    extraction: "structured data extraction",
+    writing: "drafting and editing text",
   };
 
   return (

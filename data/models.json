@@ -2962,12 +2962,12 @@
       ],
       "i18n": {
         "en": {
-          "tagline": "Google's newest Flash — 1M context",
-          "description": "Gemini 3.8 Flash runs at $0.75 input / $3.75 output per 1M tokens with a 1M context window and 66K max output. Priced identically to Gemini 3.7 Flash. A 1,000-in / 500-out call costs $0.00262."
+          "tagline": "Google's newest Flash — introductory price until Dec 31",
+          "description": "Gemini 3.8 Flash costs $0.75 input / $3.75 output per 1M tokens — an introductory price that Google says ends on December 31, 2026. From January 1, 2027 it doubles to $1.50 / $7.50 (cached input $0.075 → $0.15), so budget on the standard price for anything that runs into next year. Google calls it its most intelligent Flash model, aimed at long-horizon coding, agents and enterprise workflows, with a 1M context window and 66K max output. A 1,000-in / 500-out call costs $0.00262 now and $0.00525 from January."
         },
         "zh": {
-          "tagline": "Google 最新 Flash，1M 上下文",
-          "description": "Gemini 3.8 Flash 定价为输入 $0.75 / 输出 $3.75（每 1M token），1M 上下文，66K 最大输出。 与 Gemini 3.7 Flash 同价。 一次 1000 输入 / 500 输出的调用约 $0.00262。"
+          "tagline": "Google 最新 Flash——首发优惠价至 12 月 31 日",
+          "description": "Gemini 3.8 Flash 现价为输入 $0.75 / 输出 $3.75（每 1M token），Google 说明这是截至 2026 年 12 月 31 日的首发优惠价，2027 年 1 月 1 日起翻倍为 $1.50 / $7.50（缓存输入 $0.075 → $0.15）。要跑到明年的项目请按标准价做预算。Google 称它是最强的 Flash 模型，面向长周期编程、智能体和企业工作流，1M 上下文，66K 最大输出。一次 1000 输入 / 500 输出的调用现在约 $0.00262，1 月起约 $0.00525。"
         }
       }
     },
@@ -2987,7 +2987,7 @@
         "long-context",
         "vision"
       ],
-      "releaseDate": null,
+      "releaseDate": "2026-09-03",
       "status": "active",
       "deprecatedAt": null,
       "successorId": null,
@@ -3344,7 +3344,7 @@
         "long-context",
         "fast"
       ],
-      "releaseDate": null,
+      "releaseDate": "2026-09-22",
       "status": "active",
       "deprecatedAt": null,
       "successorId": null,
@@ -3434,7 +3434,7 @@
         "vision",
         "long-context"
       ],
-      "releaseDate": null,
+      "releaseDate": "2026-09-22",
       "status": "active",
       "deprecatedAt": null,
       "successorId": null,
@@ -3607,7 +3607,7 @@
       "providerId": "google",
       "providerLogo": "/logos/google.svg",
       "providerWebsite": "https://ai.google.dev",
-      "category": "flagship",
+      "category": "balanced",
       "useCase": [
         "general",
         "reasoning",
@@ -3691,7 +3691,7 @@
       },
       "draft": {
         "generatedAt": "2026-09-24",
-        "note": "Auto-drafted from the LiteLLM registry the day it appeared. Prices and limits are registry values; the name follows a fixed rule; tagline and description are formulaic. Needs a human read for lineage, positioning and anything the registry cannot know."
+        "note": "Listed in the LiteLLM registry but not on Google's public Gemini API pricing or models pages as of 2026-10-29, so the price cannot be checked against the provider. Likely a restricted-access security variant. Its $1.50/$7.50 equals plain Gemini 3.8 Flash's standard price from 2027-01-01."
       }
     },
     {
@@ -3702,14 +3702,15 @@
       "providerId": "anthropic",
       "providerLogo": "/logos/anthropic.svg",
       "providerWebsite": "https://anthropic.com",
-      "category": "flagship",
+      "category": "balanced",
       "useCase": [
         "general",
+        "coding",
         "reasoning",
-        "vision",
+        "agents",
         "long-context"
       ],
-      "releaseDate": null,
+      "releaseDate": "2026-09-28",
       "status": "active",
       "deprecatedAt": null,
       "successorId": null,
@@ -3755,6 +3756,16 @@
       "lastVerified": "2026-10-29",
       "sources": [
         {
+          "type": "official",
+          "url": "https://platform.claude.com/docs/en/about-claude/pricing",
+          "fetchedAt": "2026-10-29"
+        },
+        {
+          "type": "official",
+          "url": "https://www.anthropic.com/claude-sonnet-5-5",
+          "fetchedAt": "2026-10-29"
+        },
+        {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
           "fetchedAt": "2026-10-29"
@@ -3767,25 +3778,21 @@
       ],
       "priceHistory": [
         {
-          "date": "2026-09-29",
+          "date": "2026-09-28",
           "input": 2,
           "output": 10,
-          "note": "First listed; auto-drafted from LiteLLM registry"
+          "note": "Initial release — Anthropic announcement"
         }
       ],
       "i18n": {
         "en": {
-          "tagline": "Claude Sonnet 5.5 — $2.00/$10.00 per 1M tokens, 1M context",
-          "description": "Claude Sonnet 5.5 is priced at $2.00 input / $10.00 output per 1M tokens, with a 1M context window and 128K max output. Cached input $0.10/1M. Same per-call cost as Claude Sonnet 5. A 1,000-in / 500-out call costs $0.00700."
+          "tagline": "Sonnet 5's price, near-Opus results, 30% faster",
+          "description": "Claude Sonnet 5.5 keeps Sonnet 5's $2.00 input / $10.00 output per 1M tokens but halves cached input to $0.10, and Anthropic describes it as a faster, lower-cost complement to Opus 5.5 — over 30% faster than Sonnet 5 and within a few points of Opus 5.5 on most of its published agentic benchmarks. Opus 5.5 ($4.00/$20.00) remains the pick for the hardest open-ended work. 1M context, 128K max output, Batch API at $1.00/$5.00. A 1,000-in / 500-out call costs $0.00700."
         },
         "zh": {
-          "tagline": "Claude Sonnet 5.5 —— 输入 $2.00 / 输出 $10.00（每 1M token），1M 上下文",
-          "description": "Claude Sonnet 5.5 定价为输入 $2.00 / 输出 $10.00（每 1M token），1M 上下文，128K 最大输出。缓存输入 $0.10/1M。单次成本与 Claude Sonnet 5 相同。一次 1000 输入 / 500 输出的调用约 $0.00700。"
+          "tagline": "Sonnet 5 的价格，接近 Opus 的表现，快 30%",
+          "description": "Claude Sonnet 5.5 沿用 Sonnet 5 的输入 $2.00 / 输出 $10.00（每 1M token），缓存输入减半至 $0.10。Anthropic 将它定位为 Opus 5.5 更快、更便宜的搭档：比 Sonnet 5 快 30% 以上，在官方公布的多数智能体基准上与 Opus 5.5 只差几个点；最难的开放式任务仍推荐 Opus 5.5（$4.00/$20.00）。1M 上下文，128K 最大输出，Batch API $1.00/$5.00。一次 1000 输入 / 500 输出的调用约 $0.00700。"
         }
-      },
-      "draft": {
-        "generatedAt": "2026-09-29",
-        "note": "Auto-drafted from the LiteLLM registry the day it appeared. Prices and limits are registry values; the name follows a fixed rule; tagline and description are formulaic. Needs a human read for lineage, positioning and anything the registry cannot know."
       }
     },
     {
@@ -3796,14 +3803,15 @@
       "providerId": "openai",
       "providerLogo": "/logos/openai.svg",
       "providerWebsite": "https://openai.com",
-      "category": "flagship",
+      "category": "balanced",
       "useCase": [
         "general",
+        "coding",
         "reasoning",
-        "vision",
+        "agents",
         "long-context"
       ],
-      "releaseDate": null,
+      "releaseDate": "2026-09-29",
       "status": "active",
       "deprecatedAt": null,
       "successorId": null,
@@ -3826,7 +3834,7 @@
         "contextWindow": 922000,
         "maxOutput": 128000,
         "maxImagesPerRequest": null,
-        "knowledgeCutoff": null
+        "knowledgeCutoff": "2026-04"
       },
       "tokenization": {
         "encoder": "o200k_base",
@@ -3849,6 +3857,11 @@
       "lastVerified": "2026-10-29",
       "sources": [
         {
+          "type": "official",
+          "url": "https://developers.openai.com/api/docs/models/gpt-6.1-sol",
+          "fetchedAt": "2026-10-29"
+        },
+        {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
           "fetchedAt": "2026-10-29"
@@ -3861,25 +3874,21 @@
       ],
       "priceHistory": [
         {
-          "date": "2026-09-30",
+          "date": "2026-09-29",
           "input": 2,
           "output": 10,
-          "note": "First listed; auto-drafted from LiteLLM registry"
+          "note": "Initial release — OpenAI changelog"
         }
       ],
       "i18n": {
         "en": {
-          "tagline": "GPT-6.1 Sol — $2.00/$10.00 per 1M tokens, 922K context",
-          "description": "GPT-6.1 Sol is priced at $2.00 input / $10.00 output per 1M tokens, with a 922K context window and 128K max output. Cached input $0.10/1M. Same per-call cost as GPT-6 Sol. A 1,000-in / 500-out call costs $0.00700."
+          "tagline": "\"Near-Astra\" for a fifth of the price",
+          "description": "GPT-6.1 Sol costs $2.00 input / $10.00 output per 1M tokens — the same as GPT-6 Sol, with cached input halved to $0.10 — and OpenAI pitches it as near-Astra performance for complex coding, computer use and professional work, at a fifth of GPT-6 Astra's $10.00/$50.00. Prompts over 272K tokens are billed at $4.00/$15.00. OpenAI now charges for cache writes: $2.50/1M (30-minute retention). 922K input context, 128K max output, Batch $1.00/$5.00. A 1,000-in / 500-out call costs $0.00700."
         },
         "zh": {
-          "tagline": "GPT-6.1 Sol —— 输入 $2.00 / 输出 $10.00（每 1M token），922K 上下文",
-          "description": "GPT-6.1 Sol 定价为输入 $2.00 / 输出 $10.00（每 1M token），922K 上下文，128K 最大输出。缓存输入 $0.10/1M。单次成本与 GPT-6 Sol 相同。一次 1000 输入 / 500 输出的调用约 $0.00700。"
+          "tagline": "\"接近 Astra\"，价格只有五分之一",
+          "description": "GPT-6.1 Sol 定价为输入 $2.00 / 输出 $10.00（每 1M token），与 GPT-6 Sol 相同，缓存输入减半至 $0.10。OpenAI 称它在复杂编程、电脑操作和专业工作上接近 Astra 的表现，价格只有 GPT-6 Astra（$10.00/$50.00）的五分之一。提示词超过 272K token 时按 $4.00/$15.00 计费。OpenAI 现在对缓存写入收费：$2.50/1M（保留 30 分钟）。922K 输入上下文，128K 最大输出，Batch $1.00/$5.00。一次 1000 输入 / 500 输出的调用约 $0.00700。"
         }
-      },
-      "draft": {
-        "generatedAt": "2026-09-30",
-        "note": "Auto-drafted from the LiteLLM registry the day it appeared. Prices and limits are registry values; the name follows a fixed rule; tagline and description are formulaic. Needs a human read for lineage, positioning and anything the registry cannot know."
       }
     },
     {
@@ -3893,12 +3902,12 @@
       "category": "small",
       "useCase": [
         "general",
-        "reasoning",
-        "vision",
-        "long-context",
-        "fast"
+        "fast",
+        "classification",
+        "extraction",
+        "long-context"
       ],
-      "releaseDate": null,
+      "releaseDate": "2026-10-07",
       "status": "active",
       "deprecatedAt": null,
       "successorId": null,
@@ -3944,6 +3953,16 @@
       "lastVerified": "2026-10-29",
       "sources": [
         {
+          "type": "official",
+          "url": "https://platform.claude.com/docs/en/about-claude/pricing",
+          "fetchedAt": "2026-10-29"
+        },
+        {
+          "type": "official",
+          "url": "https://www.anthropic.com/claude-haiku-5-5",
+          "fetchedAt": "2026-10-29"
+        },
+        {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
           "fetchedAt": "2026-10-29"
@@ -3956,25 +3975,21 @@
       ],
       "priceHistory": [
         {
-          "date": "2026-10-08",
+          "date": "2026-10-07",
           "input": 0.1,
           "output": 0.5,
-          "note": "First listed; auto-drafted from LiteLLM registry"
+          "note": "Initial release — Anthropic announcement (prompts up to 100K tokens)"
         }
       ],
       "i18n": {
         "en": {
-          "tagline": "Claude Haiku 5.5 — $0.10/$0.50 per 1M tokens, 1M context",
-          "description": "Claude Haiku 5.5 is priced at $0.10 input / $0.50 output per 1M tokens, with a 1M context window and 128K max output. Cached input $0.01/1M. That is 90% cheaper per call than Claude Haiku 4.5 ($1.00/$5.00). A 1,000-in / 500-out call costs $0.00035."
+          "tagline": "$0.10/$0.50 — but only for prompts up to 100K tokens",
+          "description": "Claude Haiku 5.5 costs $0.10 input / $0.50 output per 1M tokens for prompts up to 100K tokens, and $0.50 / $2.50 above that — it is the one current Claude model without flat 1M-context pricing, so long prompts cost 5x more per token. Within 100K it is 90% cheaper per call than Claude Haiku 4.5 ($1.00/$5.00); Anthropic puts the average saving at about 75%. It uses the newer tokenizer, which counts roughly 30% more tokens for the same text, so measure your own prompts. Built for classification, extraction and routing; Sonnet 5.5 is the better choice for agentic coding. Cached input $0.01, Batch $0.05/$0.25. The calculator shows the up-to-100K price."
         },
         "zh": {
-          "tagline": "Claude Haiku 5.5 —— 输入 $0.10 / 输出 $0.50（每 1M token），1M 上下文",
-          "description": "Claude Haiku 5.5 定价为输入 $0.10 / 输出 $0.50（每 1M token），1M 上下文，128K 最大输出。缓存输入 $0.01/1M。单次成本比 Claude Haiku 4.5（$1.00/$5.00） 便宜 90%。一次 1000 输入 / 500 输出的调用约 $0.00035。"
+          "tagline": "$0.10/$0.50——仅限 10 万 token 以内的提示词",
+          "description": "Claude Haiku 5.5 在提示词不超过 10 万 token 时为输入 $0.10 / 输出 $0.50（每 1M token），超过后为 $0.50 / $2.50——它是当前唯一没有 1M 上下文统一定价的 Claude 模型，长提示词每 token 贵 5 倍。10 万以内单次调用比 Claude Haiku 4.5（$1.00/$5.00）便宜 90%，Anthropic 给出的平均节省约 75%。它使用新版分词器，同样文本的 token 数约多 30%，请用自己的提示词实测。适合分类、抽取、路由；智能体编程更适合 Sonnet 5.5。缓存输入 $0.01，Batch $0.05/$0.25。计算器按 10 万以内的价格计算。"
         }
-      },
-      "draft": {
-        "generatedAt": "2026-10-08",
-        "note": "Auto-drafted from the LiteLLM registry the day it appeared. Prices and limits are registry values; the name follows a fixed rule; tagline and description are formulaic. Needs a human read for lineage, positioning and anything the registry cannot know."
       }
     },
     {
@@ -4087,15 +4102,15 @@
       "providerId": "openai",
       "providerLogo": "/logos/openai.svg",
       "providerWebsite": "https://openai.com",
-      "category": "small",
+      "category": "balanced",
       "useCase": [
         "general",
-        "reasoning",
         "vision",
-        "long-context",
-        "fast"
+        "computer-use",
+        "writing",
+        "long-context"
       ],
-      "releaseDate": null,
+      "releaseDate": "2026-10-26",
       "status": "active",
       "deprecatedAt": null,
       "successorId": null,
@@ -4118,7 +4133,7 @@
         "contextWindow": 922000,
         "maxOutput": 128000,
         "maxImagesPerRequest": null,
-        "knowledgeCutoff": null
+        "knowledgeCutoff": "2026-06"
       },
       "tokenization": {
         "encoder": "o200k_base",
@@ -4141,6 +4156,11 @@
       "lastVerified": "2026-10-29",
       "sources": [
         {
+          "type": "official",
+          "url": "https://developers.openai.com/api/docs/models/gpt-6.1-terra",
+          "fetchedAt": "2026-10-29"
+        },
+        {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
           "fetchedAt": "2026-10-29"
@@ -4153,25 +4173,21 @@
       ],
       "priceHistory": [
         {
-          "date": "2026-10-27",
+          "date": "2026-10-26",
           "input": 1,
           "output": 5,
-          "note": "First listed; auto-drafted from LiteLLM registry"
+          "note": "Initial release — OpenAI changelog"
         }
       ],
       "i18n": {
         "en": {
-          "tagline": "GPT-6.1 Terra — $1.00/$5.00 per 1M tokens, 922K context",
-          "description": "GPT-6.1 Terra is priced at $1.00 input / $5.00 output per 1M tokens, with a 922K context window and 128K max output. Cached input $0.05/1M. That is 1.1x the per-call cost of o4-mini ($1.10/$4.40). A 1,000-in / 500-out call costs $0.00350."
+          "tagline": "Half of Sol's price, tuned for vision and computer use",
+          "description": "GPT-6.1 Terra costs $1.00 input / $5.00 output per 1M tokens — half of GPT-6.1 Sol, ten times GPT-6 Luna ($0.10/$0.50) — and OpenAI aims it at visual reasoning, precise computer use and natural writing: matching product photos to catalogue entries, reading technical drawings, acting on app screens. OpenAI doesn't say where it ranks against Sol on general reasoning, so test before swapping it in for Sol. Prompts over 272K tokens cost $2.00/$7.50; cache writes $1.25/1M; cached input $0.05; Batch $0.50/$2.50. Knowledge cutoff June 2026, the latest in the GPT-6 family. A 1,000-in / 500-out call costs $0.00350."
         },
         "zh": {
-          "tagline": "GPT-6.1 Terra —— 输入 $1.00 / 输出 $5.00（每 1M token），922K 上下文",
-          "description": "GPT-6.1 Terra 定价为输入 $1.00 / 输出 $5.00（每 1M token），922K 上下文，128K 最大输出。缓存输入 $0.05/1M。单次成本是 o4-mini（$1.10/$4.40） 的 1.1 倍。一次 1000 输入 / 500 输出的调用约 $0.00350。"
+          "tagline": "Sol 一半的价格，专攻视觉与电脑操作",
+          "description": "GPT-6.1 Terra 定价为输入 $1.00 / 输出 $5.00（每 1M token），是 GPT-6.1 Sol 的一半、GPT-6 Luna（$0.10/$0.50）的十倍。OpenAI 将它用于视觉推理、精确的电脑操作和自然写作：把商品照片对应到目录条目、读工程图纸、在应用界面上操作。OpenAI 没有说明它在通用推理上与 Sol 的高下，替换 Sol 之前请先测试。提示词超过 272K token 时 $2.00/$7.50；缓存写入 $1.25/1M；缓存输入 $0.05；Batch $0.50/$2.50。知识截止 2026 年 6 月，是 GPT-6 系列里最新的。一次 1000 输入 / 500 输出的调用约 $0.00350。"
         }
-      },
-      "draft": {
-        "generatedAt": "2026-10-27",
-        "note": "Auto-drafted from the LiteLLM registry the day it appeared. Prices and limits are registry values; the name follows a fixed rule; tagline and description are formulaic. Needs a human read for lineage, positioning and anything the registry cannot know."
       }
     }
   ],
