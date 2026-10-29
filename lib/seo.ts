@@ -23,7 +23,7 @@ export function modelUrl(modelId: string): string {
  */
 export function modelMetadata(model: Model): Metadata {
   // "API Pricing" leads, "Cost Calculator" follows — deliberate, see GSC data
-  // in HANDOVER §16 (2026-08-24). We ranked ~8 for "<model> cost calculator"
+  // on 2026-08-24. We ranked ~8 for "<model> cost calculator"
   // (6 impressions) and ~58 for "<model> api pricing" (52 impressions): the
   // phrasing we optimised for is not the phrasing people search. Both phrases
   // stay in the title so the position we already hold is not thrown away.

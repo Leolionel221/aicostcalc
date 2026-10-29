@@ -1,7 +1,7 @@
 {
   "schemaVersion": "2.1",
   "lastUpdated": "2026-10-29",
-  "_note": "All pricing verified against LiteLLM's public model registry (github.com/BerriAI/litellm) on 2026-08-01. LiteLLM is community-maintained and the de facto industry standard for LLM pricing data. For final billing accuracy, always verify against each provider's official pricing page (links in each model's 'sources' field). See docs/PRD_v1.1_Supplement.md §4.3 for maintenance SOP.",
+  "_note": "Prices are reconciled every day against LiteLLM's public model registry (github.com/BerriAI/litellm) by .github/workflows/sync-prices.yml; `lastChecked` is the date of the latest run, each model's `lastVerified` the last day its values matched. Moves over 60% in a day are held for a human and checked against the provider's own pricing page. Provider pricing can change without notice — verify before making financial decisions.",
   "models": [
     {
       "id": "gpt-5-6",

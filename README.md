@@ -200,9 +200,9 @@ For substantial changes, please discuss in an issue before opening a PR.
 
 ## Documentation
 
-- [`HANDOVER.md`](./HANDOVER.md) — comprehensive project handover doc (stack, conventions, decisions, changelog)
-- [`docs/AI_API_Cost_Calculator_PRD.pdf`](./docs) — original product requirements doc (v1.0)
-- [`docs/PRD_v1.1_Supplement.md`](./docs/PRD_v1.1_Supplement.md) — product decisions supplement
+- [API docs](https://aicostcalc.net/api) — endpoints, filters, schema 2.1
+- [`data/models.json`](./data/models.json) — the pricing data itself, with per-model `priceHistory` and sources
+- [Price change log](https://aicostcalc.net/changes) — every new model and price move ([RSS](https://aicostcalc.net/changes/rss.xml))
 
 ## Trademark notice
 

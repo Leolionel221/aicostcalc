@@ -1,4 +1,4 @@
-// Schema v2 — see docs/PRD_v1.1_Supplement.md §4.1
+// Data schema (2.1) for data/models.json — public contract documented at /api
 
 export type ModelStatus = "active" | "deprecated" | "preview" | "legacy";
 export type ModelCategory = "flagship" | "balanced" | "small" | "reasoning" | "open-source";
