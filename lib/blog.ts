@@ -16,6 +16,8 @@ export interface BlogPostFrontmatter {
   tags?: string[];
   readingTime?: string;
   featured?: boolean;
+  /** Last substantive revision (YYYY-MM-DD). Shown on the post and sent as dateModified. */
+  lastUpdated?: string;
 }
 
 export interface BlogPostMeta extends BlogPostFrontmatter {

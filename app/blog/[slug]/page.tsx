@@ -31,6 +31,7 @@ export async function generateMetadata({
       description: post.description,
       url,
       publishedTime: post.date,
+      modifiedTime: post.lastUpdated ?? post.date,
       authors: post.author ? [post.author] : undefined,
       tags: post.tags,
     },
@@ -57,6 +58,7 @@ export default async function BlogPostPage({
     headline: post.title,
     description: post.description,
     datePublished: post.date,
+    dateModified: post.lastUpdated ?? post.date,
     author: { "@type": "Organization", name: post.author ?? SITE.name },
     publisher: { "@type": "Organization", name: SITE.name },
     url: `${SITE.url}/blog/${slug}`,
@@ -81,6 +83,14 @@ export default async function BlogPostPage({
         <header className="mb-10 pb-8 border-b border-border">
           <div className="flex items-center gap-3 text-xs text-muted-foreground mb-4">
             <time dateTime={post.date}>{formatDate(post.date)}</time>
+            {post.lastUpdated && post.lastUpdated !== post.date && (
+              <>
+                <span>·</span>
+                <span>
+                  Updated <time dateTime={post.lastUpdated}>{formatDate(post.lastUpdated)}</time>
+                </span>
+              </>
+            )}
             {post.readingTime && (
               <>
                 <span>·</span>

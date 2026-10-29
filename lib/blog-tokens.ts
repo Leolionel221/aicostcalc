@@ -63,7 +63,7 @@ function cheapestTable(n: number): string {
     .join("\n");
 
   return `${head}\n${body}\n\n_Cost per call assumes 1,000 input + 500 output tokens. ` +
-    `Prices verified ${data.lastUpdated} against the LiteLLM registry._`;
+    `Prices checked ${data.lastChecked ?? data.lastUpdated} against the LiteLLM registry._`;
 }
 
 type Handler = (id: string, token: string) => string;
@@ -115,7 +115,8 @@ export function resolveBlogTokens(markdown: string): string {
   return markdown.replace(TOKEN_RE, (full, rawKind: string, arg?: string) => {
     const kind = rawKind.toLowerCase();
 
-    if (kind === "updated") return data.lastUpdated;
+    // "Last verified" in the posts means the last daily check, not the last price change.
+    if (kind === "updated") return data.lastChecked ?? data.lastUpdated;
     if (kind === "model-count") return String(data.models.length);
     if (kind === "cheapest-table") {
       const n = Number(arg ?? "10");
