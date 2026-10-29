@@ -1,164 +1,140 @@
 ---
 title: "OpenAI API Pricing Explained: Complete Guide for 2026"
-description: "Deep dive into OpenAI's API pricing in 2026 — GPT-5.5, GPT-5 mini, o4-mini. Standard rates, cached input savings, Batch API discounts, and how to actually optimize your bill."
+description: "OpenAI API pricing as of late 2026: GPT-6 Astra, GPT-6.1 Sol, GPT-6.1 Terra and GPT-6 Luna, the GPT-5.x models still running, 95% cached input, the new cache-write charge, the over-272K long-context rate and the 50% Batch discount."
 date: "2026-05-04"
 author: "AI Cost Calc Team"
-tags: ["openai", "pricing", "gpt-5", "cost-optimization"]
-readingTime: "9 min read"
+tags: ["openai", "pricing", "gpt-6", "cost-optimization"]
+readingTime: "8 min read"
 featured: true
-lastUpdated: "2026-05-12"
+lastUpdated: "2026-10-29"
 ---
 
-> **📊 Prices on this page are live** — pulled from the site dataset at build time, last verified **{{updated}}**.
+> **📊 Prices on this page are live**: they're pulled from the site dataset at build time, last verified **{{updated}}**.
 
+OpenAI's lineup turned over between May and October 2026. The GPT-6 family arrived in September, the 6.1 updates followed, and o4-mini was retired on 2026-10-23. Pricing changed shape along the way too. On GPT-6.1 models you now pay to **write** a prompt to the cache, cached reads are **95% off**, and prompts over **272K tokens** are billed at a higher rate.
 
-If you're shipping production features on top of OpenAI's API in 2026, the headline price-per-token is no longer the number that matters. Between **prompt caching**, **Batch API discounts**, and the divergent pricing across **GPT-5.5**, **GPT-5 mini**, and **o4-mini**, the real cost of a workload can vary by **5×–10×** depending on how you architect it.
+This guide covers what each current OpenAI model costs, how to pick a tier, and which billing details actually move the total.
 
-This guide breaks down OpenAI's full 2026 pricing surface and shows where the real savings live.
+## The current OpenAI lineup
 
-## OpenAI's 2026 lineup at a glance
+### GPT-6 generation
 
-| Model | Input ($/1M) | Output ($/1M) | Context | Best for |
-|---|---|---|---|---|
-| **GPT-5.5** | $5.00 | $20.00 | 256K | Frontier reasoning, multimodal |
-| **GPT-5 mini** | $0.20 | $0.80 | 200K | High-volume production, vision |
-| **o4-mini** | $0.90 | $3.60 | 200K | STEM reasoning, coding, math |
+| Model | Input / Output (per 1M) | Cached input | Batch | Context | One call* |
+|---|---|---|---|---|---|
+| [**{{name:gpt-6-astra}}**](/gpt-6-astra-cost-calculator) | {{pair:gpt-6-astra}} | {{cached:gpt-6-astra}} | {{batch-pair:gpt-6-astra}} | {{ctx:gpt-6-astra}} | {{call:gpt-6-astra}} |
+| [**{{name:gpt-6-1-sol}}**](/gpt-6-1-sol-cost-calculator) | {{pair:gpt-6-1-sol}} | {{cached:gpt-6-1-sol}} | {{batch-pair:gpt-6-1-sol}} | {{ctx:gpt-6-1-sol}} | {{call:gpt-6-1-sol}} |
+| [**{{name:gpt-6-sol}}**](/gpt-6-sol-cost-calculator) | {{pair:gpt-6-sol}} | {{cached:gpt-6-sol}} | {{batch-pair:gpt-6-sol}} | {{ctx:gpt-6-sol}} | {{call:gpt-6-sol}} |
+| [**{{name:gpt-6-1-terra}}**](/gpt-6-1-terra-cost-calculator) | {{pair:gpt-6-1-terra}} | {{cached:gpt-6-1-terra}} | {{batch-pair:gpt-6-1-terra}} | {{ctx:gpt-6-1-terra}} | {{call:gpt-6-1-terra}} |
+| [**{{name:gpt-6-luna}}**](/gpt-6-luna-cost-calculator) | {{pair:gpt-6-luna}} | {{cached:gpt-6-luna}} | {{batch-pair:gpt-6-luna}} | {{ctx:gpt-6-luna}} | {{call:gpt-6-luna}} |
 
-Compared to the GPT-4 era (where GPT-4 launched at $30/$60), the 2026 lineup is dramatically cheaper for the same capability tier — driven by competition from Anthropic, Google, and DeepSeek.
+_*One call = 1,000 input + 500 output tokens at the standard rate._
 
-## The pricing surface that matters
+Here's how OpenAI describes each one:
 
-OpenAI bills you across **at least four dimensions** for any production workload. Most pricing pages only show two.
+- **GPT-6 Astra** (released 2026-09-03) is "our most capable model", and it's the most expensive GPT-6 model.
+- **GPT-6.1 Sol** (2026-09-29) is pitched as "near-Astra performance for complex work at a lower cost". It costs the same as GPT-6 Sol for input and output, and its cached input is half of GPT-6 Sol's.
+- **GPT-6 Sol** (2026-09-22) is the original GPT-6 middle tier. Since 6.1 Sol has the same input/output price and cheaper cached input, it's hard to justify for new work.
+- **GPT-6.1 Terra** (2026-10-26) costs half as much as 6.1 Sol. OpenAI calls it "a fast, efficient model for visual reasoning, precise computer use, and clear, natural writing". OpenAI doesn't say how it ranks against Sol on general reasoning.
+- **GPT-6 Luna** (2026-09-22) is OpenAI's "most efficient model for focused, high-volume tasks", and it has the full {{ctx:gpt-6-luna}} context window.
 
-### 1. Standard input / output
+### GPT-5.x models still available
 
-These are the rates everyone knows. You pay per million tokens at the headline rate.
+| Model | Input / Output (per 1M) | Cached input | Status |
+|---|---|---|---|
+| [{{name:gpt-5-5-pro}}](/gpt-5-5-pro-cost-calculator) | {{pair:gpt-5-5-pro}} | {{cached:gpt-5-5-pro}} | Active. The most expensive model we track |
+| [{{name:gpt-5-5}}](/gpt-5-5-cost-calculator) | {{pair:gpt-5-5}} | {{cached:gpt-5-5}} | Active |
+| [{{name:gpt-5-6-sol}}](/gpt-5-6-sol-cost-calculator) | {{pair:gpt-5-6-sol}} | {{cached:gpt-5-6-sol}} | Active, same price as base [{{name:gpt-5-6}}](/gpt-5-6-cost-calculator) |
+| [{{name:gpt-5-6-terra}}](/gpt-5-6-terra-cost-calculator) | {{pair:gpt-5-6-terra}} | {{cached:gpt-5-6-terra}} | Active |
+| [{{name:gpt-5-6-luna}}](/gpt-5-6-luna-cost-calculator) | {{pair:gpt-5-6-luna}} | {{cached:gpt-5-6-luna}} | Active |
+| [{{name:gpt-5-mini}}](/gpt-5-mini-cost-calculator) | {{pair:gpt-5-mini}} | {{cached:gpt-5-mini}} | **Retires 2026-12-11** |
 
-For GPT-5.5 with a 1,000-token system prompt and 500-token response, that's about **$0.015** per call. Easy math.
+Compare each GPT-5.6 tier with the GPT-6 model that replaces it: GPT-5.6 Sol at {{pair:gpt-5-6-sol}} against GPT-6.1 Sol at {{pair:gpt-6-1-sol}}, and GPT-5.6 Luna at {{pair:gpt-5-6-luna}} against GPT-6 Luna at {{pair:gpt-6-luna}}. At the time of writing, the older model costs more on both input and output. Unless a GPT-5.x model is pinned in a workflow you can't retest yet, the price argument favours moving.
 
-### 2. Cached input — the savings nobody talks about
+**GPT-5 mini retires on 2026-12-11.** The obvious replacement on price is GPT-6 Luna: {{call:gpt-6-luna}} per call against {{call:gpt-5-mini}} for GPT-5 mini. Note that GPT-5 mini has no Batch price in our data, while GPT-6 Luna does. Run your own test set before you switch, because a price comparison says nothing about output quality on your task.
 
-Since late 2024, OpenAI has supported automatic prompt caching: any prompt prefix that you've already sent within the last 5–10 minutes is billed at **50% off** for cached portions on most current models.
+**o4-mini was retired on 2026-10-23.** If you still have it in code or in a cost model, it needs replacing. For reasoning-heavy work, start testing with GPT-6.1 Sol.
 
-For GPT-5.5: standard input is $5.00/1M, cached input is $1.25/1M — a **75% discount** on cached portions.
+## How to choose a tier
 
-This matters enormously for:
+Work from the bottom up and stop at the first model that passes your evaluation set.
 
-- **RAG applications** where you re-send the same retrieved context across many calls
-- **Chat threads** where the conversation history grows but the system prompt stays
-- **Function-calling agents** that re-send a long tool spec
+1. **High-volume, narrow tasks** such as classification, extraction, routing and short replies: start with **GPT-6 Luna**. One call costs {{call:gpt-6-luna}}, so it's cheap enough that you can afford a retry on the occasional failure.
+2. **Screens, images, documents and writing**: try **GPT-6.1 Terra**, which OpenAI positions for visual reasoning, computer use and natural writing. It costs half as much as Sol. Test it before you swap it in for Sol on general reasoning, since OpenAI hasn't published that comparison.
+3. **Complex coding, agents and long multi-step work**: use **GPT-6.1 Sol**. A call costs {{call:gpt-6-1-sol}} against {{call:gpt-6-astra}} for Astra, so you can run Sol for a long time before matching what a move to Astra would cost.
+4. **The hardest problems, where a better answer is worth the price**: use **GPT-6 Astra**. Measure the difference on your own tasks, because Astra costs five times as much as 6.1 Sol per token.
 
-Real numbers: a chat product with a 2,000-token system prompt + tool spec, called 10× per session, saves about **75% of the input bill** with caching enabled — the prefix is billed at full rate once, then cached for the rest.
+The most common way to overspend is to run everything on the top tier. A mixed setup usually costs much less, for example Luna for triage, Sol for the hard cases and Astra only where its results clearly win.
 
-### 3. Batch API — half off, with a 24-hour catch
+## The billing details that move the total
 
-The OpenAI Batch API processes requests asynchronously within 24 hours and bills at **50% of the standard rate** on all dimensions.
+### 1. Standard input and output
 
-For GPT-5.5: $2.50/1M input, $10/1M output — half off, full stop.
+You pay per million tokens at the headline rate. On every GPT-6 model, output costs five times as much as input. On GPT-6.1 Sol that's {{out:gpt-6-1-sol}} against {{in:gpt-6-1-sol}}. As a result, long answers often cost more than long prompts. Set a max-output limit and ask for concise formats when you don't need prose.
 
-When does this make sense?
+### 2. Cached input: 95% off on GPT-6.1
 
-- **Overnight content generation** — write 10,000 product descriptions during your sleep cycle
-- **Periodic data enrichment** — categorize a CSV of customer support tickets weekly
-- **Embedding refreshes** for large knowledge bases
-- **Synthetic data generation** for fine-tuning datasets
+If the start of your prompt (system prompt, tool definitions, reference documents) repeats across calls, those repeated tokens can be billed at the cached rate:
 
-When it doesn't:
+- **GPT-6.1 Sol**: {{cached:gpt-6-1-sol}} per 1M against {{in:gpt-6-1-sol}}, which is 95% off.
+- **GPT-6.1 Terra**: {{cached:gpt-6-1-terra}} against {{in:gpt-6-1-terra}}, also 95% off.
+- **GPT-6 Astra, GPT-6 Sol and GPT-6 Luna**: {{cached:gpt-6-astra}}, {{cached:gpt-6-sol}} and {{cached:gpt-6-luna}}. That's 90% off their input prices.
 
-- Anything user-facing in real time
-- Anything where you need streaming
-- Workloads where the 50% saving doesn't justify the operational complexity of an async pipeline
+Caching only helps when the **prefix** is identical from call to call. Put stable content first and anything that changes per request (user message, timestamps, IDs) last. The [prompt caching guide](/blog/openai-prompt-caching-when-worth-it) covers the details.
 
-### 4. Fine-tuned model rates
+### 3. Cache writes: new on GPT-6.1
 
-If you fine-tune a base model, the fine-tuned version is billed at separate (typically higher) rates plus a one-time training fee. For GPT-5 mini fine-tuning, expect roughly **2× the base rate** at inference time, plus training charges per token of training data.
+OpenAI now charges to write a prompt prefix into the cache on GPT-6.1 models, with 30-minute and 12-hour retention options. For 30-minute retention on GPT-6.1 Sol, a write costs {{cache-write:gpt-6-1-sol}} per 1M tokens, more than the normal input price of {{in:gpt-6-1-sol}}. On Terra it's {{cache-write:gpt-6-1-terra}} against {{in:gpt-6-1-terra}}.
 
-## The real cost of a real workload
+This means caching is no longer free. A prefix written once and never read again costs more than not caching it at all. The upside is that a single cache read on 6.1 Sol or Terra saves nearly four times the write premium. In practice, caching pays as soon as a prefix is read again within its retention window. The [caching guide works through the arithmetic](/blog/openai-prompt-caching-when-worth-it).
 
-Let's price a customer-support chatbot built on GPT-5 mini:
+### 4. Prompts over 272K tokens
 
-- **Volume**: 10,000 conversations / day, average 5 messages each
-- **Average input**: 1,500 tokens (system prompt 1,200 + user message 300)
-- **Average output**: 200 tokens
-- **System prompt is identical** across conversations
+GPT-6.1 Sol and Terra accept {{ctx:gpt-6-1-sol}} tokens of input, but the standard rate doesn't cover all of it. OpenAI bills prompts over 272K tokens at a higher long-context rate:
 
-### Naive calculation (what most calculators show you)
+- **GPT-6.1 Sol**: $4.00 input / $15.00 output per 1M (OpenAI's long-context rate)
+- **GPT-6.1 Terra**: $2.00 input / $7.50 output per 1M (OpenAI's long-context rate)
 
-- Input: 10,000 × 5 × 1,500 / 1M × $0.20 = **$15.00 / day**
-- Output: 10,000 × 5 × 200 / 1M × $0.80 = **$8.00 / day**
-- **Total: $23.00 / day = $690 / month**
+That's twice the standard input price and 1.5 times the standard output price. Our calculator applies the standard rate only, so for prompts over 272K it will **understate** the bill. If you regularly send whole codebases or long document sets, it's often cheaper to retrieve the relevant pieces and stay under 272K.
 
-### With caching
+### 5. Batch API: half price
 
-About 80% of input tokens are the cached system prompt:
+Requests sent through the Batch API run asynchronously and cost half the standard rate. On GPT-6.1 Sol that's {{batch-pair:gpt-6-1-sol}} instead of {{pair:gpt-6-1-sol}}, and on Terra it's {{batch-pair:gpt-6-1-terra}}.
 
-- Cached input: 10,000 × 5 × 1,200 / 1M × $0.05 = **$3.00 / day**
-- Uncached input: 10,000 × 5 × 300 / 1M × $0.20 = **$3.00 / day**
-- Output: **$8.00 / day**
-- **Total: $14.00 / day = $420 / month**
+Batch suits work where nobody is waiting for the answer: overnight content generation, weekly ticket categorisation, backfills and evaluation runs. It's the wrong choice for anything interactive or streamed.
 
-**Caching alone saves ~40% of the bill** — about **$270 / month** on this workload.
+## A worked example: support chatbot on GPT-6.1 Terra
 
-### With caching + selective batching
+- **Volume**: 10,000 conversations a day, 5 messages each, for 50,000 calls a day
+- **Input per call**: 1,500 tokens, of which 1,200 are an identical system prompt and 300 are the user turn
+- **Output per call**: 200 tokens
 
-If half of the conversations are summary generation that runs nightly (batchable):
+**Without caching**, the daily volume is 75M input tokens × {{in:gpt-6-1-terra}} plus 10M output tokens × {{out:gpt-6-1-terra}} (both per 1M). Because output costs five times as much as input on Terra, input is 75 of the 125 price units here, or 60% of the bill. Open this workload in the calculator: [/?model=gpt-6-1-terra&in=1500&out=200](/?model=gpt-6-1-terra&in=1500&out=200).
 
-- Realtime portion (with caching): ~$10 / day
-- Batch portion (50% off): ~$2 / day
-- **Total: $12 / day = $360 / month**
+**With caching**, 80% of each prompt is the shared system prompt, and at 95% off that removes 0.80 × 0.95 = **76% of the input bill**. Applied to input's 60% share, the total falls by about **46%**. The cache-write charge barely registers here: at this volume, the same 1,200-token prefix is requested hundreds of times within each 30-minute retention window. See it in the calculator: [/?model=gpt-6-1-terra&in=1500&out=200&cache=80](/?model=gpt-6-1-terra&in=1500&out=200&cache=80).
 
-Combined savings: **$330 / month, ~48%** vs the naive number.
+**With Batch for the nightly part**: anything that doesn't need an immediate answer, such as end-of-day conversation summaries, can go through Batch at half price.
 
-## How to actually optimize your OpenAI bill
+**On GPT-6 Luna** instead, the same workload costs a fraction of the Terra figure (compare {{call:gpt-6-luna}} with {{call:gpt-6-1-terra}} per standard call). Whether that's acceptable depends on whether Luna's replies pass your quality bar.
 
-In rough order of impact:
+## Optimisation checklist
 
-### 1. Always enable prompt caching
+1. **Pick the cheapest tier that passes your eval.** Re-check when OpenAI ships a new model, since the GPT-6 tiers undercut their GPT-5.6 equivalents.
+2. **Keep a stable prefix** so the 95% cached rate applies. Don't let one-off prompts pay the write premium for nothing.
+3. **Stay under 272K tokens** on GPT-6.1 unless the extra context earns its long-context rate.
+4. **Batch anything that can wait**, at 50% off.
+5. **Cap output.** At five times the input price, output tokens are the expensive ones.
+6. **Get off retiring models early**: GPT-5 mini retires on 2026-12-11.
 
-Caching is automatic on supported models — there's no flag to flip. But you must structure your prompts so that the **cacheable prefix is stable**: put your system prompt and tool definitions first, dynamic content last. If your system prompt changes per user, you lose the cache.
+## Cheaper non-OpenAI options
 
-### 2. Match the model to the task
-
-A common mistake is using GPT-5.5 for everything. Reality:
-
-- **Chatbots, classification, simple Q&A** → GPT-5 mini (25× cheaper)
-- **Code generation, hard reasoning** → GPT-5.5 or o4-mini (the latter often beats GPT-5.5 on STEM at 1/5 the cost)
-- **Image/document understanding** → GPT-5 mini handles 80% of vision tasks at flagship-level cost
-
-### 3. Use Batch API for anything non-realtime
-
-If the user isn't actively waiting, batch it. The 50% discount stacks with caching where supported.
-
-### 4. Cap output tokens explicitly
-
-Output is **4× more expensive** than input. Use `max_tokens` to bound responses. Many "expensive" calls end up that way because the model wandered into a 2,000-token answer when 200 was sufficient.
-
-### 5. Optimize your prompt
-
-Every 100 tokens of unnecessary system prompt × thousands of calls/day = real money. Audit your prompts the way you'd audit SQL queries.
-
-### 6. Consider OpenAI alternatives for cheap workloads
-
-{{name:deepseek-v3-2}} ({{price:deepseek-v3-2}}) and {{name:gemini-3-flash}} ({{pair:gemini-3-flash}}) are competitive vs {{name:gpt-5-mini}} for many classification and extraction tasks. DeepSeek V3.2 in particular is 5× cheaper on output. Test them on a sample before committing.
-
-## When OpenAI is worth the premium
-
-Despite cheaper alternatives, OpenAI's advantages remain:
-
-- **Tooling ecosystem** — Most agent frameworks default to OpenAI; switching costs are real
-- **Reliability and uptime** — Mature infrastructure
-- **Function calling reliability** — GPT-5.5's tool use is still best-in-class
-- **Vision quality** — Top tier
-- **o4-mini reasoning** — Competitive with Claude Opus 4.7 on STEM benchmarks at 1/15 the cost
+For simple high-volume tasks, compare GPT-6 Luna with [{{name:claude-haiku-5-5}}](/claude-haiku-5-5-cost-calculator) ({{pair:claude-haiku-5-5}}) and [{{name:deepseek-v4-flash}}](/deepseek-v4-flash-cost-calculator) ({{pair:deepseek-v4-flash}}). Haiku 5.5's listed price applies to prompts up to 100K tokens. Above that, Anthropic charges five times as much per token. The [cheapest AI APIs list](/blog/top-10-cheapest-ai-apis-2026) ranks the whole field by cost per call.
 
 ## Bottom line
 
-OpenAI's 2026 pricing is **friendly to volume buyers** if you actually use the discount mechanisms. Naive usage leaves 40–60% on the table.
+OpenAI's late-2026 pricing rewards three habits. Use the cheapest tier that works, keep a stable prompt prefix so cached reads apply, and batch anything that isn't interactive. Cache writes and the 272K long-context rate are the two new ways to overspend, and both are easy to avoid once you know about them.
 
-If you're spending more than $500/month on OpenAI and haven't measured your cache hit rate or considered batching, you're almost certainly overpaying.
-
-Use the [calculator on the homepage](/) to model your specific workload — including caching slider and Batch API toggle — and see exactly where you'd land.
+To model your own workload, use the [calculator](/). It has a caching slider and a Batch toggle, and every price change we record is listed in the [change log](/changes).
 
 ---
 
-*Pricing in this article reflects OpenAI's published rates as of May 2026. Always verify with [OpenAI's official pricing page](https://openai.com/api/pricing) before committing budget.*
+*Prices on this page come from the site dataset, which is checked daily against the LiteLLM registry. The over-272K long-context rates are quoted from OpenAI and aren't in our dataset. Always confirm on [OpenAI's pricing page](https://openai.com/api/pricing) before committing budget.*

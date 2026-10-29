@@ -1,119 +1,117 @@
 ---
-title: "OpenAI Prompt Caching in 2026: When You'll Save 75% (And When You Won't)"
-description: "OpenAI's prompt caching can cut your bill by 75% — or save you nothing. The difference is purely structural. Real math, real workloads, and the gotchas that destroy your cache hit rate."
+title: "OpenAI Prompt Caching in 2026: When the 95% Discount Pays (And When It Costs You)"
+description: "On GPT-6.1 Sol and Terra, cached input is 95% off, but OpenAI now charges for cache writes. Here's the break-even point with the arithmetic, how to structure prompts to reach it, and the patterns that waste the write charge."
 date: "2026-05-12"
 author: "AI Cost Calc Team"
 tags: ["openai", "prompt-caching", "cost-optimization", "llm"]
-readingTime: "9 min read"
+readingTime: "8 min read"
 featured: true
+lastUpdated: "2026-10-29"
 ---
 
-Prompt caching is the single most undervalued cost optimization in AI APIs today. Used correctly on a typical RAG workload, you'll cut your OpenAI bill by **40-75%**. Used incorrectly — or skipped entirely — you'll pay the headline rate forever.
+> **📊 Prices on this page are live**: they're pulled from the site dataset at build time, last verified **{{updated}}**.
 
-The catch: **caching savings are entirely structural**. The same product with the same total tokens can save 70% or save 0% depending on how you sequence your prompts. Most teams don't realize they're paying the no-cache price even when caching is technically "enabled."
+Prompt caching is still the biggest single lever on an OpenAI bill. On [{{name:gpt-6-1-sol}}](/gpt-6-1-sol-cost-calculator) a cached input token costs {{cached:gpt-6-1-sol}} per 1M against {{in:gpt-6-1-sol}} at the standard rate, which is **95% off**.
 
-This guide breaks down exactly when OpenAI prompt caching is worth implementing, how much you'll really save, and the four patterns that silently kill your cache hit rate.
+What changed in 2026 is that caching can now **cost** you money. On GPT-6.1 models, OpenAI charges for writing a prefix into the cache, and the write costs more than a normal input token. If a prefix is written and never read back, you pay more than you would have without caching.
 
-## How OpenAI prompt caching works (60-second refresher)
+The core rule hasn't changed: **caching only saves money when the start of your prompt repeats.** What's new is that there's now a break-even point, and you should know which side of it each workload falls on.
 
-Since late 2024, OpenAI has supported automatic prompt caching on its main reasoning models. The mechanics:
+## The prices that matter
 
-- **Trigger**: Any prompt prefix you've sent within the last 5-10 minutes is eligible for caching.
-- **Discount**: Cached input is billed at a steep discount — on {{name:gpt-5-5}} it drops from {{in:gpt-5-5}}/1M to {{cached:gpt-5-5}}/1M, a 90% cut.
-- **No flag to flip**: Caching is automatic. You don't enable it. You don't request it. It just happens — if your prompts are structured to be cacheable.
+| Model | Standard input | Cached read | Cache write | Read discount |
+|---|---|---|---|---|
+| [**{{name:gpt-6-1-sol}}**](/gpt-6-1-sol-cost-calculator) | {{in:gpt-6-1-sol}} | {{cached:gpt-6-1-sol}} | {{cache-write:gpt-6-1-sol}} | 95% |
+| [**{{name:gpt-6-1-terra}}**](/gpt-6-1-terra-cost-calculator) | {{in:gpt-6-1-terra}} | {{cached:gpt-6-1-terra}} | {{cache-write:gpt-6-1-terra}} | 95% |
+| [{{name:gpt-6-astra}}](/gpt-6-astra-cost-calculator) | {{in:gpt-6-astra}} | {{cached:gpt-6-astra}} | see note | 90% |
+| [{{name:gpt-6-sol}}](/gpt-6-sol-cost-calculator) | {{in:gpt-6-sol}} | {{cached:gpt-6-sol}} | see note | 90% |
+| [{{name:gpt-6-luna}}](/gpt-6-luna-cost-calculator) | {{in:gpt-6-luna}} | {{cached:gpt-6-luna}} | see note | 90% |
 
-Compared to Anthropic's explicit caching system (where you mark blocks with `cache_control`), OpenAI's approach is simpler but **less controllable**. You don't get to choose what's cached; OpenAI's system decides based on prefix hash matching.
+_All prices per 1M tokens. The GPT-6.1 write prices are for OpenAI's 30-minute retention. OpenAI also offers 12-hour retention, but its write price isn't in our dataset. For GPT-6 Astra, Sol and Luna, check OpenAI's pricing page for how writes are billed. The break-even method below works for any model once you plug in its write price._
 
-This sounds great until you realize the structural requirement: **the cacheable portion must be at the start of your prompt and must match byte-for-byte across requests**.
+Reading the GPT-6.1 rows as multiples of the standard input price:
 
-## The savings math: a real workload
+- A **write** costs {{cache-write:gpt-6-1-sol}} ÷ {{in:gpt-6-1-sol}} = **1.25×** input, a 25% premium.
+- A **read** costs {{cached:gpt-6-1-sol}} ÷ {{in:gpt-6-1-sol}} = **0.05×** input, which saves 95%.
 
-Let's price a customer-support chatbot built on GPT-5 mini:
+Terra has the same ratios ({{cache-write:gpt-6-1-terra}}, {{in:gpt-6-1-terra}} and {{cached:gpt-6-1-terra}}).
 
-- **System prompt**: 2,000 tokens (assistant role definition, tool specs, guardrails)
-- **Conversation context**: ~500 tokens (last 3-4 user/assistant turns)
-- **User message**: 100 tokens
-- **Output**: 250 tokens
-- **Volume**: 20,000 conversations/day, 4 messages each = 80,000 calls/day
+## The break-even point on GPT-6.1
 
-### Without caching
+Take a prefix (system prompt, tool definitions, reference documents) that gets sent **N** times within one retention window. Measure everything in units of "sending this prefix once at full price".
 
-> The daily-cost walkthrough below uses **illustrative round rates** ($0.20 input / $0.80 output, $0.05 cached) so the arithmetic is easy to verify. Current real rates for every model are on the [calculator](/); the provider table at the end of this article is pulled live.
+- **Without caching**, the cost is N × 1.00.
+- **With caching**, you pay one write at 1.25 and then (N − 1) reads at 0.05 each.
 
-```
-Input cost  = 80,000 × 2,600 / 1M × $0.20 = $41.60   # illustrative rates
-Output cost = 80,000 × 250   / 1M × $0.80 = $16.00
-Total       = $57.60 / day = $1,728 / month
-```
+| Times the prefix is sent | No caching | With caching | Difference |
+|---|---|---|---|
+| 1 (never reused) | 1.00 | 1.25 | **25% more** |
+| 2 | 2.00 | 1.30 | 35% less |
+| 5 | 5.00 | 1.45 | 71% less |
+| 10 | 10.00 | 1.70 | 83% less |
+| 100 | 100.00 | 6.20 | 94% less |
 
-### With caching (95% cache hit on system prompt)
+The general form uses the live prices directly:
 
-The system prompt (2,000 tokens) is identical across all 80,000 calls. After warmup, it's cached for ~5 minutes at a time. Assuming high call frequency:
+- **Write premium** = write − input = {{cache-write:gpt-6-1-sol}} − {{in:gpt-6-1-sol}} per 1M tokens
+- **Saving per read** = input − cached = {{in:gpt-6-1-sol}} − {{cached:gpt-6-1-sol}} per 1M tokens
+- **Reads needed to pay back one write** = premium ÷ saving = 0.25 ÷ 0.95 ≈ **0.26**
 
-```
-Cached input  = 80,000 × 2,000 × 0.95 / 1M × $0.05 = $7.60
-Uncached      = 80,000 × 2,000 × 0.05 / 1M × $0.20 = $1.60
-Dynamic part  = 80,000 × 600          / 1M × $0.20 = $9.60
-Output        = 80,000 × 250          / 1M × $0.80 = $16.00
-Total         = $34.80 / day = $1,044 / month
-```
+You can also express this as a hit rate. If a share *h* of the times the prefix is sent are cache reads and the rest are writes, caching wins once (1 − *h*) × 1.25 + *h* × 0.05 < 1. That works out to **h > 0.25 ÷ 1.20 ≈ 21%**.
 
-**Monthly savings: $684 (40% reduction).**
+**Rule of thumb for GPT-6.1:** caching pays as soon as a prefix is **read back at least once** before it expires, or more than about 1 call in 5 hits the cache. When a prefix won't be reused, the write costs you 25% extra on those tokens.
 
-If you scale this to enterprise volume (10x), savings hit $6,840/month — for free, just by structuring your prompts correctly.
+This also explains why one-off prompts and badly structured prompts are worse now than on models without a write charge. There they saved nothing. On GPT-6.1 they can cost extra.
 
-You can model your own workload using the [caching slider in the calculator](/) — drag the "Cached portion of input" between 0% and 100% to see the linear cost change.
+**A note on our calculator.** The [calculator's](/) cache slider prices the cached share of your input at the cached rate. It doesn't add the cost of the write that put it there. For high-reuse workloads, where the write is a rounding error, that's accurate. For workloads near the break-even point, add the write premium yourself.
 
-## When caching saves you the most
+## A worked example: an agent with a large tool spec
 
-Four high-leverage scenarios where caching is structurally guaranteed to work:
+An internal agent on GPT-6.1 Sol sends 20,000 input tokens per call, of which about 16,000 are a fixed block of instructions, tool definitions and a style guide. A typical session makes 10 calls within a few minutes.
 
-### 1. RAG with stable retrieval
+- **The 16K prefix without caching**: 10 sends × 1.00 = 10.00 units
+- **With caching**: 1.25 + 9 × 0.05 = 1.70 units, **83% less** on the prefix
 
-Pattern: You retrieve N documents, prepend them to a stable system prompt, then add the user query.
+In dollar terms, each write of that prefix costs 0.016 × {{cache-write:gpt-6-1-sol}} and each read costs 0.016 × {{cached:gpt-6-1-sol}}. Compare that with 0.016 × {{in:gpt-6-1-sol}} for every uncached send.
 
-Why it works: If your top-K retrieval returns the same chunks for similar queries (which it often does for FAQ-like products), the retrieved context becomes the cached prefix. **The entire 3,000-5,000 token retrieved context can be cached.**
+With 80% of input cached, open it in the calculator: [/?model=gpt-6-1-sol&in=20000&cache=80](/?model=gpt-6-1-sol&in=20000&cache=80). For comparison, the same call with no caching is at [/?model=gpt-6-1-sol&in=20000](/?model=gpt-6-1-sol&in=20000).
 
-Catch: Vector search results need to be deterministic for the same query. If you use ANN with random tie-breaking, cache rates collapse.
+Now change one thing: the agent stamps the current time at the top of the system prompt. Every call has a new prefix, so every call pays a write and none ever read. The prefix now costs **12.50 units** per session instead of 10.00, which is worse than having no caching at all.
 
-### 2. Conversation threads with persistent context
+## When caching saves the most
 
-Pattern: A chat where the system prompt + first N messages are stable, and new messages are appended.
+### 1. Agent loops with fixed tool specs
 
-Why it works: OpenAI caches by prefix. As long as the conversation grows by appending (not editing earlier messages), every new turn benefits from caching the previous turns.
+Tool definitions often run to thousands of tokens and don't change between iterations of a session. Every call after the first reads them from the cache. This is usually the highest-leverage cache in an application.
 
-Catch: Some chat frameworks edit message history (e.g., summarizing old messages). Every edit breaks the cache.
+*Catch:* if you generate tool descriptions per user or per request, the prefix changes and you pay a write each time.
 
-### 3. Agent loops with fixed tool specs
+### 2. Conversation threads that only append
 
-Pattern: An agent that decides between 10-20 tools across multiple iterations. The tool spec is identical across all calls.
+A chat where the system prompt and earlier turns stay fixed and new messages are appended at the end. Each turn reuses everything before it.
 
-Why it works: Tool definitions are often 1,500-3,000 tokens. They never change between calls in a session. **This is the highest-leverage cache** — every iteration after the first is mostly cached.
+*Catch:* frameworks that rewrite history, for example by summarising old turns in place, change the prefix. Every rewrite means a new write.
 
-Catch: If you dynamically generate tool descriptions per-user, caching breaks.
+### 3. RAG with stable context
 
-### 4. Batch classification with shared instructions
+If the same documents get prepended for many similar queries, as in FAQ-style products, the retrieved context becomes part of the cached prefix.
 
-Pattern: You process 10,000 records through the same classification prompt with different inputs.
+*Catch:* retrieval has to return the same chunks in the same order. Non-deterministic ranking or tie-breaking produces a different prefix, and therefore a write, on each call.
 
-Why it works: The classification instructions (often 500-1,500 tokens) are identical across records.
+### 4. Bulk jobs with shared instructions
 
-Catch: This is the perfect case for the **Batch API** (50% discount on top), which compounds with caching. We cover that in [How to Calculate Token Cost](/blog/how-to-calculate-token-cost-beginner-guide).
+When 10,000 records go through the same classification or extraction prompt, the instructions are identical every time. If the job can wait, also consider the **Batch API**, which is half price on GPT-6.1 Sol ({{batch-pair:gpt-6-1-sol}}) and Terra ({{batch-pair:gpt-6-1-terra}}). See [OpenAI API Pricing Explained](/blog/openai-api-pricing-explained-2026) for when Batch makes sense.
 
-## When caching saves you nothing
+## When caching saves nothing, or costs extra
 
-Four patterns where caching is technically active but practically useless:
+### 1. One-shot calls
 
-### 1. One-shot completions
+A "summarise this article" endpoint that sends a unique document once has nothing to reuse. On GPT-6.1, a cache write on that prompt is pure overhead. If the API gives you a choice, don't cache prompts you know are one-offs.
 
-If your application makes a single API call per user (e.g., a "summarize this article" tool), there's nothing to cache. The 5-10 minute window expires before the next user arrives.
-
-**Fix**: There isn't one. One-shot patterns don't benefit from caching.
-
-### 2. Highly dynamic prompts with embedded variables
+### 2. Dynamic values at the top of the prompt
 
 ```python
-# This kills caching
+# Every call has a unique prefix: you pay a write, never a read
 prompt = f"""
 The current time is {datetime.now()}.
 User ID: {user_id}
@@ -123,9 +121,7 @@ You are a helpful assistant for {product_name}.
 """
 ```
 
-Every call has a different prefix (timestamp + user_id) so no cache match.
-
-**Fix**: Move dynamic data to the END of the prompt, after the cacheable prefix:
+**Fix:** move anything that varies to the **end**, after the stable block:
 
 ```python
 prompt = f"""
@@ -133,127 +129,83 @@ You are a helpful assistant for {product_name}.
 
 [2,000 tokens of system prompt...]
 
-Context: Current time {datetime.now()}, User {user_id}
+Context: current time {datetime.now()}, user {user_id}
 """
 ```
 
-The first ~2,000 tokens now cache. The dynamic 50 tokens at the end don't, but that's fine — only the prefix needs to match.
+Now the first ~2,000 tokens are identical from call to call. Only the short tail at the end is billed at the full rate.
 
-### 3. Bursty long-tail traffic
+### 3. Traffic with gaps longer than the retention window
 
-If your usage pattern is "200 calls in one minute, then 30 minutes of silence, then 200 calls again," the cache expires between bursts. Each new burst's first call is a cache miss.
+If a prefix is used in bursts separated by more than its retention period, each burst starts with a fresh write. Bursts of many calls still come out well ahead, because one write is spread across the whole burst. The case to watch is a prefix used once or twice and then left idle. Each use can be a write that's never read back. OpenAI's 12-hour retention option exists for longer gaps, but check its write price before relying on it.
 
-**Fix**: For high-value endpoints, send a small "keep-alive" prompt every 4 minutes during silence periods. This keeps the cache warm at minimal cost.
-
-### 4. Few-shot prompts with rotating examples
+### 4. Rotating few-shot examples
 
 ```python
-# Anti-pattern
+# Anti-pattern: a different prefix on every call
 examples = random.sample(all_examples, k=5)
 prompt = f"{system}\n\nExamples:\n{examples}\n\nUser: {user_input}"
 ```
 
-Random example selection guarantees a different prefix every call.
+**Fix:** pin the example set and rotate it on a schedule (daily, for example), not on every call.
 
-**Fix**: Pin the example set during the cache window. Rotate at lower frequency (e.g., daily).
+## Measure your hit rate
 
-## How to measure your cache hit rate
-
-OpenAI returns cache hit information in the API response. You should be logging this.
-
-In the response JSON, look for `usage.prompt_tokens_details.cached_tokens`:
+OpenAI reports how many prompt tokens were served from the cache in each response's `usage` object, as `cached_tokens` under the prompt token details. Log it.
 
 ```json
 {
   "usage": {
     "prompt_tokens": 2500,
-    "prompt_tokens_details": {
-      "cached_tokens": 2000
-    },
+    "prompt_tokens_details": { "cached_tokens": 2000 },
     "completion_tokens": 250
   }
 }
 ```
 
-**Cache hit rate** = `cached_tokens / prompt_tokens` = 2000 / 2500 = **80%**.
+The cached share for this call is 2,000 ÷ 2,500 = **80%**.
 
-A healthy production application should target **>70% hit rate** for cache-eligible workflows. If yours is under 30%, you have a structural problem — most likely one of the four anti-patterns above.
+On GPT-6.1, compare your measured hit rate with the ~21% break-even point above. Then check your invoice for cache-write charges as well. A high write total next to a low hit rate means you're paying the premium without getting the reads. A sudden drop in hit rate after a deploy almost always means something dynamic has crept into the prefix.
 
-**Implementation tip**: Log `cached_tokens` to your analytics. Track it weekly. Treat a drop in cache hit rate as a P1 incident — it usually signals a recent deploy broke prompt stability.
+## How OpenAI's caching now compares
 
-## The break-even analysis: when is caching worth implementing?
+| Model | Input | Cached read | Cache write |
+|---|---|---|---|
+| [{{name:gpt-6-1-sol}}](/gpt-6-1-sol-cost-calculator) | {{in:gpt-6-1-sol}} | {{cached:gpt-6-1-sol}} | {{cache-write:gpt-6-1-sol}} |
+| [{{name:gpt-6-1-terra}}](/gpt-6-1-terra-cost-calculator) | {{in:gpt-6-1-terra}} | {{cached:gpt-6-1-terra}} | {{cache-write:gpt-6-1-terra}} |
+| [{{name:claude-sonnet-5-5}}](/claude-sonnet-5-5-cost-calculator) | {{in:claude-sonnet-5-5}} | {{cached:claude-sonnet-5-5}} | {{cache-write:claude-sonnet-5-5}} |
+| [{{name:claude-opus-5-5}}](/claude-opus-5-5-cost-calculator) | {{in:claude-opus-5-5}} | {{cached:claude-opus-5-5}} | {{cache-write:claude-opus-5-5}} |
+| [{{name:claude-haiku-5-5}}](/claude-haiku-5-5-cost-calculator) | {{in:claude-haiku-5-5}} | {{cached:claude-haiku-5-5}} | {{cache-write:claude-haiku-5-5}} |
+| [{{name:gemini-3-1-pro}}](/gemini-3-1-pro-cost-calculator) | {{in:gemini-3-1-pro}} | {{cached:gemini-3-1-pro}} | not in our data |
 
-Caching itself is free on OpenAI (unlike Anthropic, which charges 1.25× standard for cache writes). So the only cost is **engineering time** to structure your prompts.
+_Per 1M tokens. Anthropic offers 5-minute and 1-hour cache writes; the table shows the write price in our dataset. For any other caching charges on Gemini, check Google's caching docs._
 
-For a typical team:
+With cache writes on GPT-6.1, OpenAI's caching economics now look like Anthropic's. In both cases you pay a premium to write and get a deep discount on each read. At the time of writing, GPT-6.1 Sol and Claude Sonnet 5.5 have identical input, cached-read and cache-write prices. The same break-even reasoning applies to both: reuse the prefix at least once and caching pays. Our [Claude API pricing guide](/blog/claude-api-pricing-2026) covers Anthropic's side.
 
-```
-Refactor time     = 4-16 hours (depends on existing code)
-Engineer cost    = $100-200/hour all-in
-Total cost        = $400-3,200 one-time
-```
+## Checklist
 
-**Break-even at typical savings**:
+New integration:
 
-| Monthly OpenAI spend | Caching savings (40% avg) | Break-even time |
-|---|---|---|
-| $100 | $40/mo | 10-80 months |
-| $500 | $200/mo | 2-16 months |
-| $2,000 | $800/mo | < 4 months |
-| $10,000 | $4,000/mo | < 1 month |
+- [ ] Stable content first: system prompt, tool specs, reference documents
+- [ ] Anything dynamic last: timestamps, user IDs, the user's message
+- [ ] Few-shot examples pinned, not sampled per request
+- [ ] Deterministic retrieval order
+- [ ] Message history appended, never rewritten
+- [ ] `cached_tokens` logged and alerted on
 
-**Rule of thumb**: If you spend more than $500/month on OpenAI and run cache-eligible workloads, caching pays back fast. Below that, it's still good practice but the urgency is lower.
+Existing application on GPT-6.1:
 
-## How OpenAI's caching compares to Anthropic and Google
-
-OpenAI is simpler but less controllable:
-
-| Provider | Cache trigger | Discount | Cache write cost | Control |
-|---|---|---|---|---|
-| **{{name:gpt-5-5}}** | Automatic prefix | {{cached:gpt-5-5}}/1M cached (from {{in:gpt-5-5}}) | None | Low |
-| **{{name:gpt-5-mini}}** | Automatic prefix | {{cached:gpt-5-mini}}/1M cached (from {{in:gpt-5-mini}}) | None | Low |
-| **Anthropic Claude Opus 4.7** | Explicit `cache_control` | **90% off** | 1.25× | High |
-| **Anthropic Claude Haiku 4.5** | Explicit `cache_control` | **90% off** | 1.25× | High |
-| **{{name:gemini-3-1-pro}}** | Context caching API | {{cached:gemini-3-1-pro}}/1M cached (from {{in:gemini-3-1-pro}}) | None | Medium |
-
-**Trade-offs**:
-- **OpenAI is easiest** — works with zero code changes if your prompts are already structured well
-- **Anthropic offers the biggest discount** but requires explicit cache markers + pays a small write surcharge
-- **Google's context caching** sits in the middle — requires API calls to manage caches but offers tight control
-
-For most teams, OpenAI's automatic approach is fine. For high-volume agent workloads, Anthropic's explicit control is worth the complexity.
-
-We have a [head-to-head OpenAI vs Claude pricing analysis](/blog/openai-api-pricing-explained-2026) for deeper comparison, and the [main calculator](/) lets you toggle caching on any model.
-
-## Checklist: optimize for caching in 30 minutes
-
-If you're starting a new OpenAI integration:
-
-- [ ] Put system prompt + tool specs at the start (cacheable prefix)
-- [ ] Put dynamic data (timestamps, user IDs, latest user input) at the end
-- [ ] Pin few-shot examples — don't randomize per request
-- [ ] Use stable retrieval (consistent ranking on same query)
-- [ ] Avoid editing message history mid-conversation
-- [ ] Log `cached_tokens` to track hit rate
-- [ ] Set up alerts for sudden hit-rate drops
-
-For existing applications:
-
-- [ ] Audit your top 3 highest-volume prompts
-- [ ] Move any dynamic content to the end of those prompts
-- [ ] Measure cache hit rate before and after
-- [ ] If hit rate < 50%, find the byte-level diff (you'd be surprised what breaks it)
+- [ ] Find your highest-volume prompts and check whether their prefixes actually repeat
+- [ ] Identify one-off endpoints that pay cache writes without ever reading them back
+- [ ] Compare measured hit rate with the ~21% break-even point
+- [ ] Re-measure after every prompt change
 
 ## Bottom line
 
-OpenAI prompt caching is the **biggest free optimization in production AI**. The savings are real (40-75% of input cost) and the cost to implement is small (a few hours of prompt restructuring).
+Caching still delivers the biggest saving in OpenAI pricing: **95% off** every cached input token on GPT-6.1 Sol and Terra. It's no longer free, though. A write costs 25% more than a normal input token, so a prefix that's never reused costs you extra. In return, a single reuse more than pays for the write, which makes the rule simple. Structure prompts so the prefix repeats, and don't cache what won't.
 
-But it's also the most commonly missed optimization. We've reviewed dozens of teams paying 5x more than necessary because their prompts had a timestamp variable at the top, killing every cache hit.
-
-The fix is structural, not magical. Get the prompt order right, log cache hit rate, and the savings appear.
-
-**To model your specific workload**: use [the calculator](/) — toggle the "Caching slider" between 0% and 95% (your typical cache hit rate) and watch the monthly bill drop in real time.
+To model your workload, open the [calculator](/), pick a model and set the caching slider to your measured hit rate. Keep in mind that it doesn't add the write cost.
 
 ---
 
-*Related reading: [OpenAI API Pricing Explained: Complete Guide for 2026](/blog/openai-api-pricing-explained-2026) covers all of OpenAI's pricing dimensions including Batch API. [Claude API Pricing](/blog/claude-api-pricing-2026) breaks down Anthropic's even more aggressive (but explicit) caching system.*
+*Related reading: [OpenAI API Pricing Explained](/blog/openai-api-pricing-explained-2026) covers every OpenAI pricing dimension, including Batch and the over-272K long-context rate. [Claude API Pricing](/blog/claude-api-pricing-2026) covers Anthropic's caching.*

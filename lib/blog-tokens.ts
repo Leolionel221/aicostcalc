@@ -46,7 +46,8 @@ function callCost(m: Model): number {
 
 function cheapestTable(n: number): string {
   const rows = data.models
-    .filter((m) => m.status !== "deprecated") // a retired API is not an option, however cheap
+    // A retired API is not an option however cheap, and a draft's price isn't verified yet.
+    .filter((m) => m.status !== "deprecated" && !m.draft)
     .map((m) => ({ m, c: callCost(m) }))
     .sort((a, b) => a.c - b.c)
     .slice(0, n);
