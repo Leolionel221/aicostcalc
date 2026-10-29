@@ -10,10 +10,10 @@ GSC 2026-10-04：外部链接 **0**。这份文件既是投稿草稿，也是跟
 
 | # | 目标 | 方式 | 状态 | 链接 |
 |---|---|---|---|---|
-| 1 | pleasedodisturb/awesome-llm-token-optimization · Pricing Comparison → Live Pricing Tools | PR | 已提交 2026-10-04，等审核（首次贡献者，lint CI 需维护者批准才跑） | [PR #58](https://github.com/pleasedodisturb/awesome-llm-token-optimization/pull/58) |
+| 1 | pleasedodisturb/awesome-llm-token-optimization · Pricing Comparison → Live Pricing Tools | PR | ❌ 2026-10-25 维护者关闭："使用证据"不够。他读了本仓库公开的 HANDOVER.md（GA 访客数）、同日多处投稿的提交记录、过期的 lastVerified。欢迎有独立使用信号后重投 | [PR #58](https://github.com/pleasedodisturb/awesome-llm-token-optimization/pull/58) |
 | 2 | foss42/awesome-generative-ai-apis · Other AI Tools | 先 Issue，后 PR | Issue 已开 2026-10-04，有回应后提 PR | [Issue #472](https://github.com/foss42/awesome-generative-ai-apis/issues/472) |
 | 3 | taishi-i/awesome-ChatGPT-repositories · Others | PR | 已提交 2026-10-04，等审核 | [PR #255](https://github.com/taishi-i/awesome-ChatGPT-repositories/pull/255) |
-| 4 | ghimiresunil/Top-AI-Tools · Developer | PR | 已提交 2026-10-04，等审核 | [PR #657](https://github.com/ghimiresunil/Top-AI-Tools/pull/657) |
+| 4 | ghimiresunil/Top-AI-Tools · Developer | PR | ✅ 2026-10-06 合并——第一条外链 | [PR #657](https://github.com/ghimiresunil/Top-AI-Tools/pull/657) |
 | 5 | WangRongsheng/awesome-LLM-resources · 推理 Inference | PR | ❌ 2026-10-05 维护者无评论关闭。他不合并外部 PR，自己挑条目手动加（同一天把第 57 条给了推理框架 NInfer）。不再跟进 | [PR #251](https://github.com/WangRongsheng/awesome-LLM-resources/pull/251) |
 
 **排除：**
