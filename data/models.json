@@ -580,7 +580,7 @@
         "science"
       ],
       "releaseDate": "2025-04-16",
-      "status": "active",
+      "status": "deprecated",
       "deprecatedAt": "2026-10-23",
       "successorId": null,
       "pricing": {
@@ -1117,7 +1117,7 @@
         "fast"
       ],
       "releaseDate": "2025-10-01",
-      "status": "active",
+      "status": "deprecated",
       "deprecatedAt": "2026-10-15",
       "successorId": null,
       "pricing": {

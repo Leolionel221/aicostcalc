@@ -457,7 +457,22 @@ async function main() {
   // daily" claim — a reviewer read it as evidence the sync wasn't running
   // (2026-10-25). Pinned and quarantined models are deliberately not touched:
   // for those we did not accept the registry value.
+  // Retirement dates were recorded but nothing ever acted on them, so on
+  // 2026-10-29 Claude Haiku 4.5 and o4-mini were two weeks past retirement and
+  // still "active" — their pages said "plans to retire on 2026-10-15". Flipping
+  // the status keeps the page and its price (historical reference) and switches
+  // the notice to "retired"; removing a page is still a human's call.
+  const retiredToday = data.models.filter(
+    (m) => m.status !== "deprecated" && m.deprecatedAt && m.deprecatedAt <= today,
+  );
+  if (retiredToday.length) {
+    console.log(`### 🪦 Retired today — status set to deprecated (${retiredToday.length})\n`);
+    retiredToday.forEach((m) => console.log(`- \`${m.id}\` (retired ${m.deprecatedAt})`));
+    console.log("");
+  }
+
   if (WRITE) {
+    for (const model of retiredToday) model.status = "deprecated";
     for (const model of confirmed) {
       model.lastVerified = today;
       for (const s of model.sources) if (s.type === "community") s.fetchedAt = today;
@@ -467,7 +482,7 @@ async function main() {
   }
 
   if (suspicious.length) process.exit(3);
-  process.exit(safeDrift.length || news.length || deprecations.length ? 1 : 0);
+  process.exit(safeDrift.length || news.length || deprecations.length || retiredToday.length ? 1 : 0);
 }
 
 main().catch((err) => {

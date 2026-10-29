@@ -100,7 +100,7 @@ export function Calculator({ models, defaultModelId }: CalculatorProps) {
     // If user's current model isn't in recommended set, switch to first recommended that exists
     if (!scenario.recommendedModelIds.includes(modelId)) {
       const firstAvailable = scenario.recommendedModelIds.find((id) =>
-        models.some((m) => m.id === id),
+        models.some((m) => m.id === id && m.status !== "deprecated"),
       );
       if (firstAvailable) setModelId(firstAvailable);
     }
