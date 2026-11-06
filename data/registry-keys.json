@@ -47,6 +47,7 @@
     "claude-haiku-5-5": "claude-haiku-5-5",
     "mistral-large-4": "mistral/mistral-large-4",
     "gpt-6-1-terra": "gpt-6.1-terra",
-    "gpt-6-rosalind": "gpt-6-rosalind"
+    "gpt-6-rosalind": "gpt-6-rosalind",
+    "gpt-6-cyber": "gpt-6-cyber"
   }
 }
