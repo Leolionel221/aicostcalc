@@ -1,6 +1,6 @@
 {
   "schemaVersion": "2.1",
-  "lastUpdated": "2026-11-06",
+  "lastUpdated": "2026-11-10",
   "_note": "Prices are reconciled every day against LiteLLM's public model registry (github.com/BerriAI/litellm) by .github/workflows/sync-prices.yml; `lastChecked` is the date of the latest run, each model's `lastVerified` the last day its values matched. Moves over 60% in a day are held for a human and checked against the provider's own pricing page. Provider pricing can change without notice — verify before making financial decisions.",
   "models": [
     {
@@ -61,12 +61,12 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-11-09",
+      "lastVerified": "2026-11-10",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-11-09"
+          "fetchedAt": "2026-11-10"
         },
         {
           "type": "official",
@@ -157,12 +157,12 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-11-09",
+      "lastVerified": "2026-11-10",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-11-09"
+          "fetchedAt": "2026-11-10"
         },
         {
           "type": "official",
@@ -252,12 +252,12 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-11-09",
+      "lastVerified": "2026-11-10",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-11-09"
+          "fetchedAt": "2026-11-10"
         },
         {
           "type": "official",
@@ -347,12 +347,12 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-11-09",
+      "lastVerified": "2026-11-10",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-11-09"
+          "fetchedAt": "2026-11-10"
         },
         {
           "type": "official",
@@ -443,12 +443,12 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-11-09",
+      "lastVerified": "2026-11-10",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-11-09"
+          "fetchedAt": "2026-11-10"
         },
         {
           "type": "official",
@@ -532,12 +532,12 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-11-09",
+      "lastVerified": "2026-11-10",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-11-09"
+          "fetchedAt": "2026-11-10"
         },
         {
           "type": "official",
@@ -622,12 +622,12 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-11-09",
+      "lastVerified": "2026-11-10",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-11-09"
+          "fetchedAt": "2026-11-10"
         },
         {
           "type": "official",
@@ -712,12 +712,12 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-11-09",
+      "lastVerified": "2026-11-10",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-11-09"
+          "fetchedAt": "2026-11-10"
         },
         {
           "type": "official",
@@ -802,12 +802,12 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-11-09",
+      "lastVerified": "2026-11-10",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-11-09"
+          "fetchedAt": "2026-11-10"
         },
         {
           "type": "official",
@@ -892,12 +892,12 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-11-09",
+      "lastVerified": "2026-11-10",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-11-09"
+          "fetchedAt": "2026-11-10"
         },
         {
           "type": "official",
@@ -981,12 +981,12 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-11-09",
+      "lastVerified": "2026-11-10",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-11-09"
+          "fetchedAt": "2026-11-10"
         },
         {
           "type": "official",
@@ -1071,12 +1071,12 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-11-09",
+      "lastVerified": "2026-11-10",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-11-09"
+          "fetchedAt": "2026-11-10"
         },
         {
           "type": "official",
@@ -1159,12 +1159,12 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-11-09",
+      "lastVerified": "2026-11-10",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-11-09"
+          "fetchedAt": "2026-11-10"
         },
         {
           "type": "official",
@@ -1249,12 +1249,12 @@
         "fineTuning": true,
         "structuredOutput": true
       },
-      "lastVerified": "2026-11-09",
+      "lastVerified": "2026-11-10",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-11-09"
+          "fetchedAt": "2026-11-10"
         },
         {
           "type": "official",
@@ -1345,12 +1345,12 @@
         "fineTuning": true,
         "structuredOutput": true
       },
-      "lastVerified": "2026-11-09",
+      "lastVerified": "2026-11-10",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-11-09"
+          "fetchedAt": "2026-11-10"
         },
         {
           "type": "official",
@@ -1435,12 +1435,12 @@
         "fineTuning": true,
         "structuredOutput": true
       },
-      "lastVerified": "2026-11-09",
+      "lastVerified": "2026-11-10",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-11-09"
+          "fetchedAt": "2026-11-10"
         },
         {
           "type": "official",
@@ -1526,12 +1526,12 @@
         "fineTuning": true,
         "structuredOutput": true
       },
-      "lastVerified": "2026-11-09",
+      "lastVerified": "2026-11-10",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-11-09"
+          "fetchedAt": "2026-11-10"
         },
         {
           "type": "official",
@@ -1616,12 +1616,12 @@
         "fineTuning": true,
         "structuredOutput": true
       },
-      "lastVerified": "2026-11-09",
+      "lastVerified": "2026-11-10",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-11-09"
+          "fetchedAt": "2026-11-10"
         },
         {
           "type": "official",
@@ -1705,12 +1705,12 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-11-09",
+      "lastVerified": "2026-11-10",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-11-09"
+          "fetchedAt": "2026-11-10"
         },
         {
           "type": "official",
@@ -1807,12 +1807,12 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-11-09",
+      "lastVerified": "2026-11-10",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-11-09"
+          "fetchedAt": "2026-11-10"
         },
         {
           "type": "official",
@@ -1897,12 +1897,12 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-11-09",
+      "lastVerified": "2026-11-10",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-11-09"
+          "fetchedAt": "2026-11-10"
         },
         {
           "type": "official",
@@ -2076,12 +2076,12 @@
         "fineTuning": true,
         "structuredOutput": true
       },
-      "lastVerified": "2026-11-09",
+      "lastVerified": "2026-11-10",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-11-09"
+          "fetchedAt": "2026-11-10"
         },
         {
           "type": "official",
@@ -2166,12 +2166,12 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-11-09",
+      "lastVerified": "2026-11-10",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-11-09"
+          "fetchedAt": "2026-11-10"
         }
       ],
       "priceHistory": [
@@ -2251,12 +2251,12 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-11-09",
+      "lastVerified": "2026-11-10",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-11-09"
+          "fetchedAt": "2026-11-10"
         }
       ],
       "priceHistory": [
@@ -2337,12 +2337,12 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-11-09",
+      "lastVerified": "2026-11-10",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-11-09"
+          "fetchedAt": "2026-11-10"
         }
       ],
       "priceHistory": [
@@ -2422,12 +2422,12 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-11-09",
+      "lastVerified": "2026-11-10",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-11-09"
+          "fetchedAt": "2026-11-10"
         }
       ],
       "priceHistory": [
@@ -2507,12 +2507,12 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-11-09",
+      "lastVerified": "2026-11-10",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-11-09"
+          "fetchedAt": "2026-11-10"
         }
       ],
       "priceHistory": [
@@ -2592,12 +2592,12 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-11-09",
+      "lastVerified": "2026-11-10",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-11-09"
+          "fetchedAt": "2026-11-10"
         }
       ],
       "priceHistory": [
@@ -2677,12 +2677,12 @@
         "fineTuning": false,
         "structuredOutput": false
       },
-      "lastVerified": "2026-11-09",
+      "lastVerified": "2026-11-10",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-11-09"
+          "fetchedAt": "2026-11-10"
         }
       ],
       "priceHistory": [
@@ -2762,12 +2762,12 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-11-09",
+      "lastVerified": "2026-11-10",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-11-09"
+          "fetchedAt": "2026-11-10"
         }
       ],
       "priceHistory": [
@@ -2848,12 +2848,12 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-11-09",
+      "lastVerified": "2026-11-10",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-11-09"
+          "fetchedAt": "2026-11-10"
         },
         {
           "type": "official",
@@ -2939,12 +2939,12 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-11-09",
+      "lastVerified": "2026-11-10",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-11-09"
+          "fetchedAt": "2026-11-10"
         },
         {
           "type": "official",
@@ -3030,12 +3030,12 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-11-09",
+      "lastVerified": "2026-11-10",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-11-09"
+          "fetchedAt": "2026-11-10"
         }
       ],
       "priceHistory": [
@@ -3115,12 +3115,12 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-11-09",
+      "lastVerified": "2026-11-10",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-11-09"
+          "fetchedAt": "2026-11-10"
         },
         {
           "type": "official",
@@ -3205,12 +3205,12 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-11-09",
+      "lastVerified": "2026-11-10",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-11-09"
+          "fetchedAt": "2026-11-10"
         },
         {
           "type": "official",
@@ -3296,12 +3296,12 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-11-09",
+      "lastVerified": "2026-11-10",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-11-09"
+          "fetchedAt": "2026-11-10"
         },
         {
           "type": "official",
@@ -3387,12 +3387,12 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-11-09",
+      "lastVerified": "2026-11-10",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-11-09"
+          "fetchedAt": "2026-11-10"
         },
         {
           "type": "official",
@@ -3477,12 +3477,12 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-11-09",
+      "lastVerified": "2026-11-10",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-11-09"
+          "fetchedAt": "2026-11-10"
         },
         {
           "type": "official",
@@ -3567,12 +3567,12 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-11-09",
+      "lastVerified": "2026-11-10",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-11-09"
+          "fetchedAt": "2026-11-10"
         },
         {
           "type": "official",
@@ -3658,12 +3658,12 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-11-09",
+      "lastVerified": "2026-11-10",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-11-09"
+          "fetchedAt": "2026-11-10"
         },
         {
           "type": "official",
@@ -3753,7 +3753,7 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-11-09",
+      "lastVerified": "2026-11-10",
       "sources": [
         {
           "type": "official",
@@ -3768,7 +3768,7 @@
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-11-09"
+          "fetchedAt": "2026-11-10"
         },
         {
           "type": "official",
@@ -3854,7 +3854,7 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-11-09",
+      "lastVerified": "2026-11-10",
       "sources": [
         {
           "type": "official",
@@ -3864,7 +3864,7 @@
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-11-09"
+          "fetchedAt": "2026-11-10"
         },
         {
           "type": "official",
@@ -3950,7 +3950,7 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-11-09",
+      "lastVerified": "2026-11-10",
       "sources": [
         {
           "type": "official",
@@ -3965,7 +3965,7 @@
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-11-09"
+          "fetchedAt": "2026-11-10"
         },
         {
           "type": "official",
@@ -4051,7 +4051,7 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-11-09",
+      "lastVerified": "2026-11-10",
       "sources": [
         {
           "type": "official",
@@ -4066,7 +4066,7 @@
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-11-09"
+          "fetchedAt": "2026-11-10"
         }
       ],
       "priceHistory": [
@@ -4159,7 +4159,7 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-11-09",
+      "lastVerified": "2026-11-10",
       "sources": [
         {
           "type": "official",
@@ -4169,7 +4169,7 @@
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-11-09"
+          "fetchedAt": "2026-11-10"
         },
         {
           "type": "official",
@@ -4254,12 +4254,12 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-11-09",
+      "lastVerified": "2026-11-10",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-11-09"
+          "fetchedAt": "2026-11-10"
         },
         {
           "type": "official",
@@ -4348,12 +4348,12 @@
         "fineTuning": false,
         "structuredOutput": true
       },
-      "lastVerified": "2026-11-09",
+      "lastVerified": "2026-11-10",
       "sources": [
         {
           "type": "community",
           "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-          "fetchedAt": "2026-11-09"
+          "fetchedAt": "2026-11-10"
         },
         {
           "type": "official",
@@ -4383,7 +4383,195 @@
         "generatedAt": "2026-11-06",
         "note": "Auto-drafted from the LiteLLM registry the day it appeared. Prices and limits are registry values; the name follows a fixed rule; tagline and description are formulaic. Needs a human read for lineage, positioning and anything the registry cannot know."
       }
+    },
+    {
+      "id": "claude-fable-5-2",
+      "name": "Claude Fable 5.2",
+      "shortName": "Fable 5.2",
+      "provider": "Anthropic",
+      "providerId": "anthropic",
+      "providerLogo": "/logos/anthropic.svg",
+      "providerWebsite": "https://anthropic.com",
+      "category": "flagship",
+      "useCase": [
+        "general",
+        "reasoning",
+        "vision",
+        "long-context"
+      ],
+      "releaseDate": null,
+      "status": "active",
+      "deprecatedAt": null,
+      "successorId": null,
+      "pricing": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 8,
+        "output": 40,
+        "cachedInput": 0.2,
+        "cacheWrite": 10,
+        "batchInput": 4,
+        "batchOutput": 20,
+        "imagePerImage": null,
+        "imageTokensFormula": null,
+        "reasoningOutput": null,
+        "fineTunedInput": null,
+        "fineTunedOutput": null
+      },
+      "limits": {
+        "contextWindow": 1000000,
+        "maxOutput": 128000,
+        "maxImagesPerRequest": null,
+        "knowledgeCutoff": null
+      },
+      "tokenization": {
+        "encoder": "approximate",
+        "approximationRatio": {
+          "english": 4,
+          "chinese": 1.5,
+          "code": 3
+        }
+      },
+      "supports": {
+        "vision": true,
+        "audio": false,
+        "tools": true,
+        "streaming": true,
+        "caching": true,
+        "batch": true,
+        "fineTuning": false,
+        "structuredOutput": true
+      },
+      "lastVerified": "2026-11-10",
+      "sources": [
+        {
+          "type": "community",
+          "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
+          "fetchedAt": "2026-11-10"
+        },
+        {
+          "type": "official",
+          "url": "https://platform.claude.com/docs/en/about-claude/pricing",
+          "fetchedAt": "2026-11-10"
+        }
+      ],
+      "priceHistory": [
+        {
+          "date": "2026-11-10",
+          "input": 8,
+          "output": 40,
+          "note": "First listed; auto-drafted from LiteLLM registry"
+        }
+      ],
+      "i18n": {
+        "en": {
+          "tagline": "Claude Fable 5.2 — $8.00/$40.00 per 1M tokens, 1M context",
+          "description": "Claude Fable 5.2 is priced at $8.00 input / $40.00 output per 1M tokens, with a 1M context window and 128K max output. Cached input $0.20/1M. That is 20% cheaper per call than Claude Fable 5 ($10.00/$50.00). A 1,000-in / 500-out call costs $0.02800."
+        },
+        "zh": {
+          "tagline": "Claude Fable 5.2 —— 输入 $8.00 / 输出 $40.00（每 1M token），1M 上下文",
+          "description": "Claude Fable 5.2 定价为输入 $8.00 / 输出 $40.00（每 1M token），1M 上下文，128K 最大输出。缓存输入 $0.20/1M。单次成本比 Claude Fable 5（$10.00/$50.00） 便宜 20%。一次 1000 输入 / 500 输出的调用约 $0.02800。"
+        }
+      },
+      "draft": {
+        "generatedAt": "2026-11-10",
+        "note": "Auto-drafted from the LiteLLM registry the day it appeared. Prices and limits are registry values; the name follows a fixed rule; tagline and description are formulaic. Needs a human read for lineage, positioning and anything the registry cannot know."
+      }
+    },
+    {
+      "id": "claude-mythos-5-2",
+      "name": "Claude Mythos 5.2",
+      "shortName": "Mythos 5.2",
+      "provider": "Anthropic",
+      "providerId": "anthropic",
+      "providerLogo": "/logos/anthropic.svg",
+      "providerWebsite": "https://anthropic.com",
+      "category": "flagship",
+      "useCase": [
+        "general",
+        "reasoning",
+        "vision",
+        "long-context"
+      ],
+      "releaseDate": null,
+      "status": "active",
+      "deprecatedAt": null,
+      "successorId": null,
+      "pricing": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 8,
+        "output": 40,
+        "cachedInput": 0.2,
+        "cacheWrite": 10,
+        "batchInput": 4,
+        "batchOutput": 20,
+        "imagePerImage": null,
+        "imageTokensFormula": null,
+        "reasoningOutput": null,
+        "fineTunedInput": null,
+        "fineTunedOutput": null
+      },
+      "limits": {
+        "contextWindow": 1000000,
+        "maxOutput": 128000,
+        "maxImagesPerRequest": null,
+        "knowledgeCutoff": null
+      },
+      "tokenization": {
+        "encoder": "approximate",
+        "approximationRatio": {
+          "english": 4,
+          "chinese": 1.5,
+          "code": 3
+        }
+      },
+      "supports": {
+        "vision": true,
+        "audio": false,
+        "tools": true,
+        "streaming": true,
+        "caching": true,
+        "batch": true,
+        "fineTuning": false,
+        "structuredOutput": true
+      },
+      "lastVerified": "2026-11-10",
+      "sources": [
+        {
+          "type": "community",
+          "url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
+          "fetchedAt": "2026-11-10"
+        },
+        {
+          "type": "official",
+          "url": "https://platform.claude.com/docs/en/about-claude/pricing",
+          "fetchedAt": "2026-11-10"
+        }
+      ],
+      "priceHistory": [
+        {
+          "date": "2026-11-10",
+          "input": 8,
+          "output": 40,
+          "note": "First listed; auto-drafted from LiteLLM registry"
+        }
+      ],
+      "i18n": {
+        "en": {
+          "tagline": "Claude Mythos 5.2 — $8.00/$40.00 per 1M tokens, 1M context",
+          "description": "Claude Mythos 5.2 is priced at $8.00 input / $40.00 output per 1M tokens, with a 1M context window and 128K max output. Cached input $0.20/1M. That is 20% cheaper per call than Claude Fable 5 ($10.00/$50.00). A 1,000-in / 500-out call costs $0.02800."
+        },
+        "zh": {
+          "tagline": "Claude Mythos 5.2 —— 输入 $8.00 / 输出 $40.00（每 1M token），1M 上下文",
+          "description": "Claude Mythos 5.2 定价为输入 $8.00 / 输出 $40.00（每 1M token），1M 上下文，128K 最大输出。缓存输入 $0.20/1M。单次成本比 Claude Fable 5（$10.00/$50.00） 便宜 20%。一次 1000 输入 / 500 输出的调用约 $0.02800。"
+        }
+      },
+      "draft": {
+        "generatedAt": "2026-11-10",
+        "note": "Auto-drafted from the LiteLLM registry the day it appeared. Prices and limits are registry values; the name follows a fixed rule; tagline and description are formulaic. Needs a human read for lineage, positioning and anything the registry cannot know."
+      }
     }
   ],
-  "lastChecked": "2026-11-09"
+  "lastChecked": "2026-11-10"
 }
