@@ -50,6 +50,8 @@
     "gpt-6-rosalind": "gpt-6-rosalind",
     "gpt-6-cyber": "gpt-6-cyber",
     "claude-fable-5-2": "claude-fable-5-2",
-    "claude-mythos-5-2": "claude-mythos-5-2"
+    "claude-mythos-5-2": "claude-mythos-5-2",
+    "gpt-6-2-astra": "gpt-6.2-astra",
+    "gpt-6-2-sol": "gpt-6.2-sol"
   }
 }
